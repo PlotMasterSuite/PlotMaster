@@ -12,4 +12,6 @@ class Plot {
 	List<String> members;
 	List<String> deny;
 	
+	
+
 }
