@@ -21,13 +21,9 @@ abstract class PlotManager {
 	
 	abstract Region getRegionAt(int x, int z, Closure c)
 	
-	abstract Region getRegionAt(Location l, Closure c)
-	
 	abstract Region getRegion(int id, Closure c)
 	
 	abstract Plot getPlot(int x, int z, Closure c)
-	
-	abstract Plot getPlotAt(Location l, Closure c)
 	
 	abstract Plot getPlot(int id, Closure c)
 	
@@ -35,20 +31,11 @@ abstract class PlotManager {
 	
 	abstract boolean regionExist(int x, int z, Closure c)
 	
-	abstract createPlot(int x, int y, PlotType type, Closure c)
+	abstract void createPlot(int x, int y, PlotType type, Closure c)
 	
-	abstract createRegion(int x, int y, int h, int w, Closure c)
+	abstract void createRegion(int x, int y, int h, int w, Closure c)
 	
 	
-	def asyncWrap(Closure callback, Closure code){
-		if (callback){
-			Thread.start {
-				def result = code()
-				callback(result)
-			}	
-		}else {
-			return code()	
-		}
-	}
+	
 	
 }

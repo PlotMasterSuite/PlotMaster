@@ -6,11 +6,11 @@ class BackendManager {
 	
 	static Backend backend;
 	
-	static initBackend(String name){
+	static initBackend(String name, String world){
 		assert !backend, "A backend is already loaded!"
 		
 		backend = backends.get(name).newInstance();
-		backend.load()
+		backend.load(world)
 	}
 	
 	

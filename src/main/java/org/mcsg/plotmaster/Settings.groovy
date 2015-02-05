@@ -6,7 +6,7 @@ class Settings {
 	 * Default Configuration
 	 */
 	
-	Map config = [
+	static Map config = [
 
 
 
