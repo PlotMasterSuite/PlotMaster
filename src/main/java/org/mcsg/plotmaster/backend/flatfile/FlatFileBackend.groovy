@@ -4,6 +4,7 @@ import groovy.lang.Closure;
 
 import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotMaster;
+import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.backend.Backend
@@ -59,6 +60,16 @@ class FlatFileBackend implements Backend{
 	}
 
 	public void getPlot(int id, Closure c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void createRegion(int x, int y, Closure c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void createPlot(Region region, int x, int y, PlotType type, Closure c) {
 		// TODO Auto-generated method stub
 		
 	}
