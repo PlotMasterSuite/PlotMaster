@@ -3,15 +3,22 @@ package org.mcsg.plotmaster
 
 class Plot {
 
-	String plotName;
-	String ownerName, OwnerUUID;
-	int x, z, h, w;
+	int id
 	
-	PlotType type;
+	String plotName
+	String ownerName, OwnerUUID
+	int x, z, h, w
 	
-	List<String> members;
-	List<String> deny;
+	long createdAt
+	long loadedAt
 	
+	boolean changed
+	
+	PlotType type
+	
+	List<String> members
+	List<String> deny
+
 	
 
 }

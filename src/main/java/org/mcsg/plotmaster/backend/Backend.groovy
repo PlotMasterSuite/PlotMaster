@@ -9,7 +9,7 @@ interface Backend {
 	
 	
 	
-	void load(String world, Closure c);
+	void load(String world);
 	
 	void getRegion(int id,Closure c)
 	void getRegionByLocation(int x, int z, Closure c)
