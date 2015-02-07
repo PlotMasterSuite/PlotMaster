@@ -6,6 +6,7 @@ import groovy.transform.CompileStatic;
 
 import javax.sql.DataSource
 
+import org.mcsg.plotmaster.Plot
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend;
@@ -47,22 +48,33 @@ abstract class AbstractSQLBackend implements Backend{
 				 `w` int(11) NOT NULL,
 				 `createdAt` int(11) NOT NULL,
 				 `type` int(11) NOT NULL,
-				 PRIMARY KEY (`id`)
+				  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 		""")
 		
+		sql.execute("""
+			CREATE TABLE `${world}_access_list` (
+				 `id` int(11) NOT NULL AUTO_INCREMENT,
+				 `name` varchar(16) NOT NULL,
+				 `uuid` varchar(36) NOT NULL,
+				 `mode` int(2) NOT NULL,
+				 PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1
+		""")
 		
-
+		
+		
+		sql.close()
 	}
 
 
 
-	public void getRegion(int id) {
+	public Region getRegion(int id) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void getRegionByLocation(int x, int z) {
+	public Region getRegionByLocation(int x, int z) {
 		// TODO Auto-generated method stub
 
 	}
@@ -72,17 +84,17 @@ abstract class AbstractSQLBackend implements Backend{
 
 	}
 
-	public void getPlot(int id) {
+	public Plot getPlot(int id) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void createRegion(int x, int y) {
+	public Region createRegion(int x, int y) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void createPlot(Region region, int x, int y, PlotType type) {
+	public Plot createPlot(Region region, int x, int y, PlotType type) {
 		// TODO Auto-generated method stub
 
 	}

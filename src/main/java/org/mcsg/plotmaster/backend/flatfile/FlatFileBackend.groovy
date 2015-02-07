@@ -23,8 +23,8 @@ class FlatFileBackend implements Backend{
 	File userFolder
 
 
-	Map<Integer, XZLoc> regionMap
-	Map<Integer, Integer> plotMap
+	TreeMap<Integer, XZLoc> regionMap
+	TreeMap<Integer, Integer> plotMap
 
 	Gson gson = new Gson();
 
@@ -45,12 +45,12 @@ class FlatFileBackend implements Backend{
 		regionMapFile = new File(folder, "regionmap.json")
 		regionMapFile.createNewFile()
 
-		regionMap = gson.fromJson(regionMapFile.getText(), Map.class)
+		regionMap = gson.fromJson(regionMapFile.getText(), TreeMap.class)
 
 		plotMapFile = new File(folder, "plotmap.json")
 		plotMapFile.createNewFile()
 
-		plotMap = gson.fromJson(regionMapFile.getText(), Map.class)
+		plotMap = gson.fromJson(regionMapFile.getText(), TreeMap.class)
 
 	}
 
@@ -70,7 +70,9 @@ class FlatFileBackend implements Backend{
 		if(!file)
 			return null
 
-		gson.fromJson(file.getText(), Region.class)
+		Region rg = gson.fromJson(file.getText(), Region.class)
+		rg.setLoadedAt(System.currentTimeMillis())
+		return rg
 	}
 
 	public void saveRegion(Region region) {
@@ -92,9 +94,12 @@ class FlatFileBackend implements Backend{
 		return region.plots.get(id)
 	}
 
-	public Region createRegion(int x, int y) {
-		// TODO Auto-generated method stub
 
+	public Region createRegion(String world, int x, int y, int h, int w) {
+		def id = regionMap.getLastEntry().getKey() + 1
+		def time = System.currentTimeMillis()
+		
+		def rg = new Region(id: id, x: x, y: y, h: h, w: w, world: world, loadedAt:time, createdAt: time)
 	}
 
 	public Plot createPlot(Region region, int x, int y, PlotType type) {

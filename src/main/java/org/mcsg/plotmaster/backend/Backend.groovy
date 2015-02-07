@@ -6,18 +6,18 @@ import org.mcsg.plotmaster.Region
 
 interface Backend {
 
-	
+	 
 	
 	
 	void load(String world);
 	
-	void getRegion(int id)
-	void getRegionByLocation(int x, int z)
+	Region getRegion(int id)
+	Region getRegionByLocation(int x, int z)
 	
     void saveRegion(Region region)
 	
-	void getPlot(int id)
+	Plot getPlot(int id)
 	
-	void createRegion(int x, int y)
-	void createPlot(Region region, int x, int y, PlotType type)
+	Region createRegion(int x, int y)
+	Plot createPlot(Region region, int x, int y, PlotType type)
 }

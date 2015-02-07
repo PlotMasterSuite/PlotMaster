@@ -13,9 +13,8 @@ class Region {
 	long loadedAt
 	
 	boolean changed
-	boolean saved
 	
-	World world;
-	List<Plot> plots;	
+	String world;
+	Map<Integer, Plot> plots;	
 	
 }
