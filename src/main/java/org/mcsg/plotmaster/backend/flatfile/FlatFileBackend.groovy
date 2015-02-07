@@ -18,60 +18,56 @@ class FlatFileBackend implements Backend{
 	File plotMapFile
 	File regionFolder
 	File userFolder
-	
-	
+
+
 	Map regionMap
 	Map plotMap
-	
-	
-	public void load(String world, Closure c) {
-		AsyncUtils.asyncWrap(c) {
-			File loc = new File(PlotMaster.getPlugin().getDataFolder(), Settings.config.backend.flatfile.location);
-			if(!loc.exists())
-				loc.mkdirs()
-			
-			folder = new File(loc, world)
-			if(!folder.exists())
-				folder.mkdirs()
-			
-			regionMapFile = new File(folder, "regionmap.json")
-			regionMapFile.createNewFile()
-			
-			plotMapFile = new File(folder, "plotmap.json")
-			plotMapFile.createNewFile()
-			
-			
-		}
+
+
+	public void load(String world) {
+		File loc = new File(PlotMaster.getPlugin().getDataFolder(), Settings.config.backend.flatfile.location);
+		if(!loc.exists())
+			loc.mkdirs()
+
+		folder = new File(loc, world)
+		if(!folder.exists())
+			folder.mkdirs()
+
+		regionMapFile = new File(folder, "regionmap.json")
+		regionMapFile.createNewFile()
+
+		plotMapFile = new File(folder, "plotmap.json")
+		plotMapFile.createNewFile()
 	}
 
-	public void getRegion(int id, Closure c) {
+	public void getRegion(int id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public void getRegionByLocation(int x, int z, Closure c) {
+	public void getRegionByLocation(int x, int z) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public void saveRegion(Region region, Closure c) {
+	public void saveRegion(Region region) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public void getPlot(int id, Closure c) {
+	public void getPlot(int id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public void createRegion(int x, int y, Closure c) {
+	public void createRegion(int x, int y) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public void createPlot(Region region, int x, int y, PlotType type, Closure c) {
+	public void createPlot(Region region, int x, int y, PlotType type) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 

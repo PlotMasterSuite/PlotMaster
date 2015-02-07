@@ -6,5 +6,4 @@ class PlotMember {
 	Map<Integer, Plot> added;
 	Map<Integer, Plot> deny;
 	
-	
 }

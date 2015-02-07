@@ -22,64 +22,67 @@ abstract class AbstractSQLBackend implements Backend{
 
 		sql.execute("""
 			CREATE TABLE IF NOT EXISTS `${world}_regions` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`world` int(11) NOT NULL,
-				`x` int(11) NOT NULL,
-				`z` int(11) NOT NULL,
-				`h` int(11) NOT NULL,
-				`w` int(11) NOT NULL,
-				`createdAt` int(11) NOT NULL,
-				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+				 `id` int(11) NOT NULL AUTO_INCREMENT,
+				 `name` varchar(128) NOT NULL,
+				 `world` int(11) NOT NULL,
+				 `x` int(11) NOT NULL,
+				 `z` int(11) NOT NULL,
+				 `h` int(11) NOT NULL,
+				 `w` int(11) NOT NULL,
+				 `createdAt` int(11) NOT NULL,
+				 PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 		""")
 		
 		sql.execute("""
 			CREATE TABLE IF NOT EXISTS `${world}_plots` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `name` varchar(64) NOT NULL,
-			  `owner` varchar(16) NOT NULL,
-			  `uuid` varchar(36) NOT NULL,
-			  `x` int(11) NOT NULL,
-			  `z` int(11) NOT NULL,
-			  `h` int(11) NOT NULL,
-			  `w` int(11) NOT NULL,
-			  `createdAt` int(11) NOT NULL,
-			  `type` int(11) NOT NULL,
-			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+				 `id` int(11) NOT NULL AUTO_INCREMENT,
+				 `region` int(11) NOT NULL,
+				 `name` varchar(64) NOT NULL,
+				 `owner` varchar(16) NOT NULL,
+				 `uuid` varchar(36) NOT NULL,
+				 `x` int(11) NOT NULL,
+				 `z` int(11) NOT NULL,
+				 `h` int(11) NOT NULL,
+				 `w` int(11) NOT NULL,
+				 `createdAt` int(11) NOT NULL,
+				 `type` int(11) NOT NULL,
+				 PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 		""")
+		
 		
 
 	}
 
 
 
-	public void getRegion(int id, Closure c) {
+	public void getRegion(int id) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void getRegionByLocation(int x, int z, Closure c) {
+	public void getRegionByLocation(int x, int z) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void saveRegion(Region region, Closure c) {
+	public void saveRegion(Region region) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void getPlot(int id, Closure c) {
+	public void getPlot(int id) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void createRegion(int x, int y, Closure c) {
+	public void createRegion(int x, int y) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void createPlot(Region region, int x, int y, PlotType type, Closure c) {
+	public void createPlot(Region region, int x, int y, PlotType type) {
 		// TODO Auto-generated method stub
 
 	}

@@ -11,13 +11,13 @@ interface Backend {
 	
 	void load(String world);
 	
-	void getRegion(int id,Closure c)
-	void getRegionByLocation(int x, int z, Closure c)
+	void getRegion(int id)
+	void getRegionByLocation(int x, int z)
 	
-    void saveRegion(Region region, Closure c)
+    void saveRegion(Region region)
 	
-	void getPlot(int id, Closure c)
+	void getPlot(int id)
 	
-	void createRegion(int x, int y, Closure c)
-	void createPlot(Region region, int x, int y, PlotType type, Closure c)
+	void createRegion(int x, int y)
+	void createPlot(Region region, int x, int y, PlotType type)
 }
