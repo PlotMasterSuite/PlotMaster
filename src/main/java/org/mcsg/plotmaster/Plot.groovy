@@ -9,16 +9,15 @@ class Plot {
 	String ownerName, OwnerUUID
 	int x, z, h, w
 	
-	long createdAt
-	long loadedAt
-	
-	boolean changed
-	
+	long createdAt	
 	PlotType type
 	
 	List<String> members
 	List<String> deny
 
 	
+	transient long loadedAt
+	transient boolean changed
+	transient Region region
 
 }

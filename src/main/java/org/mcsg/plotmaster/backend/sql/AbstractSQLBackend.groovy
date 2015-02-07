@@ -11,7 +11,6 @@ import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend;
 
-@CompileStatic
 abstract class AbstractSQLBackend implements Backend{
 
 	DataSource ds;
@@ -57,12 +56,10 @@ abstract class AbstractSQLBackend implements Backend{
 				 `id` int(11) NOT NULL AUTO_INCREMENT,
 				 `name` varchar(16) NOT NULL,
 				 `uuid` varchar(36) NOT NULL,
-				 `mode` int(2) NOT NULL,
+				 `mode` enum('MEMBER','ALLOW','DENY') NOT NULL,
 				 PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1
 		""")
-		
-		
 		
 		sql.close()
 	}
@@ -70,7 +67,42 @@ abstract class AbstractSQLBackend implements Backend{
 
 
 	public Region getRegion(int id) {
-		// TODO Auto-generated method stub
+		Region reg
+		Sql sql = getSql()
+		
+		sql.eachRow("SELECT * FROM ${world}_regions WHERE id=${id}") { row ->
+			reg = new Region(
+				id: row.id, 
+				name: row.name, 
+				world: row.world, 
+				x: row.x, 
+				y: row.y, 
+				h: row.h,
+				w: row.w, 
+				createdAt: row.createdAt
+				);
+		}
+		
+		sql.eachRow("SELECT * FROM ${world}_plots WHERE region=${id}") { row ->
+			Plot plot = new Plot(
+				id: row.id,
+				region: reg,
+				name: row.name,
+				ownerName: row.owner,
+				ownerUuid: row.uuid,
+				x: row.x,
+				y: row.y,
+				h: row.h,
+				w: row.w,
+				createdAt: row.createdAt
+				
+				
+				
+				
+				
+				);
+			
+		}
 
 	}
 
@@ -97,6 +129,11 @@ abstract class AbstractSQLBackend implements Backend{
 	public Plot createPlot(Region region, int x, int y, PlotType type) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	
+	private Sql getSql(){
+		new Sql(ds)
 	}
 
 }

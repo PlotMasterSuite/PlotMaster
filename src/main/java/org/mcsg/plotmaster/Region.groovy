@@ -15,6 +15,8 @@ class Region {
 	boolean changed
 	
 	String world;
+	String name;
+	
 	Map<Integer, Plot> plots;	
 	
 }
