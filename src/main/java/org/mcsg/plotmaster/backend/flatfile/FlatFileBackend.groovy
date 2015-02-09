@@ -102,9 +102,17 @@ class FlatFileBackend implements Backend{
 		def rg = new Region(id: id, x: x, y: y, h: h, w: w, world: world, loadedAt:time, createdAt: time)
 	}
 
-	public Plot createPlot(Region region, int x, int y, PlotType type) {
-		// TODO Auto-generated method stub
 
+	public Region getRegionByPlotId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Plot createPlot(Region region, int x, int y, int h, int w,
+			PlotType type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -4,6 +4,7 @@ import org.mcsg.plotmaster.Settings;
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+
 import groovy.lang.Closure;
 
 import org.mcsg.plotmaster.Plot;
@@ -28,7 +29,6 @@ class MysqlBackend extends AbstractSQLBackend {
 		this.ds = new HikariDataSource(config);
 	}
 
-	
 
 
 

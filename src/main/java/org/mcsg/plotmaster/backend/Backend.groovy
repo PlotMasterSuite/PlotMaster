@@ -13,11 +13,13 @@ interface Backend {
 	
 	Region getRegion(int id)
 	Region getRegionByLocation(int x, int z)
+	Region getRegionByPlotId(int id)	
 	
     void saveRegion(Region region)
 	
 	Plot getPlot(int id)
 	
-	Region createRegion(int x, int y)
-	Plot createPlot(Region region, int x, int y, PlotType type)
+	
+	Region createRegion(String world, int x, int z, int h, int w)
+	Plot createPlot(Region region, int x, int y, int h, int w, PlotType type)
 }
