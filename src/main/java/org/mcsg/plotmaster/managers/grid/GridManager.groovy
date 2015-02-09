@@ -1,6 +1,7 @@
 package org.mcsg.plotmaster.managers.grid
 
 import groovy.lang.Closure;
+import groovy.transform.CompileStatic;
 
 import org.bukkit.Location;
 import org.mcsg.plotmaster.Plot;
@@ -10,7 +11,9 @@ import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.cache.Cache
 import org.mcsg.plotmaster.cache.CacheFactory;
 import org.mcsg.plotmaster.managers.PlotManager
+
 import static org.mcsg.plotmaster.utils.AsyncUtils.asyncWrap;
+
 class GridManager extends PlotManager{
 
 	Cache regionCache;

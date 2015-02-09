@@ -26,7 +26,7 @@ abstract class AbstractSQLBackend implements Backend{
 		regions = "${world}_regions"
 		plots  = "${world}_plots"
 		users  = "${world}_users"
-		access_list = "{world}_access_list"
+		access_list = "${world}_access_list"
 
 		def sql = getSql();
 
