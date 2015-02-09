@@ -8,9 +8,9 @@ import org.mcsg.plotmaster.PlotMaster;
 @CompileStatic
 class TaskUtils {
 
-	static delayed(int delay, Closure run){
+	static delayed(int delay, Closure run){ 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(PlotMaster.getPlugin(), run as Runnable ,delay)
-	}
+	} 
 
 	static repeating(int delay, int repeat, Closure run){
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(PlotMaster.getPlugin(), run as Runnable, delay, repeat)

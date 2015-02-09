@@ -1,6 +1,9 @@
 package org.mcsg.plotmaster.utils
 
+import org.bukkit.Bukkit;
+
 import groovy.lang.Closure;
+import groovy.transform.CompileStatic;
 
 class AsyncUtils {
 
