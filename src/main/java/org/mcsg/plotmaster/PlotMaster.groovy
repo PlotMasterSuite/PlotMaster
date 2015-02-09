@@ -14,6 +14,12 @@ class PlotMaster extends JavaPlugin{
 	void onDisable(){
 
 	}
+	
+	
+	
+	static PlotMaster getPlugin(){
+		plugin
+	}
 
 
 }
