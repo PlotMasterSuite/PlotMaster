@@ -1,1 +1,1 @@
-All new High Performance flexible plot managment system for Minecraft Servers. Coming soon to a server near you.
+All new high performance flexible plot management system for Minecraft servers. Coming soon to a server near you!
