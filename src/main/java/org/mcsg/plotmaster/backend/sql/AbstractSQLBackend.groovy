@@ -1,6 +1,7 @@
 package org.mcsg.plotmaster.backend.sql
 
 import groovy.lang.Closure;
+import groovy.sql.BatchingPreparedStatementWrapper
 import groovy.sql.Sql;
 import groovy.transform.CompileStatic;
 
@@ -8,7 +9,10 @@ import javax.sql.DataSource
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
+import org.mcsg.plotmaster.AccessType;
 import org.mcsg.plotmaster.Plot
+import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend;
@@ -64,9 +68,11 @@ abstract class AbstractSQLBackend implements Backend{
 		sql.execute("""
 			CREATE TABLE IF NOT EXISTS`${access_list}` (
 				 `id` int(11) NOT NULL AUTO_INCREMENT,
-				 `name` varchar(16) NOT NULL,
 				 `uuid` varchar(36) NOT NULL,
-				 `mode` enum('MEMBER','ALLOW','DENY') NOT NULL,
+				 `name` varchar(16) NOT NULL,
+				 `type` enum('MEMBER','ALLOW','DENY') NOT NULL,
+				 `plot` int(11) NOT NULL,
+				 `region` int(11) NOT NULL,
 				 PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1
 		""")
@@ -140,7 +146,7 @@ abstract class AbstractSQLBackend implements Backend{
 
 	public Plot createPlot(Region region, int x, int z, int h, int w, PlotType type) {
 		Sql sql = getSql()
-		
+
 		def res = sql.firstRow( """INSERT INTO ${plots} (world, region, x, z, h, w, type) VALUES(?,?,?,?,?,?,?);
 			SELECT * FROM ${plots} WHERE id=LAST_INSERT_ID()""", [region.world, region.id, x, z, h, w, type.name])
 
@@ -148,15 +154,53 @@ abstract class AbstractSQLBackend implements Backend{
 		closeReturn(sql, plot)
 	}
 
+	PlotMember getMemeber(String uuid){
+		assert uuid, "UUID Cannot be null"
+		Sql sql = getSql()
+
+		PlotMember member = new PlotMember(uuid: uuid, plots: new HashMap<>())
+
+		sql.eachRow("SELECT * FROM ${access_list} WHERE uuid=?", [uuid]) { row ->
+			def type = row.type as AccessType;
+			def access = (member.plots.get(type)) ?: new ArrayList<Map<String, Integer>>()
+
+			access.add([plot: row.plot, region: row.region])
+
+			member.plots.put(type, access)
+		}
+
+		closeReturn(sql, member)
+	}
+
+	//Simplest and most reliable way to update this is to delete all access list
+	//then reinsert all
+	void saveMember(PlotMember member){
+		assert member, "Cannot save null member!"
+		assert member.uuid, "Cannot save a member with no UUID!"
+
+		Sql sql = getSql()
+
+		sql.execute("DELETE FROM ${access_list} WHERE uuid=?", [member.uuid]) 
+																		
+		//uuid, name, access, plot, region
+		sql.withBatch("INSERT INTO ${access_list} VALUES(NULL, ?, ?, ?, ?, ?)") { BatchingPreparedStatementWrapper ps ->
+			member.plots.each { type, map ->
+				ps.addBatch([member.uuid, member.name, type, map.plot, map.region])
+			}
+		}
+
+	}
+
+
 	private Region regionFromQuery(row){
 		new Region(id: row.id, name: row.name, world: row.world, x: row.x, z: row.z,
-				h: row.h, w: row.w, createdAt: row.createdAt)
+		h: row.h, w: row.w, createdAt: row.createdAt)
 	}
 
 	private Plot plotFromQuery(row){
 		new Plot(id: row.id, region: reg, plotName: row.name, ownerName: row.owner,
-				ownerUUID: row.uuid, x: row.x, z: row.z, h: row.h, w: row.w,
-				createdAt: row.createdAt)
+		ownerUUID: row.uuid, x: row.x, z: row.z, h: row.h, w: row.w,
+		createdAt: row.createdAt)
 	}
 
 
@@ -167,6 +211,7 @@ abstract class AbstractSQLBackend implements Backend{
 		}
 		return reg
 	}
+
 
 
 	private Sql getSql(){

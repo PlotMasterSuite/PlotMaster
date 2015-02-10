@@ -7,6 +7,7 @@ import groovy.transform.CompileStatic;
 
 import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotMaster;
+import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
@@ -113,6 +114,16 @@ class FlatFileBackend implements Backend{
 			PlotType type) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public PlotMember getMemeber(String uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void saveMember(PlotMember member) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
