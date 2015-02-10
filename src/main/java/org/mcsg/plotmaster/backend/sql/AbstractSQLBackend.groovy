@@ -165,30 +165,26 @@ abstract class AbstractSQLBackend implements Backend{
 			def access = (member.plots.get(type)) ?: new ArrayList<Map<String, Integer>>()
 
 			access.add([plot: row.plot, region: row.region])
-
 			member.plots.put(type, access)
 		}
 
 		closeReturn(sql, member)
 	}
 
-	//Simplest and most reliable way to update this is to delete all access list
-	//then reinsert all
 	void saveMember(PlotMember member){
 		assert member, "Cannot save null member!"
 		assert member.uuid, "Cannot save a member with no UUID!"
-
 		Sql sql = getSql()
+		
+		sql.execute("DELETE FROM ${access_list} WHERE uuid=?", [member.uuid])
 
-		sql.execute("DELETE FROM ${access_list} WHERE uuid=?", [member.uuid]) 
-																		
 		//uuid, name, access, plot, region
 		sql.withBatch("INSERT INTO ${access_list} VALUES(NULL, ?, ?, ?, ?, ?)") { BatchingPreparedStatementWrapper ps ->
 			member.plots.each { type, map ->
 				ps.addBatch([member.uuid, member.name, type, map.plot, map.region])
 			}
 		}
-
+		sql.close()
 	}
 
 
