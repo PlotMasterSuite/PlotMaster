@@ -35,13 +35,16 @@ class FlatFileBackend implements Backend{
 
 	public void load(String world) {
 		File loc = new File(PlotMaster.getPlugin().getDataFolder(), Settings.config.backend.flatfile.location);
-
-		if(!loc.exists())
-			loc.mkdirs()
+		loc.mkdirs()
 
 		folder = new File(loc, world)
-		if(!folder.exists())
-			folder.mkdirs()
+		folder.mkdirs()
+
+		regionFolder = new File(folder, "regions/")
+		regionFolder.mkdirs()
+
+		userFolder = new File(folder, "users/")
+		userFolder.mkdirs()
 
 		regionMapFile = new File(folder, "regionmap.json")
 		regionMapFile.createNewFile()
@@ -52,7 +55,6 @@ class FlatFileBackend implements Backend{
 		plotMapFile.createNewFile()
 
 		plotMap = gson.fromJson(regionMapFile.getText(), TreeMap.class)
-
 	}
 
 	public Region getRegion(int id) {
@@ -72,60 +74,81 @@ class FlatFileBackend implements Backend{
 			return null
 
 		Region rg = gson.fromJson(file.getText(), Region.class)
-		rg.setLoadedAt(System.currentTimeMillis())
 		return rg
 	}
 
 	public void saveRegion(Region region) {
 		assert region != null, "Region cannot be null"
-		
+
 		def file = new File(regionFolder, "${region.x}.${region.z}.rg")
 		file.createNewFile()
 		file.setText(gson.toJson(region))
 	}
 
 	public Plot getPlot(int id) {
-		XZLoc loc = plotMap.get(id.toString())
-		
+		XZLoc loc = regionMap.get(plotMap.get(id))
+
 		if(!loc)
 			return null
-			
+
 		Region region = getRegionByLocation(loc.x, loc.z)
-		
+
 		return region.plots.get(id)
 	}
 
 
-	public Region createRegion(String world, int x, int y, int h, int w) {
+	public Region createRegion(Region region) {
 		def id = regionMap.getLastEntry().getKey() + 1
-		def time = System.currentTimeMillis()
-		
-		def rg = new Region(id: id, x: x, y: y, h: h, w: w, world: world, loadedAt:time, createdAt: time)
+
+		region.setId(id)
+		region.setCreatedAt(System.currentTimeMillis())
+
+		return region
 	}
 
 
 	public Region getRegionByPlotId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		def rid = plotMap.get(id);
+		return getRegion(rid)
 	}
 
 
-	public Plot createPlot(Region region, int x, int y, int h, int w,
-			PlotType type) {
-		// TODO Auto-generated method stub
-		return null;
+	public Plot createPlot(Region region, Plot plot) {
+		def id = plotMap.getLastEntry().getKey() + 1
+
+		plot.setId(id)
+		plot.setCreatedAt(System.currentTimeMillis())
+
+		region.plots.put(id, plot)
+
+		saveRegion(region)
+		plotMap.put(id, plot)
+
+		return plot;
 	}
 
 	public PlotMember getMemeber(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		def file = new File(userFolder, "${uuid}.json")
+
+		if(!file.exists())
+			return null
+
+		gson.fromJson(file.getText(), PlotMember.class)
 	}
 
 	public void saveMember(PlotMember member) {
-		// TODO Auto-generated method stub
-		
+		def file = new File(userFolder, "${uuid}.json")
+		file.createNewFile()
+
+		gson.toJson(file.getText())
 	}
 
+	private void savePlotMap(){
+		plotMapFile.setText(gson.toJson(plotMap))
+	}
 
+	private void saveRegionMap(){
+		regionMapFile.setText(gson.toJson(regionMap))
+	}
 
 }

@@ -87,7 +87,7 @@ abstract class AbstractSQLBackend implements Backend{
 
 		def res = sql.firstRow "SELECT * FROM ${regions} WHERE id=${id}"
 		def reg = regionFromQuery(res)
-
+		
 		loadPlotsForRegion(sql, reg)
 		closeReturn(sql, res)
 	}
@@ -106,10 +106,10 @@ abstract class AbstractSQLBackend implements Backend{
 		Sql sql = getSql()
 
 		def res = sql.firstRow "SELECT * FROM ${regions} WHERE x=${x} AND z=${z}"
-		def req = regionFromQuery(res)
-
-		loadPlotsForRegion(sql, req)
-		closeReturn(sql, res)
+		def reg = regionFromQuery(res)
+		
+		loadPlotsForRegion(sql, reg)
+		closeReturn(sql, reg)
 	}
 
 	public void saveRegion(Region region) {
@@ -134,23 +134,31 @@ abstract class AbstractSQLBackend implements Backend{
 		closeReturn(sql, plot)
 	}
 
-	public Region createRegion(String world, int x, int y, int h, int w) {
+	public Region createRegion(Region region) {
+		assert region, "Cannot create a null region!"
+		assert region.world == world, "Attempting to create a region with an invalid world! ${region.world} != ${world}"
 		Sql sql = getSql()
 
 		def res = sql.firstRow ("""INSERT INTO ${regions} (world, x, z, h, w) VALUES(?,?,?,?,?); 
-			SELECT * FROM ${regions} WHERE id=LAST_INSERT_ID();""", [world, x, y, h, w])
+			SELECT LAST_INSERT_ID() as id FROM ${regions}""", [region.world, region.x, region.y, region.h, region.w])
 
-		def reg = regionFromQuery(res)
+		def time = System.currentTimeMillis()
+		region.setId(res.id)
+		region.setCreatedAt(time)
+		
 		closeReturn(sql, reg)
 	}
 
-	public Plot createPlot(Region region, int x, int z, int h, int w, PlotType type) {
+	public Plot createPlot(Region region, Plot plot) {
 		Sql sql = getSql()
 
 		def res = sql.firstRow( """INSERT INTO ${plots} (world, region, x, z, h, w, type) VALUES(?,?,?,?,?,?,?);
-			SELECT * FROM ${plots} WHERE id=LAST_INSERT_ID()""", [region.world, region.id, x, z, h, w, type.name])
+			SELECT LAST_INSERT_ID() as id FROM ${plots}""", [region.world, region.id, plot.x, plot.z, plot.h, plot.w, plot.type.name])
 
-		def plot = plotFromQuery(res)
+		def time = System.currentTimeMillis()
+		plot.setId(res.id)
+		plot.setCreatedAt(time)
+		
 		closeReturn(sql, plot)
 	}
 

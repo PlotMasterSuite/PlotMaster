@@ -55,14 +55,10 @@ interface Backend {
 	
 	/**
 	 * Creates a new region from the given paramters, and sets it up on the backend
-	 * @param world
-	 * @param x
-	 * @param z
-	 * @param h
-	 * @param w
+	 * @param Region
 	 * @return
 	 */
-	Region createRegion(String world, int x, int z, int h, int w)
+	Region createRegion(Region region)
 	
 	
 	///////////////////////////////////// PLOTS ////////////////////////////////
@@ -78,14 +74,11 @@ interface Backend {
 	/**
 	 * Creates a plot from the given plot information, and assigns it to the region provided
 	 * @param region
-	 * @param x
-	 * @param y
-	 * @param h
-	 * @param w
-	 * @param type
+	 * @param plot
 	 * @return
 	 */
-	Plot createPlot(Region region, int x, int y, int h, int w, PlotType type)
+	//int x, int y, int h, int w, PlotType type
+	Plot createPlot(Region region, Plot plot)
 	
 	///////////////////////////////////// MEMBERS //////////////////////////////
 	

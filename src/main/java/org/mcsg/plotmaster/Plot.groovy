@@ -16,7 +16,6 @@ class Plot {
 	List<String> deny
 
 	
-	transient long loadedAt
 	transient boolean changed
 	transient Region region
 

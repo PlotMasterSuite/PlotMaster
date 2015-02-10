@@ -10,7 +10,6 @@ class Region {
 	int h, w
 	
 	long createdAt
-	long loadedAt
 	
 	boolean changed
 	
