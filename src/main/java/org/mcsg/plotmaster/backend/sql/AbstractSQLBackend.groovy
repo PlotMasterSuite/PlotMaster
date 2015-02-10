@@ -155,7 +155,7 @@ abstract class AbstractSQLBackend implements Backend{
 	}
 
 	PlotMember getMemeber(String uuid){
-		assert uuid, "UUID Cannot be null"
+		assert uuid, "UUID cannot be null!"
 		Sql sql = getSql()
 
 		PlotMember member = new PlotMember(uuid: uuid, plots: new HashMap<>())
