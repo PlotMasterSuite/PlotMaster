@@ -12,8 +12,8 @@ abstract class PlotManager {
 
 	Backend backend;
 	
-	def PlotManager(){
-		backend = BackendManager.getBackend();
+	def PlotManager(String world){
+		backend = BackendManager.getBackend(world);
 	}
 	
 	// For all methods, if Closure is not null, will run async with the Closure being the callback
@@ -30,9 +30,9 @@ abstract class PlotManager {
 	
 	abstract boolean regionExist(int x, int z, Closure c)
 	
-	abstract void createPlot(int x, int y, PlotType type, Closure c)
+	abstract PlotCreation createPlot(int x, int y, PlotType type, Closure c)
 	
-	abstract void createRegion(int x, int y, int h, int w, Closure c)
+	abstract RegionCreation createRegion(int x, int y, int h, int w, Closure c)
 	
 	
 	

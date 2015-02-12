@@ -10,7 +10,11 @@ import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.cache.Cache
 import org.mcsg.plotmaster.cache.CacheFactory;
+import org.mcsg.plotmaster.managers.PlotCreation
+import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.managers.PlotManager
+import org.mcsg.plotmaster.managers.RegionCreation
+import org.mcsg.plotmaster.managers.RegionCreation.RegionCreationStatus;
 
 import static org.mcsg.plotmaster.utils.AsyncUtils.asyncWrap;
 
@@ -20,7 +24,7 @@ class GridManager extends PlotManager{
 	Cache xzRegionCache;
 
 	Cache plotCache;
-	
+
 	String world
 	int cellWidth
 	int cellHeight
@@ -31,12 +35,12 @@ class GridManager extends PlotManager{
 		this.world = world
 		this.cellHeight = height
 		this.cellWidth = width
-		
-		
+
+
 		regionCache = CacheFactory.createCache()
 		xzRegionCache = CacheFactory.createCache()
 		plotCache = CacheFactory.createCache()
-		
+
 	}
 
 
@@ -104,39 +108,49 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public boolean plotExist(int x, int z, Closure c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
 	public boolean regionExist(int x, int z, Closure c) {
-		// TODO Auto-generated method stub
-		return false;
+		asyncWrap(c) {
+			return getRegionAt(x, z, null) != null
+		}
 	}
 
 
 	@Override
-	public  void createPlot(int x, int y, PlotType type, Closure c) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean plotExist(int x, int z, Closure c) {
+		asyncWrap(c) {
+			return getPlot(x, z, null) != null
+		}
+	}
+
+
+
+	@Override
+	public  PlotCreation createPlot(int x, int z, PlotType type, Closure c) {
+		asyncWrap(c){
+			if(plotExist(x, z, null))
+				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
+
+			Region region = getRegionAt(x, z, null)
+			if(!region)
+				return new PlotCreation(status: PlotCreationStatus.NO_PARENT_REGION)
+
+			Plot plot = new Plot(region: region, x: x, z: z, w: type.w, h: type.h, type: type);
+			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
+		}
 	}
 
 
 	@Override
-	public void createRegion(int x, int y, int h, int w, Closure c) {
-		// TODO Auto-generated method stub
-		return null;
+	public RegionCreation createRegion(int x, int z, int h, int w, Closure c) {
+		asyncWrap(c){
+			if(regionExist(x, z, null))
+				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS)
+
+			Region region = new Region(x: x, z: z, h: h, w: w)
+
+			region = backend.createRegion(region)
+			return new RegionCreation(status: RegionCreationStatus.SUCCESS, region: region)
+		}
 	}
-
-
-
-
-
-
-
-
-
 
 }
