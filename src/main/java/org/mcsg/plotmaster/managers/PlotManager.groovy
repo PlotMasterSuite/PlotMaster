@@ -5,16 +5,20 @@ import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend
-import org.mcsg.plotmaster.backend.BackendManager;
 
 
 abstract class PlotManager {
 
 	Backend backend;
+	String world; 
 	
-	def PlotManager(String world){
-		backend = BackendManager.getBackend(world);
+	def PlotManager(Backend backend, String world){
+		this.backend = backend;
+		this.world = world;
 	}
+	
+	
+	abstract void load()
 	
 	// For all methods, if Closure is not null, will run async with the Closure being the callback
 	

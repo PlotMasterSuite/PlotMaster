@@ -5,25 +5,23 @@ class Settings {
 	/**
 	 * Default Configuration
 	 */
-	
+
 	static Map config = [
 
-
-
-
+		
+		
 		configurations: [
 			[
 				type: "grid",
 				world: "world",
 				backend: "flatfile",
-				
+
 				grid : [
-					regions : [
-						width: 99,
-						height: 99,
-						border: "road",
-						allow_expand: false
-					],
+					width: 99,
+					height: 99,
+					border: "road",
+					allow_expand: false,
+					
 					plotTypes :[
 						default: [
 							name: "default",
@@ -60,7 +58,4 @@ class Settings {
 			]
 		]
 	]
-
-
-
 }
