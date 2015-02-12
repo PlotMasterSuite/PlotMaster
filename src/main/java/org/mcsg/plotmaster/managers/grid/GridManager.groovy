@@ -48,7 +48,7 @@ class GridManager extends PlotManager{
 	public Region getRegionAt(int x, int z, Closure c) {
 		asyncWrap(c) {
 			Region r = xzRegionCache.get("$x:$z")
-			if(r) {
+			if(r) { 
 				return r
 			} else {
 				r = backend.getRegionByLocation(x, z)

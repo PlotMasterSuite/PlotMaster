@@ -6,12 +6,14 @@ import org.bukkit.Location;
 import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region
+import org.mcsg.plotmaster.managers.PlotCreation;
 import org.mcsg.plotmaster.managers.PlotManager
+import org.mcsg.plotmaster.managers.RegionCreation
 
 class UnboundManager extends PlotManager{
 
 	List<Region> regions;
-
+ 
 
 	@Override
 	public Region getRegionAt(int x, int z, Closure c) {
@@ -50,13 +52,13 @@ class UnboundManager extends PlotManager{
 	}
 
 	@Override
-	public void createPlot(int x, int y, PlotType type, Closure c) {
+	public PlotCreation createPlot(int x, int y, PlotType type, Closure c) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void createRegion(int x, int y, int h, int w, Closure c) {
+	public RegionCreation createRegion(int x, int y, int h, int w, Closure c) {
 		// TODO Auto-generated method stub
 		
 	}
