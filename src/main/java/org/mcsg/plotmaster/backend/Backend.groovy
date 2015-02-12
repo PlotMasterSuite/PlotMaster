@@ -54,7 +54,7 @@ interface Backend {
     void saveRegion(Region region)
 	
 	/**
-	 * Creates a new region from the given paramters, and sets it up on the backend
+	 * Creates a new region from the given parameters, and sets it up on the backend
 	 * @param Region
 	 * @return
 	 */
@@ -87,7 +87,7 @@ interface Backend {
 	 * @param uuid
 	 * @return
 	 */
-	PlotMember getMemeber(String uuid)
+	PlotMember getMember(String uuid)
 	
 	/**
 	 * Saves a given members information

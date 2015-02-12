@@ -127,7 +127,7 @@ class FlatFileBackend implements Backend{
 		return plot;
 	}
 
-	public PlotMember getMemeber(String uuid) {
+	public PlotMember getMember(String uuid) {
 		def file = new File(userFolder, "${uuid}.json")
 
 		if(!file.exists())

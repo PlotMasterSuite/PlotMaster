@@ -162,7 +162,7 @@ abstract class AbstractSQLBackend implements Backend{
 		closeReturn(sql, plot)
 	}
 
-	PlotMember getMemeber(String uuid){
+	PlotMember getMember(String uuid){
 		assert uuid, "UUID cannot be null!"
 		Sql sql = getSql()
 
