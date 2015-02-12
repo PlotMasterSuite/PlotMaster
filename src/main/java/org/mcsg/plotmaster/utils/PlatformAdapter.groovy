@@ -1,6 +1,7 @@
 package org.mcsg.plotmaster.utils
 
-import bukkit.org.mcsg.plotmaster.util.BlockUpdateBukkit;
+import groovy.lang.Closure;
+import bukkit.org.mcsg.plotmaster.util.BukkitBlockUpdate;
 
 class PlatformAdapter {
 
@@ -12,9 +13,12 @@ class PlatformAdapter {
 	
 	static BlockUpdate createBlockUpdate(String world, int x, int y, int z, String material, byte data){
 		if(platform == PlatformType.BUKKIT){
-			return new BlockUpdateBukkit(world, x, y, z, material, data)
+			return new BukkitBlockUpdate(world, x, y, z, material, data)
 		}
 	}
+	
+	
+	
 	
 	
 	

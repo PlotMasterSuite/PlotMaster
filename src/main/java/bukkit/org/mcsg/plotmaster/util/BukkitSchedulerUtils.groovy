@@ -1,31 +1,31 @@
-package org.mcsg.plotmaster.utils
+package bukkit.org.mcsg.plotmaster.util
 
 import groovy.transform.CompileStatic;
 
 import org.bukkit.Bukkit;
-import org.mcsg.plotmaster.PlotMaster;
+import bukkit.org.mcsg.plotmaster.PlotMasterPlugin;
 
 @CompileStatic
-class TaskUtils {
+class BukkitSchedulerUtils {
 
 	static delayed(int delay, Closure run){ 		
-		Bukkit.getScheduler().scheduleSyncDelayedTask(PlotMaster.getPlugin(), run as Runnable ,delay)
+		Bukkit.getScheduler().scheduleSyncDelayedTask(PlotMasterPlugin.getPlugin(), run as Runnable ,delay)
 	} 
-
+ 
 	static repeating(int delay, int repeat, Closure run){
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(PlotMaster.getPlugin(), run as Runnable, delay, repeat)
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(PlotMasterPlugin.getPlugin(), run as Runnable, delay, repeat)
 	}
 
 	static asyncDelay(int delay, Runnable run, Closure callback){
-		Bukkit.getScheduler().runTaskLaterAsynchronously(PlotMaster.getPlugin(), {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(PlotMasterPlugin.getPlugin(), {
 			run.run()
 			if(callback)
 				callback.call()
 		} as Runnable, delay)
 	}
-
+ 
 	static asyncRepeating(int delay, int repeat,  Closure run) {
-		Bukkit.getScheduler().runTaskTimerAsynchronously(PlotMaster.getPlugin(), run as Runnable, delay, repeat)
+		Bukkit.getScheduler().runTaskTimerAsynchronously(PlotMasterPlugin.getPlugin(), run as Runnable, delay, repeat)
 	}
 
 	static asyncRepeating(int delay, int repeat, int times, Runnable run, Closure callback) {

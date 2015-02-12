@@ -1,21 +1,22 @@
 package org.mcsg.plotmaster
 
 import org.bukkit.block.Block
+import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 
-class PlotMaster extends JavaPlugin{
+class PlotMaster{
 
-	static PlotMaster plugin;
+	static Plugin plugin
 
-	void onEnable(){
-		plugin = this;
+	
+	//TODO: remove bukkit dependency
+	void onEnable(Plugin plugin){
+		plugin = plugin;
 	}
 
 	void onDisable(){
 
 	}
-	
-	
 	
 	static PlotMaster getPlugin(){
 		plugin

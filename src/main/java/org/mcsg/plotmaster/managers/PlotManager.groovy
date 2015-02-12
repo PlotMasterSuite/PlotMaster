@@ -6,7 +6,8 @@ import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend
 import org.mcsg.plotmaster.backend.BackendManager;
-import org.mcsg.plotmaster.utils.TaskUtils;
+
+import bukkit.org.mcsg.plotmaster.util.BukkitSchedulerUtils;
 
 abstract class PlotManager {
 

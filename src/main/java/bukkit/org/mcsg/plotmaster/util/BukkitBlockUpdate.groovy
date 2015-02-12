@@ -6,7 +6,7 @@ import org.bukkit.Material
 import org.bukkit.World
 import org.mcsg.plotmaster.utils.BlockUpdate
 
-class BlockUpdateBukkit implements BlockUpdate{
+class BukkitBlockUpdate implements BlockUpdate{
 
 	Location loc
 	
@@ -15,14 +15,14 @@ class BlockUpdateBukkit implements BlockUpdate{
 	
 	
 	
-	def BlockUpdateBukkit(String world, int x, int y, int z, String type, byte data){
+	def BukkitBlockUpdate(String world, int x, int y, int z, String type, byte data){
 		this.loc = new Location(Bukkit.getWorld(world), x, y, z)
 		
 		this.type = Material.valueOf(type.toUpperCase())
 		this.data = data
 	}
 	
-	def BlockUpdateBukkit(String world, int x, int y, int z) {
+	def BukkitBlockUpdate(String world, int x, int y, int z) {
 		this.loc = new Location(Bukkit.getWorld(world), x, y, z)
 	}
 	

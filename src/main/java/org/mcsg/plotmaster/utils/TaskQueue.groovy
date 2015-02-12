@@ -1,5 +1,6 @@
 package org.mcsg.plotmaster.utils
 
+import bukkit.org.mcsg.plotmaster.util.BukkitSchedulerUtils;
 import groovy.transform.CompileStatic;
 
 @CompileStatic
@@ -10,7 +11,7 @@ class TaskQueue {
 	static Task current
 	
 	static start(){
-		TaskUtils.repeating(1, 1) {
+		SchedulerAdapter.repeating(1, 1) {
 			
 			if(current) {
 				def ret = current.step()

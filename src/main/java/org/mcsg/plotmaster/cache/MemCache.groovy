@@ -1,6 +1,6 @@
 package org.mcsg.plotmaster.cache
 
-import org.mcsg.plotmaster.utils.TaskUtils;
+import bukkit.org.mcsg.plotmaster.util.BukkitSchedulerUtils;
 import groovy.transform.CompileStatic;
 
 @CompileStatic
@@ -31,7 +31,7 @@ class MemCache<K, V extends Cacheable<K>> implements Cache{
 	}
 	
 	 private cullProccessor(){
-		 TaskUtils.asyncRepeating(cullPeriod, cullPeriod) {
+		 BukkitSchedulerUtils.asyncRepeating(cullPeriod, cullPeriod) {
 			 cache = cache.findAll {
 				 !it.value.isStale()
 			 }
