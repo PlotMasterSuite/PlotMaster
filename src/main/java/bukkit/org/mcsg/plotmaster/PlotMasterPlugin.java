@@ -28,7 +28,7 @@ public class PlotMasterPlugin extends JavaPlugin{
 	
 		}
 		
-		plotMaster.onEnable(this);
+		plotMaster.onEnable();
 		
 	}
 	

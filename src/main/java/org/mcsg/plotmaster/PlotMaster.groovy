@@ -1,26 +1,21 @@
 package org.mcsg.plotmaster
 
-import org.bukkit.block.Block
-import org.bukkit.plugin.Plugin
-import org.bukkit.plugin.java.JavaPlugin
+
 
 class PlotMaster{
 
-	static Plugin plugin
-
+	void onLoad(){
+		
+	}
 	
-	//TODO: remove bukkit dependency
-	void onEnable(Plugin plugin){
-		plugin = plugin;
+	void onEnable(){
+		
 	}
 
 	void onDisable(){
 
 	}
 	
-	static PlotMaster getPlugin(){
-		plugin
-	}
 
 
 }
