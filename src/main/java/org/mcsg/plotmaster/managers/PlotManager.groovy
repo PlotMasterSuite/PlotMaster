@@ -5,6 +5,7 @@ import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend
+import org.mcsg.plotmaster.utils.Callback
 
 
 abstract class PlotManager {
@@ -22,21 +23,21 @@ abstract class PlotManager {
 	
 	// For all methods, if Closure is not null, will run async with the Closure being the callback
 	
-	abstract Region getRegionAt(int x, int z, Closure c)
+	abstract Region getRegionAt(int x, int z, Callback c)
 	
-	abstract Region getRegion(int id, Closure c)
+	abstract Region getRegion(int id, Callback c)
 	
-	abstract Plot getPlot(int x, int z, Closure c)
+	abstract Plot getPlot(int x, int z, Callback c)
 	
-	abstract Plot getPlot(int id, Closure c)
+	abstract Plot getPlot(int id, Callback c)
 	
-	abstract boolean plotExist(int x, int z, Closure c)
+	abstract boolean plotExist(int x, int z, Callback c)
 	
-	abstract boolean regionExist(int x, int z, Closure c)
+	abstract boolean regionExist(int x, int z, Callback c)
 	
-	abstract PlotCreation createPlot(int x, int y, PlotType type, Closure c)
+	abstract PlotCreation createPlot(int x, int y, PlotType type, Callback c)
 	
-	abstract RegionCreation createRegion(int x, int y, int h, int w, Closure c)
+	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	
 	
 	

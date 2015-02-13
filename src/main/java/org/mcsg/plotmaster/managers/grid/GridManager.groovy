@@ -15,6 +15,7 @@ import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.RegionCreation
 import org.mcsg.plotmaster.managers.RegionCreation.RegionCreationStatus;
+import org.mcsg.plotmaster.utils.Callback
 
 import static org.mcsg.plotmaster.utils.AsyncUtils.asyncWrap;
 
@@ -49,7 +50,7 @@ class GridManager extends PlotManager{
 	
 
 	@Override
-	public Region getRegionAt(int x, int z, Closure c) {
+	public Region getRegionAt(int x, int z, Callback c) {
 		asyncWrap(c) {
 			Region r = xzRegionCache.get("$x:$z")
 			if(r) { 
@@ -63,7 +64,7 @@ class GridManager extends PlotManager{
 	}
 
 	@Override
-	public Region getRegion(int id, Closure c) {
+	public Region getRegion(int id, Callback c) {
 		asyncWrap(c) {
 			Region r = regionCache.get(id)
 			if(r) {
@@ -78,7 +79,7 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public Plot getPlot(int x, int z, Closure c ) {
+	public Plot getPlot(int x, int z, Callback c ) {
 		int cellx = (x / cellWidth).toInteger()
 		int cellz = (z / cellHeight).toInteger()
 
@@ -97,7 +98,7 @@ class GridManager extends PlotManager{
 	}
 
 	@Override
-	public Plot getPlot(int id, Closure c) {
+	public Plot getPlot(int id, Callback c) {
 		asyncWrap(c) {
 			Plot p = plotCache.get(id)
 			if(p) {
@@ -112,7 +113,7 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public boolean regionExist(int x, int z, Closure c) {
+	public boolean regionExist(int x, int z, Callback c) {
 		asyncWrap(c) {
 			return getRegionAt(x, z, null) != null
 		}
@@ -120,7 +121,7 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public boolean plotExist(int x, int z, Closure c) {
+	public boolean plotExist(int x, int z, Callback c) {
 		asyncWrap(c) {
 			return getPlot(x, z, null) != null
 		}
@@ -129,7 +130,7 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public  PlotCreation createPlot(int x, int z, PlotType type, Closure c) {
+	public  PlotCreation createPlot(int x, int z, PlotType type, Callback c) {
 		asyncWrap(c){
 			if(plotExist(x, z, null))
 				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
@@ -145,7 +146,7 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public RegionCreation createRegion(int x, int z, int h, int w, Closure c) {
+	public RegionCreation createRegion(int x, int z, int h, int w, Callback c) {
 		asyncWrap(c){
 			if(regionExist(x, z, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS)
