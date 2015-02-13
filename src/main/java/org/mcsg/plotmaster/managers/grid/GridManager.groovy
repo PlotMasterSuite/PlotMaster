@@ -43,6 +43,10 @@ class GridManager extends PlotManager{
 
 	}
 
+	void load(){
+		
+	}
+	
 
 	@Override
 	public Region getRegionAt(int x, int z, Closure c) {

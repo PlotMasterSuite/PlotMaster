@@ -14,6 +14,10 @@ class UnboundManager extends PlotManager{
 
 	List<Region> regions;
  
+	void load(){
+		
+	}
+	
 
 	@Override
 	public Region getRegionAt(int x, int z, Closure c) {
