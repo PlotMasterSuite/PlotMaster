@@ -17,11 +17,13 @@ class PlotMaster{
 
 	private static Map<String, Class<? extends PlotManager>> managers_registry = [:]
 	private static Map<String, Class<? extends Backend>> backends_registry = [:]
-	
+	private static Map<String, Map<String, PlotType>> plottypes = [:]
 	private Map<String, PlotManager> managers = [:]
 	
 	
-	static instance;
+	static PlotMaster instance;
+
+	
 	
 	void onLoad(PMCommandSender console){
 		instance = this;
@@ -70,6 +72,14 @@ class PlotMaster{
 		managers_registry.put(name, manager)
 	}
 	
+	void registerPlotType(String world, PlotType type){
+		
+	}
+	
+	PlotType getPlotType(String world, String name){
+		
+	}
+	
 	PlotManager getManager(String world){
 		return managers.get(world)
 	}
@@ -77,6 +87,14 @@ class PlotMaster{
 	
 	
 	
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////
+	
+	static String getVersion(){
+		"0.0.1"
+	}
 	
 	
 	

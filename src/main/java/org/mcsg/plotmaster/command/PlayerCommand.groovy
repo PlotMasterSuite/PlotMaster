@@ -13,10 +13,13 @@ public abstract class PlayerCommand extends RootCommand{
 
 	public boolean call(PMPlayer player, String[] args){
 		if(args.length > 0){
-			if(subs.containsKey(args[0].toLowerCase())){
-				return subs.get(args[0].toLowerCase()).onCommand(player, args[1..-1]);
-			} else {
-				return onCommand(player, player, args);
+			def sub = subs.get(args[0].toLowerCase());
+			if(subs){
+				assert subs instanceof PlayerSubCommand, "Cannot invoke a ConsoleSubCommand from a ConsoleCommand!"
+				return ((PlayerSubCommand)subs).call(player, args)
+			}
+			else {
+				return onCommand(player, args);
 			}
 		} else {
 			return onCommand(player, args);
@@ -24,6 +27,6 @@ public abstract class PlayerCommand extends RootCommand{
 	}
 
 	public abstract boolean onCommand(PMPlayer player, String[] args);
-	
+
 
 }

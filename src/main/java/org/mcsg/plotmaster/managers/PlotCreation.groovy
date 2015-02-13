@@ -7,10 +7,10 @@ class PlotCreation {
 
 
 	enum PlotCreationStatus {
-		SUCCESS("Plot created successfully."),
-		PLOT_EXISTS("A plot already exists in this location!"),
-		NO_PARENT_REGION("Cannot create a plot without a parent region!"),
-		OTHER("Failed to create plot.")
+		SUCCESS("&aPlot created successfully."),
+		PLOT_EXISTS("&cA plot already exists in this location!"),
+		NO_PARENT_REGION("&cCannot create a plot without a parent region!"),
+		OTHER("&cFailed to create plot.")
 
 		String message;
 
@@ -21,7 +21,7 @@ class PlotCreation {
 
 	
 	
-	PlotCreationStatus stuatus
+	PlotCreationStatus status
 	Plot plot
 }
 	

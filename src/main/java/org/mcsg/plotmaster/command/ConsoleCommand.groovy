@@ -15,8 +15,13 @@ public abstract class ConsoleCommand extends RootCommand{
 
 	public boolean call(PMCommandSender player, String[] args){
 		if(args.length > 0){
-			if(subs.containsKey(args[0].toLowerCase())){
-				return subs.get(args[0].toLowerCase()).onCommand(player, args[1..-1]);
+			def sub = subs.get(args[0].toLowerCase());
+			if(subs){
+				if(subs instanceof ConsoleSubCommand){
+					return ((ConsoleSubCommand)subs).call(player, args)
+				} else {
+					return ((PlayerSubCommand)subs).call(player, args)
+				}
 			} else {
 				return onCommand(player, player, args);
 			}
