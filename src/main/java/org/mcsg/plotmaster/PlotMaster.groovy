@@ -35,6 +35,8 @@ class PlotMaster{
 		
 		registerManager("grid", GridManager.class)
 		registerManager("unbound", UnboundManager.class)
+		
+		Settings.load()
 	}
 	
 	void onEnable(){
@@ -61,6 +63,8 @@ class PlotMaster{
 		return manager
 	}
 	
+	
+
 	
 	
 	//////////////////////////////// API //////////////////////////////////

@@ -2,7 +2,9 @@ package org.mcsg.plotmaster
 
 class PlotType {
 
-	String name;
-	int h, w;
+	String name
+	String schematic
+	String border
+	int h, w
 	
 }

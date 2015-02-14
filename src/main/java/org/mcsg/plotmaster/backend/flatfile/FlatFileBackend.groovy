@@ -34,7 +34,7 @@ class FlatFileBackend implements Backend{
 	}
 
 	public void load(String world) {
-		File loc = new File(PlotMaster.getPlugin().getDataFolder(), Settings.config.backend.flatfile.location);
+		File loc = new File(PlotMaster.getInstance().getDataFolder(), Settings.config.backend.flatfile.location);
 		loc.mkdirs()
 
 		folder = new File(loc, world)
