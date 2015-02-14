@@ -6,10 +6,56 @@ class Settings {
 	 * Default Configuration
 	 */
 
-	static Map config = [
+	static Map config = [:]
 
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
 		configurations: [
 			[
 				type: "grid",
@@ -57,5 +103,5 @@ class Settings {
 				location: "./plots.db"
 			]
 		]
-	]
+	]*/
 }
