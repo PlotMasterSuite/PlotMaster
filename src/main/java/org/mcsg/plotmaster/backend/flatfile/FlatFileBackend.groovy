@@ -32,7 +32,7 @@ class FlatFileBackend implements Backend{
 	Gson gson = new Gson();
 
 	public class XZLoc {
-		int x, z
+		int x, z 
 	}
 
 	public void load(String world, Map settings) {
