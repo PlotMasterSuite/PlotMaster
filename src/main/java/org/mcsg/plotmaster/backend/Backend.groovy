@@ -13,7 +13,7 @@ interface Backend {
 	 * Initialize the backend
 	 * @param world
 	 */
-	void load(String world);
+	void load(String world, Map settings);
 	
 	////////////////////////////////// REGIONS ///////////////////////////////////
 	

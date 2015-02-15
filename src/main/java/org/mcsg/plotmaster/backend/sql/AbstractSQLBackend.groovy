@@ -24,7 +24,7 @@ abstract class AbstractSQLBackend implements Backend{
 
 	def regions, plots, users, access_list
 
-	public void load(String world){
+	public void load(String world, Map settings){
 		this.world = world;
 
 		regions = "${world}_regions"

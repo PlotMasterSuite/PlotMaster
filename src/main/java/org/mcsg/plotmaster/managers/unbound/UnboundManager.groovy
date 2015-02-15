@@ -16,7 +16,7 @@ class UnboundManager extends PlotManager{
 	List<Region> regions;
 
 	@Override
-	public void load() {
+	public void load(Map settings) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -44,7 +44,7 @@ class GridManager extends PlotManager{
 
 	}
 
-	void load(){
+	void load(Map settings){
 		
 	}
 	

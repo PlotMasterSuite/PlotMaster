@@ -19,7 +19,7 @@ abstract class PlotManager {
 	}
 	
 	
-	abstract void load()
+	abstract void load(Map settings)
 	
 	// For all methods, if Closure is not null, will run async with the Closure being the callback
 	
