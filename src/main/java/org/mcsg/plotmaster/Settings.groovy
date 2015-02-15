@@ -24,9 +24,6 @@ class Settings {
 		} else {
 			save()
 		}
-			 
-	
-		
 	}
 
 	static save(){
