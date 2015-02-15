@@ -13,8 +13,10 @@ import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.backend.Backend
 import org.mcsg.plotmaster.utils.AsyncUtils;
+import org.mcsg.plotmaster.utils.PlatformAdapter;
 
 
+@CompileStatic
 class FlatFileBackend implements Backend{
 
 	File folder
@@ -34,7 +36,7 @@ class FlatFileBackend implements Backend{
 	}
 
 	public void load(String world, Map settings) {
-		File loc = new File(PlotMaster.getInstance().getDataFolder(), Settings.config.backend.flatfile.location);
+		File loc = new File(PlatformAdapter.getDataFolder(), settings.location.toString());
 		loc.mkdirs()
 
 		folder = new File(loc, world)
@@ -122,7 +124,7 @@ class FlatFileBackend implements Backend{
 		region.plots.put(id, plot)
 
 		saveRegion(region)
-		plotMap.put(id, plot)
+		plotMap.put(id, region.getId())
 
 		return plot;
 	}
@@ -137,7 +139,7 @@ class FlatFileBackend implements Backend{
 	}
 
 	public void saveMember(PlotMember member) {
-		def file = new File(userFolder, "${uuid}.json")
+		def file = new File(userFolder, "${member.uuid}.json")
 		file.createNewFile()
 
 		gson.toJson(file.getText())

@@ -13,8 +13,7 @@ import org.mcsg.plotmaster.backend.sql.AbstractSQLBackend;
 
 class SQLiteBackend extends AbstractSQLBackend {
 
-	public void load(String world, Map settings) {
-		def conf = Settings.config.backends.sqlite;
+	public void load(String world, Map conf) {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:sqlite:$conf.location");
 		config.setUsername(conf.username);

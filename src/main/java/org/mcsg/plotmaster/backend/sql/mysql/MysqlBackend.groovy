@@ -15,8 +15,7 @@ import org.mcsg.plotmaster.backend.sql.AbstractSQLBackend;
 
 class MysqlBackend extends AbstractSQLBackend {
 
-	public void load(String world, Map settings) {
-		def conf = Settings.config.backends.mysql; 
+	public void load(String world, Map conf) {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://$conf.host:$conf.port/$conf.database");
 		config.setUsername(conf.username);
