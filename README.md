@@ -4,4 +4,5 @@ All new high performance flexible plot management system for Minecraft servers. 
 
 
 Builds: http://ci.mc-sg.org/job/PlotMaster/ 
+
 [![Build Status](http://www.mc-sg.org:8080/job/PlotMaster/badge/icon)](http://www.mc-sg.org:8080/job/PlotMaster/)
