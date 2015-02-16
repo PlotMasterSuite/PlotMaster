@@ -1,5 +1,7 @@
 package bukkit.org.mcsg.plotmaster;
 
+import java.io.File;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +28,6 @@ public class PlotMasterPlugin extends JavaPlugin{
 			return;
 	
 		}
-		
 		plotMaster.onEnable();
 		
 	}
