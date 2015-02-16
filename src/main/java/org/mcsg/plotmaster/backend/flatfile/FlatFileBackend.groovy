@@ -29,9 +29,9 @@ class FlatFileBackend implements Backend{
 	TreeMap<Integer, XZLoc> regionMap
 	TreeMap<Integer, Integer> plotMap
 
-	Gson gson = new Gson();
+	Gson gson = new Gson()
 
-	public class XZLoc {
+	class XZLoc {
 		int x, z 
 	}
 

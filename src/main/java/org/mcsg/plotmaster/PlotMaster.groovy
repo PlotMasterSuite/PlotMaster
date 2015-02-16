@@ -88,8 +88,20 @@ class PlotMaster{
 		return managers.get(world)
 	}
 	
+
 	
 	
+	List<Map> getConfigurationSelectionPerManagerType(String type){
+		def list = []
+		def sel = Settings.getConfig().configurations
+		
+		list = sel.findAll() {
+			(it as Map).type == type
+		}
+		
+		return list
+		
+	}
 	
 	
 	
