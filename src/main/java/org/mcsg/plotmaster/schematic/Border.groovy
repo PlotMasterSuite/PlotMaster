@@ -17,7 +17,7 @@ class Border {
 	Map<SFace, Schematic> borders
 	
 	
-	SchematicBlock getBlockAt(int x, int y, int z , int h, int w, int bottom){
+	SchematicBlock getBlockAt(int x, int y, int z , int w, int h, int bottom){
 		def posx = x % h
 		def posz = z % w
 		
@@ -37,7 +37,7 @@ class Border {
 	}
 	
 	
-	SchematicBlock[] getColumnAt(int x, int y, int z , int h, int w, int bottom){
+	SchematicBlock[] getColumnAt(int x, int z , int w, int h, int bottom){
 		def posx = x % h
 		def posz = z % w
 		
