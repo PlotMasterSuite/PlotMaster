@@ -1,14 +1,20 @@
 package org.mcsg.plotmaster.schematic
 
-import org.mcsg.plotmaster.schematic.Schematic.SchematicBlock
+import groovy.transform.CompileStatic;
 
+import java.util.zip.GZIPInputStream
+import java.util.zip.GZIPOutputStream
+
+import org.mcsg.plotmaster.Settings;
+import org.mcsg.plotmaster.schematic.Schematic.SchematicBlock
+import org.mcsg.plotmaster.utils.PlatformAdapter;
+
+@CompileStatic
 class Border {
 
 	String name;
 	int width
-	
 	Map<SFace, Schematic> borders
-	
 	
 	
 	SchematicBlock getBlockAt(int x, int y, int z , int h, int w, int bottom){
@@ -23,13 +29,12 @@ class Border {
 			
 			int xloc = posx + (face.getXmod() * w)
 			int yloc = y - bottom
-			int zlox = posz + (face.getZmod() * h)
+			int zloc = posz + (face.getZmod() * h)
 			
 			return schematic.getBlockAt(xloc, yloc, zloc)
 		}
 		return null
 	}
-	
 	
 	
 	private SFace getFace(int posx, int posz, int h, int w){
@@ -59,9 +64,49 @@ class Border {
 			return SFace.EAST
 			
 		return null
-		
-		
 	}
+	
+	
+	void save(){
+		checkFolder()
+		
+		def json = Settings.getGson().toJson(this)
+		def file = new File(folder, "${name}.border")
+		
+		def writer = new OutputStreamWriter(new GZIPOutputStream(
+			new FileOutputStream(file)))
+		
+		writer.write(json)
+		writer.close()	
+	}
+	
+	static File folder
+	
+	private static checkFolder(){
+		if(!folder){
+			folder = new File(PlatformAdapter.getDataFolder(), "borders/")
+			folder.mkdirs()
+		}
+	}
+	
+	
+	static Border load(String name){
+		checkFolder()
+		File file = new File(folder, "${name}.border")
+		
+		if(!file.exists())
+			return null
+	
+		def reader = new BufferedReader(new InputStreamReader(
+			new GZIPInputStream(new FileInputStream(file))))
+			
+		def json = reader.getText()
+		
+		Settings.getGson().fromJson(json, Border.class)
+		reader.close()
+	}
+	
+	
 	
 	
 }
