@@ -18,14 +18,16 @@ class Schematic {
 
 	SchematicBlock getBlockAt(int x,int y,int z){
 		try{
-			return blocks[x][y][z]
+			return blocks[x][z][y]
 		} catch (Exception e){
 			return null
 		}
 	}
 	
 	
-	
+	SchematicBlock[] getColumn(int x, int z){
+		return blocks[x][z]
+	}
 	
 	
 	

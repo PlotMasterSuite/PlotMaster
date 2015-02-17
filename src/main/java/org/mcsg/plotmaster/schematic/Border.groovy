@@ -37,6 +37,24 @@ class Border {
 	}
 	
 	
+	SchematicBlock[] getColumnAt(int x, int y, int z , int h, int w, int bottom){
+		def posx = x % h
+		def posz = z % w
+		
+		def face = getFace(posx, posz, h, w)
+		
+		if(face) {
+			Schematic schematic = borders.get(face)
+			
+			int xloc = posx + (face.getXmod() * w)
+			int zloc = posz + (face.getZmod() * h)
+			
+			return schematic.getColumn(xloc, zloc)
+		}
+		return null
+	}
+	
+	
 	private SFace getFace(int posx, int posz, int h, int w){
 		
 		boolean north = posx > h - width
