@@ -6,7 +6,7 @@ import org.mcsg.plotmaster.command.PlayerSubCommand;
 import org.mcsg.plotmaster.managers.PlotCreation;
 import org.mcsg.plotmaster.utils.Messages;
 
-class PlotClaimSubCommand implements PlayerSubCommand{
+class ClaimSubCommand implements PlayerSubCommand{
 
 	@Override
 	public String help() {

@@ -6,7 +6,6 @@ import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
 
 import org.mcsg.plotmaster.Settings;
-import org.mcsg.plotmaster.schematic.Schematic.SchematicBlock
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 
 @CompileStatic

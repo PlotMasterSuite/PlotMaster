@@ -11,13 +11,10 @@ class Schematic {
 
 	SchematicBlock[][][] blocks;
 	String name
-	class SchematicBlock {
-		String material
-		byte data
-	}
+
 	
 	def Schematic(int sizex, int sizey, int sizez){
-		blocks = new SchematicBlock[sizex][ sizey][ sizez]
+		blocks = new SchematicBlock[sizex][ sizez][ sizey]
 	}
 	
 	void setBlockAt(int x, int y, int z, SchematicBlock block){

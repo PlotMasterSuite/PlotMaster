@@ -18,9 +18,9 @@ public abstract class ConsoleCommand extends RootCommand{
 			def sub = subs.get(args[0].toLowerCase());
 			if(subs){
 				if(subs instanceof ConsoleSubCommand){
-					return ((ConsoleSubCommand)subs).call(player, args)
+					return ((ConsoleSubCommand)subs).call(player, args[1..-1])
 				} else {
-					return ((PlayerSubCommand)subs).call(player, args)
+					return ((PlayerSubCommand)subs).call(player, args[1..-1])
 				}
 			} else {
 				return onCommand(player, player, args);

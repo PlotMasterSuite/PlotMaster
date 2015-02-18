@@ -24,5 +24,21 @@ enum SFace {
 		this.corner = corner
 	}
 	
+	/**
+	 * 
+	 * Allow to get from the format "southeast"
+	 * 
+	 * @param s
+	 * @return
+	 */
+	static SFace fromString(String s){
+		String str = s.toUpperCase()
+		
+		if(str.length() > 5 && !str.contains("_")){
+			str = str.substring(0, 5) + "_" + str.substring(6)
+		}
+		
+		return this.valueOf(str)
+	}
 	
 }

@@ -34,6 +34,11 @@ class Settings {
 
 
 	static Map config = [
+		
+		version: 1,
+		setup: true,
+		
+		
 		configurations: [
 			[
 				type: "grid",

@@ -3,6 +3,7 @@ package org.mcsg.plotmaster.command.commands;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMCommandSender;
 import org.mcsg.plotmaster.command.ConsoleCommand;
+import org.mcsg.plotmaster.command.commands.sub.BorderSubCommand
 
 public class PlotCommand extends ConsoleCommand{
 
@@ -14,8 +15,7 @@ public class PlotCommand extends ConsoleCommand{
 
 	@Override
 	public void registerCommands() {
-		
-		
+		registerCommand("border", new BorderSubCommand())
 	}
 
 	
