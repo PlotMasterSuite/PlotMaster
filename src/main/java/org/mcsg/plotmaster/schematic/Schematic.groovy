@@ -15,6 +15,14 @@ class Schematic {
 		String material
 		byte data
 	}
+	
+	def Schematic(int sizex, int sizey, int sizez){
+		blocks = new SchematicBlock[sizex][ sizey][ sizez]
+	}
+	
+	void setBlockAt(int x, int y, int z, SchematicBlock block){
+		blocks[x][z][y] = block
+	}
 
 	SchematicBlock getBlockAt(int x,int y,int z){
 		try{
@@ -28,6 +36,7 @@ class Schematic {
 	SchematicBlock[] getColumn(int x, int z){
 		return blocks[x][z]
 	}
+	
 	
 	
 	

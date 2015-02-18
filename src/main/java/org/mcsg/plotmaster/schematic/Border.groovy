@@ -54,6 +54,9 @@ class Border {
 		return null
 	}
 	
+	void setBorder(SFace face, Schematic schematic){
+		borders.put(face,  schematic)
+	}
 	
 	private SFace getFace(int posx, int posz, int h, int w){
 		
