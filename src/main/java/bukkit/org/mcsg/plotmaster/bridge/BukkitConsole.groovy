@@ -1,5 +1,7 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import groovy.transform.CompileStatic;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender;
@@ -8,6 +10,7 @@ import org.mcsg.plotmaster.bridge.PMConsole
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer
 
+@CompileStatic
 class BukkitConsole implements PMConsole {
 
 	CommandSender sender
@@ -19,7 +22,7 @@ class BukkitConsole implements PMConsole {
 
 	@Override
 	public void sendMessage(String message) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9[PlotMaster] ${message}"))
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&9[PlotMaster] ${message}"))
 	}
 
 	@Override
@@ -39,12 +42,12 @@ class BukkitConsole implements PMConsole {
 
 	@Override
 	public void error(String msg) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[PlotMaster] ${msg}"))
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&6[PlotMaster] ${msg}"))
 	}
 
 	@Override
 	public void warn(String msg) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4[PlotMaster] ${msg}"))
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&4[PlotMaster] ${msg}"))
 	}
 
 

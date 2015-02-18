@@ -1,5 +1,6 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer
@@ -30,7 +31,7 @@ class BukkitPlayer implements PMPlayer{
 
 	@Override
 	public void sendMessage(String message) {
-		player.sendMessage(message)
+		player.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "${message}"))
 	}
 
 

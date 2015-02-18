@@ -53,6 +53,7 @@
 							<artifactSet>
 								<includes>
 									<includes>com.zaxxer:HikariCP-java6</includes>
+									<includes>com.google.code.gson</includes>
 								</includes>
 							</artifactSet>
 						</configuration>
