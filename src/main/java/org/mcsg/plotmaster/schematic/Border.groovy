@@ -15,10 +15,22 @@ class Border {
 	int width
 	Map<SFace, Schematic> borders = [:]
 	
+	/*
+	 * Z = H
+	 * +Z = NORTH
+	 * -Z = SOUTH
+	 * 
+	 * X = W
+	 * +X = EAST
+	 * -X = WEST
+	 * 
+	 * 
+	 */
+	
 	
 	SchematicBlock getBlockAt(int x, int y, int z , int w, int h, int bottom){
-		def posx = x % h
-		def posz = z % w
+		def posx = x % w
+		def posz = z % h
 		
 		def face = getFace(posx, posz, h, w)
 		
@@ -36,19 +48,22 @@ class Border {
 	}
 	
 	
-	SchematicBlock[] getColumnAt(int x, int z , int w, int h, int bottom){
-		def posx = x % h
-		def posz = z % w
+	SchematicBlock[] getColumnAt(int x, int z , int w, int h){
+		def posx = Math.abs(x % w)
+		def posz = Math.abs(z % h)
+		
+		//println "${x}_$posx: ${z}_$posz"
 		
 		def face = getFace(posx, posz, h, w)
-		
 		if(face) {
 			Schematic schematic = borders.get(face)
+		
+		/*	int xloc = posx + (face.getXmod() * width)
+			int zloc = posz + (face.getZmod() * width)
 			
-			int xloc = posx + (face.getXmod() * w)
-			int zloc = posz + (face.getZmod() * h)
+			if(Math.abs(xloc) < width || Math.abs(zloc) < width)*/
 			
-			return schematic.getColumn(xloc, zloc)
+			return schematic.getColumn(posx , posz)
 		}
 		return null
 	}
@@ -59,12 +74,14 @@ class Border {
 	}
 	
 	private SFace getFace(int posx, int posz, int h, int w){
+
+		//print "${posx}.${posz}.${h}.${w}.${width}"
 		
-		boolean north = posx > h - width
-		boolean south = posx < h + width 
+		boolean north = posz > h - width - 1
+		boolean south = posz <  width 
 		
-		boolean west = posz > w - width
-		boolean east = posz < w + width
+		boolean west = posx > w - width - 1
+		boolean east = posx <  width
 		
 		
 		if(north && east)
@@ -123,8 +140,10 @@ class Border {
 			
 		def json = reader.getText()
 		
-		Settings.getGson().fromJson(json, Border.class)
+		Border border = Settings.getGson().fromJson(json, Border.class)
 		reader.close()
+		
+		return border
 	}
 	
 	

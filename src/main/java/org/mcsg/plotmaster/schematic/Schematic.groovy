@@ -31,7 +31,7 @@ class Schematic {
 	
 	
 	SchematicBlock[] getColumn(int x, int z){
-		return blocks[x][z]
+		return blocks[x % blocks.size()][z % blocks[0].size()]
 	}
 	
 	

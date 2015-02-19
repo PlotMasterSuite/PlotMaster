@@ -1,4 +1,4 @@
-name: PlotMasterPlugin
+name: PlotMaster
 authors: [Double0negative, MCSG]
 version: 0.0.1
 main: bukkit.org.mcsg.plotmaster.PlotMasterPlugin

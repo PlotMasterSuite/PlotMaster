@@ -13,13 +13,13 @@ class Settings {
 
 	static Gson gson = new GsonBuilder().setPrettyPrinting().create()
 	static File file
-	
+
 	static load(){
 		file = new File(PlatformAdapter.getDataFolder(), "config.json")
 		file.createNewFile()
-		
+
 		def json = file.getText()
-		
+
 		if(json) {
 			config = gson.fromJson(json, Map.class)
 		} else {
@@ -35,11 +35,11 @@ class Settings {
 
 
 	static Map config = [
-		
+
 		version: 1,
 		setup: true,
-		
-		
+
+
 		configurations: [
 			[
 				type: "grid",
@@ -66,8 +66,25 @@ class Settings {
 							border: null
 						]
 					]
+				],
+				generator : [
+					levels: [[
+							y: 10,
+							block: "GRASS"
+						],
+						[
+
+							y: 9,
+							block: "DIRT"
+						],
+						[
+							y: 1,
+							block: "BEDROCK"
+						]
+					]
 				]
 			]
+
 		],
 		backend : [
 			flatfile: [
@@ -85,7 +102,7 @@ class Settings {
 			]
 		]
 	]
-	
+
 	/* Java
 	 *
 	 *
