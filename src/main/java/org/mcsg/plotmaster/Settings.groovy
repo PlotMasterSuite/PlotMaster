@@ -3,6 +3,7 @@ package org.mcsg.plotmaster
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 class Settings {
 
@@ -10,7 +11,7 @@ class Settings {
 	 * Default Configuration
 	 */
 
-	static Gson gson = new Gson()
+	static Gson gson = new GsonBuilder().setPrettyPrinting().create()
 	static File file
 	
 	static load(){

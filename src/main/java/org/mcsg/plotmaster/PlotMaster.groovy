@@ -30,6 +30,8 @@ class PlotMaster{
 
 	void onLoad(PMConsole console){
 		instance = this;
+		this.console = console
+		
 		console.sendMessage ("&9PlotMaster Suite is loading")
 
 		Settings.load()
@@ -57,7 +59,7 @@ class PlotMaster{
 			console.sendMessage("&bSETUP mode allows you to setup the plugin (ie create borders/schematics) without loading the plot managers")
 			console.sendMessage("&bOnce you have setup the plugin, change 'setup' to false in the config!")
 
-			for(a in 10..0){
+			for(a in 2..0){
 				Thread.sleep(1000)
 				console.sendMessage("&aContinuing startup in $a seconds")
 			}

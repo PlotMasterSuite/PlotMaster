@@ -17,7 +17,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 	}
 
 	@Override
-	public boolean onCommand(PMPlayer player, String... args) {
+	public boolean onCommand(PMPlayer player, List<String> args) {
 		if(player.hasPermission("plot.create")){
 			def tname = (args[0]) ?: "default"
 			

@@ -17,9 +17,9 @@ class BorderSubCommand implements PlayerSubCommand{
 	}
 
 	@Override
-	public boolean onCommand(PMPlayer player, String... args) {
-
-		if(args.length < 2){
+	public boolean onCommand(PMPlayer player, List<String> args) {
+		player.sendMessage("Hello ${args.size()}" )
+		if(args.size() < 2){
 			return false
 		}
 		
@@ -32,11 +32,13 @@ class BorderSubCommand implements PlayerSubCommand{
 		
 		def name = args[0]
 		def face = SFace.fromString(args[1])
-		def border = borders.get(name) ?: new Border()
+		def border = borders.get(name) ?: new Border(name: name)
 		
 		border.setBorder(face, sel.toSchematic())
 
 		player.sendMessage("&aSuccessfully set ${face} of ${name}")
+		
+		borders.put(name, border)
 		
 		return true
 	}

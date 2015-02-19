@@ -22,7 +22,7 @@ class BukkitConsole implements PMConsole {
 
 	@Override
 	public void sendMessage(String message) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&9[PlotMaster] ${message}"))
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&b[PlotMaster] ${message}"))
 	}
 
 	@Override
@@ -42,12 +42,12 @@ class BukkitConsole implements PMConsole {
 
 	@Override
 	public void error(String msg) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&6[PlotMaster] ${msg}"))
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&c[PlotMaster] ${msg}"))
 	}
 
 	@Override
 	public void warn(String msg) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&4[PlotMaster] ${msg}"))
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "&e[PlotMaster] ${msg}"))
 	}
 
 

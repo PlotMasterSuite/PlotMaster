@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command;
 
+import groovy.transform.CompileStatic;
+
 import java.util.HashMap;
 
 import org.mcsg.plotmaster.bridge.PMCommandSender
@@ -12,6 +14,8 @@ import org.mcsg.plotmaster.bridge.PMPlayer;
  *  https://bitbucket.org/mcsg/commandhandler
  * 
  */
+@CompileStatic
+
 public abstract class RootCommand {
 
 	HashMap<String, SubCommand> subs = new HashMap<String, SubCommand>();

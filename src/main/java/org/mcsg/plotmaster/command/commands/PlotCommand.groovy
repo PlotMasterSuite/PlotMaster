@@ -8,8 +8,9 @@ import org.mcsg.plotmaster.command.commands.sub.BorderSubCommand
 public class PlotCommand extends ConsoleCommand{
 
 	@Override
-	public boolean onCommand(PMCommandSender player, String... args) {
+	public boolean onCommand(PMCommandSender player, List<String> args) {
 		player.sendMessage("&aPlot Master Suite, Version ${PlotMaster.getVersion()}. By Double0negative")
+		player.sendMessage(args.toString())
 		return true;
 	}
 

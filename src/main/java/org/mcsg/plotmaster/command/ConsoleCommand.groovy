@@ -1,6 +1,11 @@
 package org.mcsg.plotmaster.command;
 
+import groovy.transform.CompileStatic;
+
+import java.util.List;
+
 import org.mcsg.plotmaster.bridge.PMCommandSender
+import org.mcsg.plotmaster.bridge.PMConsole;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 
 /*
@@ -10,27 +15,28 @@ import org.mcsg.plotmaster.bridge.PMPlayer;
  * 
  */
 
-
+@CompileStatic
 public abstract class ConsoleCommand extends RootCommand{
 
-	public boolean call(PMCommandSender player, String[] args){
-		if(args.length > 0){
+	public boolean call(PMCommandSender player, List<String> args){
+		player.sendMessage(args.toString())
+		if(args.size() > 0){
 			def sub = subs.get(args[0].toLowerCase());
-			if(subs){
-				if(subs instanceof ConsoleSubCommand){
-					return ((ConsoleSubCommand)subs).call(player, args[1..-1])
+			if(sub){
+				if(sub instanceof ConsoleSubCommand){
+					return (sub as ConsoleSubCommand).onCommand(player, args[1..-1])
 				} else {
-					return ((PlayerSubCommand)subs).call(player, args[1..-1])
+					return (sub as PlayerSubCommand).onCommand((PMPlayer)player, args[1..-1])
 				}
 			} else {
-				return onCommand(player, player, args);
+				return onCommand(player, args);
 			}
 		} else {
 			return onCommand(player, args);
 		}
 	}
 
-	public abstract boolean onCommand(PMCommandSender player, String[] args);
+	public abstract boolean onCommand(PMCommandSender player, List<String> args);
 	
 
 }

@@ -20,9 +20,10 @@ class SelectionListener implements Listener {
 			Action a = e.getAction()
 			if(a == Action.LEFT_CLICK_BLOCK || a == Action.RIGHT_CLICK_BLOCK){
 				Selection.select(player.getUniqueId().toString(), a == Action.LEFT_CLICK_BLOCK , 
-					loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ())
+					loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())
 				
-				new BukkitPlayer(player).sendMessage("&aSelection set at { &{loc.getX()}, ${loc.getY()}, ${loc.getZ()}}")
+				new BukkitPlayer(player).sendMessage("&aSelection set at { ${loc.getX()}, ${loc.getY()}, ${loc.getZ()}}")
+				e.setCancelled(true)
 			}
 		}
 	}

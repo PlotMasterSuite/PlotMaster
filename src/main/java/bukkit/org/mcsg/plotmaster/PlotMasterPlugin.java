@@ -10,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMCommandSender;
 import org.mcsg.plotmaster.command.CommandHandler;
+import org.mcsg.plotmaster.utils.PlatformAdapter;
+import org.mcsg.plotmaster.utils.PlatformAdapter.PlatformType;
 
 import bukkit.org.mcsg.plotmaster.bridge.BukkitCommand;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitConsole;
@@ -23,6 +25,8 @@ public class PlotMasterPlugin extends JavaPlugin{
 
 
 	public void onLoad(){
+		PlatformAdapter.setPlatform(PlatformType.BUKKIT);
+		
 		plotMaster =  new PlotMaster();
 
 		plotMaster.onLoad(new BukkitConsole(Bukkit.getConsoleSender()));

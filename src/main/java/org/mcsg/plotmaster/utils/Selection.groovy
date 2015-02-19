@@ -1,6 +1,7 @@
 package org.mcsg.plotmaster.utils
 
 import org.mcsg.plotmaster.schematic.Schematic
+import static java.lang.Math.*
 
 class Selection {
 
@@ -20,6 +21,8 @@ class Selection {
 			selection.z2 = z
 		}
 		
+		selections.put(player, selection)
+		
 		return selection
 	}
 	
@@ -29,15 +32,21 @@ class Selection {
 	
 	
 	Schematic toSchematic(){
-		Schematic schematic = new Schematic(x1 - x2, y1 - y2, z1 - z2)
+		Schematic schematic = new Schematic(abs(x1 - x2) + 1, abs(y1 - y2) + 1, abs(z1 - z2) + 1)
 		
-		for(x in x1..x2){
-			for(z in z1..z2){
-				for(y in y1..y2){
-					schematic.setBlockAt(x, y, z, PlatformAdapter.toSchematicBlock(world, x, y, z))
+		int mx = min(x1, x2)
+		int my = min(y1, y2)
+		int mz = min(z1, z2)
+		
+		
+		for(x in mx..max(x1, x2)){
+			for(z in mz..max(z1, z2)){
+				for(y in my..max(y1, y2)){
+					schematic.setBlockAt(x - mx, y - my, z - mz, PlatformAdapter.toSchematicBlock(world, x, y, z))
 				}
 			}
 		}
+		return schematic
 	}
 	
 	String world

@@ -2,13 +2,16 @@ package org.mcsg.plotmaster.utils
 
 import java.io.File;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location
 import org.bukkit.block.Block;
 import org.mcsg.plotmaster.schematic.SchematicBlock;
 
 import groovy.lang.Closure;
+import groovy.transform.CompileStatic;
 import bukkit.org.mcsg.plotmaster.util.BukkitBlockUpdate;
 
+@CompileStatic
 class PlatformAdapter {
 
 	enum PlatformType {
@@ -25,9 +28,9 @@ class PlatformAdapter {
 	
 	static SchematicBlock toSchematicBlock(String world, int x, int y, int z){
 		if(platform == PlatformType.BUKKIT){
-			Block b = new Location(world, x, y, z).getBlock()
+			Block b = new Location(Bukkit.getWorld(world), x, y, z).getBlock()
 			
-			return new SchematicBlock(material: b.getType(), data: b.getData())
+			return new SchematicBlock(material: b.getType().toString(), data: b.getData())
 		}
 		
 	}

@@ -13,7 +13,7 @@ class Border {
 
 	String name;
 	int width
-	Map<SFace, Schematic> borders
+	Map<SFace, Schematic> borders = [:]
 	
 	
 	SchematicBlock getBlockAt(int x, int y, int z , int w, int h, int bottom){
@@ -55,6 +55,7 @@ class Border {
 	
 	void setBorder(SFace face, Schematic schematic){
 		borders.put(face,  schematic)
+		save()
 	}
 	
 	private SFace getFace(int posx, int posz, int h, int w){
@@ -91,7 +92,7 @@ class Border {
 		checkFolder()
 		
 		def json = Settings.getGson().toJson(this)
-		def file = new File(folder, "${name}.border")
+		def file = new File(folder, "${name}.border.gz")
 		
 		def writer = new OutputStreamWriter(new GZIPOutputStream(
 			new FileOutputStream(file)))
@@ -112,7 +113,7 @@ class Border {
 	
 	static Border load(String name){
 		checkFolder()
-		File file = new File(folder, "${name}.border")
+		File file = new File(folder, "${name}.border.gz")
 		
 		if(!file.exists())
 			return null
