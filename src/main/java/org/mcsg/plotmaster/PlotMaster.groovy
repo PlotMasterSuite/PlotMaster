@@ -31,7 +31,7 @@ class PlotMaster{
 	void onLoad(PMConsole console){
 		instance = this;
 		this.console = console
-		
+
 		console.sendMessage ("&9PlotMaster Suite is loading")
 
 		Settings.load()
@@ -53,7 +53,7 @@ class PlotMaster{
 	void onEnable(){
 
 		CommandHandler.load()
-		
+
 		if(setup){
 			console.sendMessage("&bPlot Master has loaded in SETUP mode!")
 			console.sendMessage("&bSETUP mode allows you to setup the plugin (ie create borders/schematics) without loading the plot managers")
@@ -65,10 +65,10 @@ class PlotMaster{
 			}
 			return;
 		} else {
-		
-			
-		
-		
+
+			loadConfigurations()
+
+
 		}
 
 
@@ -78,6 +78,21 @@ class PlotMaster{
 
 	}
 
+
+	private loadConfigurations(){
+		Settings.config.configurations.each { Map conf ->
+
+			conf.plotTypes.each { Map type ->
+				
+				def plot = new PlotType(name: type.name, w: type.w, h: type.h,
+					schematic: type.schematic, border: type.border)
+				
+				registerPlotType(conf.world, plot)
+				
+			}
+			
+		}
+	}
 
 
 	Backend loadBackend(String name, String world){
@@ -94,9 +109,12 @@ class PlotMaster{
 		return manager
 	}
 
+	void sendConsoleMessage(String msg){
+		console.sendMessage(msg)
+	}
 
 
-
+	
 
 	//////////////////////////////// API //////////////////////////////////
 	void registerBackend(String name, Class<? extends Backend> backend){
@@ -108,11 +126,14 @@ class PlotMaster{
 	}
 
 	void registerPlotType(String world, PlotType type){
+		def worldmap = plottypes.get(world) ?: [:]
 
+		worldmap.put(world, type)
+		plottypes.put(world, worldmap)
 	}
 
 	PlotType getPlotType(String world, String name){
-
+		return plottypes.get(world).get(name)
 	}
 
 	PlotManager getManager(String world){

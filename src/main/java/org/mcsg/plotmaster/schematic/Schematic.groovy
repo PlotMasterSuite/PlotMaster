@@ -60,7 +60,7 @@ class Schematic {
 	
 	static File folder
 	
-	static Border load(String name){
+	static Schematic load(String name){
 
 		File file = new File(folder, "${name}.sch")
 		
