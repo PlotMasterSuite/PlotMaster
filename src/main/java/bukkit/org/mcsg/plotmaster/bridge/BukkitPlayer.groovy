@@ -46,5 +46,11 @@ class BukkitPlayer implements PMPlayer{
 		return false;
 	}
 
+
+	@Override
+	public boolean isOnline() {
+		return player.isOnline()
+	}
+
 	
 }

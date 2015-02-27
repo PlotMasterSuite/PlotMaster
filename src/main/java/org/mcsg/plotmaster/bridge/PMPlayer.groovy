@@ -6,4 +6,6 @@ interface PMPlayer extends PMCommandSender {
 	String getUUID()
 		
 	PMLocation getLocation()
+	
+	boolean isOnline()
 }

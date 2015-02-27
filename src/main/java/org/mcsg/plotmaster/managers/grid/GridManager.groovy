@@ -8,6 +8,7 @@ import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
+import org.mcsg.plotmaster.backend.Backend
 import org.mcsg.plotmaster.cache.Cache
 import org.mcsg.plotmaster.cache.CacheFactory;
 import org.mcsg.plotmaster.managers.PlotCreation
@@ -31,12 +32,10 @@ class GridManager extends PlotManager{
 	int cellHeight
 
 
-	def GridManager(String world, int width, int height) {
-		super()
-		this.world = world
-		this.cellHeight = height
-		this.cellWidth = width
+	def GridManager(Backend backend, String world) {
+		super(backend, world)
 
+		this.world = world
 
 		regionCache = CacheFactory.createCache()
 		xzRegionCache = CacheFactory.createCache()
@@ -45,7 +44,8 @@ class GridManager extends PlotManager{
 	}
 
 	void load(Map settings){
-		
+		this.cellHeight = settings.height
+		this.cellWidth = settings.width
 	}
 	
 

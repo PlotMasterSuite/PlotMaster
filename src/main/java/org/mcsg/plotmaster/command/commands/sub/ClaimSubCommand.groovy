@@ -22,6 +22,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 			def tname = (args[0]) ?: "default"
 			
 			def loc = player.getLocation() 
+			println "WORLD ${loc.getWorld()}"
 			def type = PlotMaster.getInstance().getPlotType(loc.getWorld(), tname)
 			
 			if(!type){

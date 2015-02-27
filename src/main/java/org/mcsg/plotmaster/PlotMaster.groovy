@@ -80,16 +80,18 @@ class PlotMaster{
 
 
 	private loadConfigurations(){
-		Settings.config.configurations.each { Map conf ->
+		for(Map conf in Settings.config.configurations) {
 
-			conf.plotTypes.each { Map type ->
+			conf.plotTypes.each { key, value ->
+				sendConsoleMessage('93  '+value.toString())
 				
-				def plot = new PlotType(name: type.name, w: type.w, h: type.h,
-					schematic: type.schematic, border: type.border)
+				def plot = new PlotType(name: value.name, w: value.width, h: value.height,
+					schematic: value.schematic, border: value.border)
 				
 				registerPlotType(conf.world, plot)
-				
 			}
+			
+			loadManager(conf.backend, conf.type, conf.world )
 			
 		}
 	}
@@ -97,15 +99,17 @@ class PlotMaster{
 
 	Backend loadBackend(String name, String world){
 		def backend = backends_registry.get(name).newInstance()
-		backend.load(world)
+		backend.load(world, getBackendConfiguration(name))
 		return backend;
 	}
 
-	PlotManager loadManager(String name, String backend, String world){
+	PlotManager loadManager(String backend, String type, String world){
 		def backendInstance = loadBackend(backend, world);
-		def manager = managers_registry.get(world).newInstance(backendInstance, world)
+		def manager = managers_registry.get(type).newInstance(backendInstance, world)
 
 		manager.load()
+		managers.put(world,  manager)
+		
 		return manager
 	}
 
@@ -126,9 +130,11 @@ class PlotMaster{
 	}
 
 	void registerPlotType(String world, PlotType type){
+		console.sendMessage("&aLoaded PlotType ${type.name} for ${world}")
+		
 		def worldmap = plottypes.get(world) ?: [:]
 
-		worldmap.put(world, type)
+		worldmap.put(type.name, type)
 		plottypes.put(world, worldmap)
 	}
 
@@ -152,7 +158,10 @@ class PlotMaster{
 		}
 
 		return list
-
+	}
+	
+	Map getBackendConfiguration(String backend){
+		return Settings.config.backends.get(backend) 
 	}
 
 

@@ -8,7 +8,7 @@ class CacheFactory {
 	 * @return a new Cache
 	 */
 	static <K, V extends Cacheable>Cache createCache(){
-		return new MemCache<K, V<K>>() 
+		return new MemCache<K, V<K>>(200) 
 	}
 	
 	

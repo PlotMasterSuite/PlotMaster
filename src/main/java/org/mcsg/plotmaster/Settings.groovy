@@ -37,7 +37,7 @@ class Settings {
 	static Map config = [
 
 		version: 1,
-		setup: true,
+		setup: false,
 
 
 		configurations: [
@@ -51,7 +51,7 @@ class Settings {
 					border: "road",
 					allow_expand: false,
 				],
-				plotTypes :[
+				plotTypes:[
 					default: [
 						name: "default",
 						width: 50,
@@ -64,7 +64,7 @@ class Settings {
 						width: 99,
 						height: 99,
 						schematic: "",
-						border: null
+						border: ""
 					]
 				],
 				generator : [
@@ -86,7 +86,7 @@ class Settings {
 			]
 
 		],
-		backend : [
+		backends : [
 			flatfile: [
 				location : "./plots"
 			],

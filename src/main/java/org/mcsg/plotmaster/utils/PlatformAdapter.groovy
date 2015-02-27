@@ -5,10 +5,12 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.Location
 import org.bukkit.block.Block;
+import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.schematic.SchematicBlock;
 
 import groovy.lang.Closure;
 import groovy.transform.CompileStatic;
+import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
 import bukkit.org.mcsg.plotmaster.util.BukkitBlockUpdate;
 
 @CompileStatic
@@ -34,6 +36,20 @@ class PlatformAdapter {
 		}
 		
 	}
+	
+	
+	static PMPlayer getPlayer(String name){
+		if(platform == PlatformType.BUKKIT){
+			return new BukkitPlayer(Bukkit.getPlayer(name))
+		}
+	}
+	
+	static PMPlayer getPlayerByUUID(String uuid){
+		if(platform == PlatformType.BUKKIT){
+			return new BukkitPlayer(Bukkit.getPlayer(UUID.fromString(uuid)))
+		}
+	}
+	
 
 	static File getDataFolder(){
 		if(platform == PlatformType.BUKKIT) {
