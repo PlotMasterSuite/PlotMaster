@@ -91,7 +91,7 @@ class PlotMaster{
 				registerPlotType(conf.world, plot)
 			}
 			
-			loadManager(conf.backend, conf.type, conf.world )
+			loadManager(conf, conf.backend, conf.type, conf.world )
 			
 		}
 	}
@@ -103,11 +103,11 @@ class PlotMaster{
 		return backend;
 	}
 
-	PlotManager loadManager(String backend, String type, String world){
+	PlotManager loadManager(Map conf, String backend, String type, String world){
 		def backendInstance = loadBackend(backend, world);
 		def manager = managers_registry.get(type).newInstance(backendInstance, world)
 
-		manager.load()
+		manager.load(conf)
 		managers.put(world,  manager)
 		
 		return manager

@@ -16,6 +16,6 @@ class Region {
 	String world;
 	String name;
 	
-	Map<Integer, Plot> plots;	
+	Map<Integer, Plot> plots = new HashMap<>();	
 	
 }

@@ -31,7 +31,7 @@ class FlatFileBackend implements Backend{
 
 	Gson gson = new Gson()
 
-	class XZLoc {
+	static class XZLoc {
 		int x, z 
 	}
 
@@ -51,12 +51,12 @@ class FlatFileBackend implements Backend{
 		regionMapFile = new File(folder, "regionmap.json")
 		regionMapFile.createNewFile()
 
-		regionMap = gson.fromJson(regionMapFile.getText(), TreeMap.class)
+		regionMap = gson.fromJson(regionMapFile.getText(), TreeMap.class) ?: new TreeMap<>()
 
 		plotMapFile = new File(folder, "plotmap.json")
 		plotMapFile.createNewFile()
 
-		plotMap = gson.fromJson(regionMapFile.getText(), TreeMap.class)
+		plotMap = gson.fromJson(regionMapFile.getText(), TreeMap.class) ?: new TreeMap<>()
 	}
 
 	public Region getRegion(int id) {
@@ -72,11 +72,10 @@ class FlatFileBackend implements Backend{
 	public Region getRegionByLocation(int x, int z) {
 		def file = new File(regionFolder, "${x}.${z}.rg")
 
-		if(!file)
+		if(!file.exists())
 			return null
 
 		Region rg = gson.fromJson(file.getText(), Region.class)
-		return rg
 	}
 
 	public void saveRegion(Region region) {
@@ -85,6 +84,9 @@ class FlatFileBackend implements Backend{
 		def file = new File(regionFolder, "${region.x}.${region.z}.rg")
 		file.createNewFile()
 		file.setText(gson.toJson(region))
+		
+		savePlotMap()
+		saveRegionMap()
 	}
 
 	public Plot getPlot(int id) {
@@ -100,11 +102,15 @@ class FlatFileBackend implements Backend{
 
 
 	public Region createRegion(Region region) {
-		def id = regionMap.getLastEntry().getKey() + 1
-
+		def en  = regionMap.lastEntry()
+		
+		def id = ((en) ? en.getKey() : 0) + 1
+		
 		region.setId(id)
 		region.setCreatedAt(System.currentTimeMillis())
 
+		regionMap.put(id, new XZLoc(x: region.getX(), z: region.getZ()))
+		
 		return region
 	}
 
@@ -116,7 +122,9 @@ class FlatFileBackend implements Backend{
 
 
 	public Plot createPlot(Region region, Plot plot) {
-		def id = plotMap.getLastEntry().getKey() + 1
+		def en  = plotMap.lastEntry()
+		
+		def id = ((en) ? en.getKey() : 0) + 1
 
 		plot.setId(id)
 		plot.setCreatedAt(System.currentTimeMillis())

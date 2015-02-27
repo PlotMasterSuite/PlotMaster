@@ -5,6 +5,7 @@ import groovy.transform.CompileStatic;
 
 import org.bukkit.Location;
 import org.mcsg.plotmaster.Plot;
+import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
@@ -44,16 +45,16 @@ class GridManager extends PlotManager{
 	}
 
 	void load(Map settings){
-		this.cellHeight = settings.height
-		this.cellWidth = settings.width
+		this.cellHeight = settings.grid.height
+		this.cellWidth = settings.grid.width
 	}
-	
+
 
 	@Override
 	public Region getRegionAt(int x, int z, Callback c) {
 		asyncWrap(c) {
 			Region r = xzRegionCache.get("$x:$z")
-			if(r) { 
+			if(r) {
 				return r
 			} else {
 				r = backend.getRegionByLocation(x, z)
@@ -85,8 +86,11 @@ class GridManager extends PlotManager{
 
 
 		asyncWrap(c) {
-			Region r = getRegionAt(cellx, cellz)
+			Region r = getRegionAt(cellx, cellz, null)
+			if(!r) return null
 			def plots = r.getPlots()
+
+
 
 			for(plot in plots){
 				if(plot.getX() == cellx && plot.getZ() == cellz){
@@ -136,8 +140,16 @@ class GridManager extends PlotManager{
 				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
 
 			Region region = getRegionAt(x, z, null)
-			if(!region)
-				return new PlotCreation(status: PlotCreationStatus.NO_PARENT_REGION)
+			if(!region) {
+				def regCre = createRegion(x - (x % cellWidth), z - (z % cellHeight), cellWidth, cellHeight, null)
+
+				if(regCre.getStatus() == RegionCreationStatus.SUCCESS){
+					region = regCre.getRegion()
+				} else {
+					PlotMaster.getInstance().console.warn("Failed to create region ${regCre.status.getMessage()}")
+					return new PlotCreation(status: PlotCreationStatus.NO_PARENT_REGION)
+				}
+			}
 
 			Plot plot = new Plot(region: region, x: x, z: z, w: type.w, h: type.h, type: type);
 			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
@@ -146,7 +158,7 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public RegionCreation createRegion(int x, int z, int h, int w, Callback c) {
+	public RegionCreation createRegion(int x, int z, int w, int h, Callback c) {
 		asyncWrap(c){
 			if(regionExist(x, z, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS)

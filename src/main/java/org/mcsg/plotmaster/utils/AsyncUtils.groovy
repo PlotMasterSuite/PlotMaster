@@ -7,7 +7,7 @@ import groovy.transform.CompileStatic;
 
 class AsyncUtils {
 
-	static asyncWrap(Closure callback, Closure code){
+	static asyncWrap(Callback callback, Closure code){
 		if (callback){
 			Thread.start {
 				callback( code() )

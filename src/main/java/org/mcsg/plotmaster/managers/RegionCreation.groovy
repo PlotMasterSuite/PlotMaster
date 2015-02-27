@@ -11,7 +11,7 @@ class RegionCreation {
 
 		String message;
 
-		public CreationStatus(String message){
+		public RegionCreationStatus(String message){
 			this.message = message;
 		}
 

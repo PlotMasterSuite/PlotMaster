@@ -14,7 +14,7 @@ class PlotCreation {
 
 		String message;
 
-		public CreationStatus(String message){
+		public PlotCreationStatus(String message){
 			this.message = message;
 		}
 	}

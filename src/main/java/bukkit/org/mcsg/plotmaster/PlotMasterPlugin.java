@@ -25,6 +25,8 @@ public class PlotMasterPlugin extends JavaPlugin{
 
 
 	public void onLoad(){
+		plugin = this;
+		
 		PlatformAdapter.setPlatform(PlatformType.BUKKIT);
 		
 		plotMaster =  new PlotMaster();
