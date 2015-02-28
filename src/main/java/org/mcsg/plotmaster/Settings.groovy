@@ -22,6 +22,7 @@ class Settings {
 
 		if(json) {
 			config = gson.fromJson(json, Map.class)
+			
 		} else {
 			save()
 		}
@@ -38,7 +39,6 @@ class Settings {
 
 		version: 1,
 		setup: false,
-
 
 		configurations: [
 			[
@@ -88,7 +88,8 @@ class Settings {
 		],
 		backends : [
 			flatfile: [
-				location : "./plots"
+				location : "./plots",
+				debug: true
 			],
 			mysql: [
 				host: "localhost",

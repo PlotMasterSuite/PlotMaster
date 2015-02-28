@@ -10,6 +10,7 @@ import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.backend.Backend
+import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.cache.Cache
 import org.mcsg.plotmaster.cache.CacheFactory;
 import org.mcsg.plotmaster.managers.PlotCreation
@@ -18,6 +19,7 @@ import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.RegionCreation
 import org.mcsg.plotmaster.managers.RegionCreation.RegionCreationStatus;
 import org.mcsg.plotmaster.utils.Callback
+import org.mcsg.plotmaster.utils.LocationUtils;
 
 import static org.mcsg.plotmaster.utils.AsyncUtils.asyncWrap;
 
@@ -90,10 +92,8 @@ class GridManager extends PlotManager{
 			if(!r) return null
 			def plots = r.getPlots()
 
-
-
-			for(plot in plots){
-				if(plot.getX() == cellx && plot.getZ() == cellz){
+			for(Plot plot in plots.values){
+				if(LocationUtils.isInRegion(x, z, plot.getX(), plot.getZ(), plot.getX() + plot.getType().getW(), plot.getZ() + plot.getType().getH())){
 					return plot;
 				}
 			}
@@ -143,7 +143,7 @@ class GridManager extends PlotManager{
 			if(!region) {
 				def regCre = createRegion(x - (x % cellWidth), z - (z % cellHeight), cellWidth, cellHeight, null)
 
-				if(regCre.getStatus() == RegionCreationStatus.SUCCESS){
+				if(regCre.getStatus() == RegionCreationStatus.SUCCESS || regCre.getStatus() == RegionCreationStatus.REGION_EXISTS){
 					region = regCre.getRegion()
 				} else {
 					PlotMaster.getInstance().console.warn("Failed to create region ${regCre.status.getMessage()}")
@@ -152,7 +152,29 @@ class GridManager extends PlotManager{
 			}
 
 			Plot plot = new Plot(region: region, x: x, z: z, w: type.w, h: type.h, type: type);
+
+
 			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
+		}
+	}
+
+	@Override
+	public PlotCreation createPlot(PMPlayer player, int x, int z, PlotType type, Callback c) {
+		asyncWrap(c){
+
+			def creation =  createPlot(x, z, type, null)
+			println "OMG ${creation.getStatus().toString()}"
+			
+			if(creation.getStatus() == PlotCreationStatus.SUCCESS){
+				creation.getPlot().setOwnerName(player.getName())
+				creation.getPlot().setOwnerUUID(player.getUUID())
+
+				backend.saveRegion(creation.getPlot().getRegion())
+
+				return creation
+			} else {
+				return creation
+			}
 		}
 	}
 
@@ -161,7 +183,7 @@ class GridManager extends PlotManager{
 	public RegionCreation createRegion(int x, int z, int w, int h, Callback c) {
 		asyncWrap(c){
 			if(regionExist(x, z, null))
-				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS)
+				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(x,z,null))
 
 			Region region = new Region(x: x, z: z, h: h, w: w)
 
@@ -169,5 +191,6 @@ class GridManager extends PlotManager{
 			return new RegionCreation(status: RegionCreationStatus.SUCCESS, region: region)
 		}
 	}
+
 
 }

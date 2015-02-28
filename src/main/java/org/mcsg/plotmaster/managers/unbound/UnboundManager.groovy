@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region
+import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.managers.PlotCreation;
 import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.RegionCreation
@@ -65,6 +66,13 @@ class UnboundManager extends PlotManager{
 
 	@Override
 	public RegionCreation createRegion(int x, int y, int h, int w, Callback c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlotCreation createPlot(PMPlayer player, int x, int y,
+			PlotType type, Callback c) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -34,7 +34,10 @@ class MemCache<K, V extends Cacheable<K>> implements Cache{
 	 private cullProccessor(){
 		 SchedulerAdapter.asyncRepeating(cullPeriod, cullPeriod) {
 			 cache = cache.findAll {
-				 !it.value.isStale()
+				 if(it.value)
+				 	!it.value.isStale()
+				 else
+					return false
 			 }
 		 }
 	 }

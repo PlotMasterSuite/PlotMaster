@@ -10,3 +10,7 @@ commands:
         description: Plot Master Command
         usage: /plot <command> <args>
         aliases: [pl, p, plots, pm, plotmaster]
+    test:
+        description: Plot Master Command
+        usage: /test
+        aliases: [t]

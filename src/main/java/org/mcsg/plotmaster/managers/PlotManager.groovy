@@ -5,6 +5,7 @@ import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend
+import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.utils.Callback
 
 
@@ -36,6 +37,8 @@ abstract class PlotManager {
 	abstract boolean regionExist(int x, int z, Callback c)
 	
 	abstract PlotCreation createPlot(int x, int y, PlotType type, Callback c)
+	
+	abstract PlotCreation createPlot(PMPlayer player, int x, int y, PlotType type, Callback c)
 	
 	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	

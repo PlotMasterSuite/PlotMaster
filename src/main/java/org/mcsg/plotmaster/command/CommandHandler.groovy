@@ -6,6 +6,7 @@ import org.mcsg.plotmaster.bridge.PMCommand
 import org.mcsg.plotmaster.bridge.PMCommandSender
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.command.commands.PlotCommand
+import org.mcsg.plotmaster.command.commands.TestCommand;
 
 @CompileStatic
 class CommandHandler {
@@ -16,6 +17,7 @@ class CommandHandler {
 	
 	static load(){
 		registerCommand("plot", new PlotCommand())
+		registerCommand("test", new TestCommand())
 	}
 	
 
