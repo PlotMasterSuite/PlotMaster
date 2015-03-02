@@ -127,6 +127,8 @@ class FlatFileBackend implements Backend{
 		regionMap.put(id,
 			 new XZLoc(x: region.getX(), z: region.getZ()))
 		
+		saveRegion(region)
+		
 		return region
 	}
 
@@ -139,14 +141,13 @@ class FlatFileBackend implements Backend{
 
 	public Plot createPlot(Region region, Plot plot) {
 		def en  = plotMap.lastEntry()
-		
+				
 		Integer id = ((en) ? en.getKey() : 0) + 1
 
 		plot.setId(id)
 		plot.setCreatedAt(System.currentTimeMillis())
 
-		
-		region.plots.put(new Random().nextInt(), plot)
+		region.plots.put(id, plot)
 		
 		plotMap.put(id, region.getId())
 		saveRegion(region)

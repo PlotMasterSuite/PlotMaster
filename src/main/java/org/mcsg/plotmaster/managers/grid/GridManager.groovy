@@ -54,13 +54,16 @@ class GridManager extends PlotManager{
 
 	@Override
 	public Region getRegionAt(int x, int z, Callback c) {
+		def regx = x
+		def regz = z
 		asyncWrap(c) {
-			Region r = xzRegionCache.get("$x:$z")
+			Region r = xzRegionCache.get("$regx:$regz")
 			if(r) {
 				return r
 			} else {
-				r = backend.getRegionByLocation(x, z)
-				xzRegionCache.cache("$x:$z", r)
+				r = backend.getRegionByLocation(regx, regz)
+				xzRegionCache.cache("$regx:$regz", r)
+			
 				return r
 			}
 		}
@@ -83,16 +86,19 @@ class GridManager extends PlotManager{
 
 	@Override
 	public Plot getPlot(int x, int z, Callback c ) {
-		int cellx = (x / cellWidth).toInteger()
-		int cellz = (z / cellHeight).toInteger()
+	
 
+		print "getPlot() cellx: ${x},  cellz: ${z}"
 
 		asyncWrap(c) {
-			Region r = getRegionAt(cellx, cellz, null)
+			Region r = getRegionAt(x, z, null)
 			if(!r) return null
 			def plots = r.getPlots()
 
-			for(Plot plot in plots.values){
+		//	println "PLOTS: ${plots.toString}...${plots.getClass()}...${plots.values()}"
+			
+			for(Plot plot in plots.values()){
+				println "RAN"
 				if(LocationUtils.isInRegion(x, z, plot.getX(), plot.getZ(), plot.getX() + plot.getType().getW(), plot.getZ() + plot.getType().getH())){
 					return plot;
 				}
@@ -135,14 +141,24 @@ class GridManager extends PlotManager{
 
 	@Override
 	public  PlotCreation createPlot(int x, int z, PlotType type, Callback c) {
+		
+		
+		//println "Got region ${region.getPlots()}"
+		
+		
 		asyncWrap(c){
 			if(plotExist(x, z, null))
 				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
 
+				
+				
 			Region region = getRegionAt(x, z, null)
+			//println "Got region ${region.getX()}, ${region.getZ()}"
 			if(!region) {
-				def regCre = createRegion(x - (x % cellWidth), z - (z % cellHeight), cellWidth, cellHeight, null)
-
+				def regCre = createRegion(x, z, cellWidth, cellHeight, null)
+				println "CREATED REGION ${regCre.getRegion().getPlots()}"
+				
+				
 				if(regCre.getStatus() == RegionCreationStatus.SUCCESS || regCre.getStatus() == RegionCreationStatus.REGION_EXISTS){
 					region = regCre.getRegion()
 				} else {
@@ -151,6 +167,10 @@ class GridManager extends PlotManager{
 				}
 			}
 
+			print "createPlot() cellx: ${x},  cellz: ${z}"
+			
+			println "Got region ${region.getPlots()}"
+			
 			Plot plot = new Plot(region: region, x: x, z: z, w: type.w, h: type.h, type: type);
 
 
@@ -160,10 +180,11 @@ class GridManager extends PlotManager{
 
 	@Override
 	public PlotCreation createPlot(PMPlayer player, int x, int z, PlotType type, Callback c) {
+		
+		
 		asyncWrap(c){
 
 			def creation =  createPlot(x, z, type, null)
-			println "OMG ${creation.getStatus().toString()}"
 			
 			if(creation.getStatus() == PlotCreationStatus.SUCCESS){
 				creation.getPlot().setOwnerName(player.getName())
@@ -181,13 +202,20 @@ class GridManager extends PlotManager{
 
 	@Override
 	public RegionCreation createRegion(int x, int z, int w, int h, Callback c) {
-		asyncWrap(c){
-			if(regionExist(x, z, null))
-				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(x,z,null))
+		def regx = x
+		def regz = z
 
-			Region region = new Region(x: x, z: z, h: h, w: w)
+		
+		asyncWrap(c){
+			if(regionExist(regx, regz, null))
+				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(regx, regz, null))
+
+			Region region = new Region(x: regx, z: regz, h: h, w: w)
 
 			region = backend.createRegion(region)
+			
+			xzRegionCache.cache("${region.getX()}:${region.getZ()}", region)
+			
 			return new RegionCreation(status: RegionCreationStatus.SUCCESS, region: region)
 		}
 	}

@@ -69,12 +69,12 @@ class Settings {
 				],
 				generator : [
 					levels: [[
-							y: 10,
+							y: 30,
 							block: "GRASS"
 						],
 						[
 
-							y: 9,
+							y: 29,
 							block: "DIRT"
 						],
 						[

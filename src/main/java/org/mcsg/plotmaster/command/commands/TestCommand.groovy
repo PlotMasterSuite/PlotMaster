@@ -18,11 +18,11 @@ class TestCommand extends PlayerCommand {
 		def manager = master.getManager(player.getLocation().getWorld())
 		
 		
-		manager.createPlot(player, 0, 0, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
-		manager.createPlot(player, 100, 100, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
-		manager.createPlot(player, 150, 100, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
-		manager.createPlot(player, 100, 150, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
-		manager.createPlot(player, 100, -100, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
+		manager.createPlot(0, 0, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
+		manager.createPlot( 100, 100, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
+		manager.createPlot( 150, 100, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
+		manager.createPlot(100, 150, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
+		manager.createPlot(100, -100, master.getPlotType(player.getLocation().getWorld(), "donator"), null)
 	
 		
 		
