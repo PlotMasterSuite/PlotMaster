@@ -5,11 +5,11 @@ import groovy.transform.CompileStatic;
 @CompileStatic
 class BlockUpdateTask implements Task{
 
-	Closure callback
+	Callback callback
 	
 	List<BlockUpdate> updates
 	
-	def BlockUpdateTask(List<BlockUpdate> updates, Closure callback){
+	def BlockUpdateTask(List<BlockUpdate> updates, Callback callback){
 		this.updates = updates
 		this.callback = callback
 	}
@@ -31,7 +31,7 @@ class BlockUpdateTask implements Task{
 	@Override
 	public void onComplete() {
 		if(callback)
-			callback()
+			callback.call(null)
 	}
 
 	

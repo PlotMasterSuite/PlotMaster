@@ -22,7 +22,7 @@ class Settings {
 
 		if(json) {
 			config = gson.fromJson(json, Map.class)
-			
+
 		} else {
 			save()
 		}
@@ -73,7 +73,6 @@ class Settings {
 							block: "GRASS"
 						],
 						[
-
 							y: 29,
 							block: "DIRT"
 						],
