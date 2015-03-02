@@ -34,6 +34,8 @@ class GridManager extends PlotManager{
 	int cellWidth
 	int cellHeight
 
+	
+	Map settings
 
 	def GridManager(Backend backend, String world) {
 		super(backend, world)
@@ -49,6 +51,7 @@ class GridManager extends PlotManager{
 	void load(Map settings){
 		this.cellHeight = settings.grid.height
 		this.cellWidth = settings.grid.width
+		this.settings = settings
 	}
 
 
