@@ -31,8 +31,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 			} else {
 				def man = PlotMaster.getInstance().getManager(loc.getWorld())
 				
-				
-				man.createPlot(loc.getX(), loc.getZ(), type){
+				man.createPlot(player, loc.getX(), loc.getZ(), type){
 					def result = it as 	PlotCreation
 					
 					if(result.getStatus() == PlotCreationStatus.SUCCESS){
@@ -40,7 +39,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 						player.sendMessage(result.getStatus().getMessage())
 						
 						plot.reset(man.getSettings()) {
-							player.sendMessage("Plot has been created")
+							player.sendMessage("&aPlot has been generated!")
 						}
 						
 					}

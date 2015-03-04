@@ -6,6 +6,8 @@ import org.mcsg.plotmaster.command.ConsoleCommand;
 import org.mcsg.plotmaster.command.commands.sub.BorderSubCommand
 import org.mcsg.plotmaster.command.commands.sub.ClaimSubCommand
 import org.mcsg.plotmaster.command.commands.sub.ClearSubCommand
+import org.mcsg.plotmaster.command.commands.sub.InfoSubCommand
+import org.mcsg.plotmaster.command.commands.sub.SchematicSubCommand
 
 public class PlotCommand extends ConsoleCommand{
 
@@ -20,6 +22,8 @@ public class PlotCommand extends ConsoleCommand{
 		registerCommand("border", new BorderSubCommand())
 		registerCommand("claim", new ClaimSubCommand())
 		registerCommand("clear", new ClearSubCommand())
+		registerCommand("schematic", new SchematicSubCommand())
+		registerCommand("info", new InfoSubCommand())
 	}
 
 	

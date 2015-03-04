@@ -6,6 +6,7 @@ import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.cache.Cacheable;
 import org.mcsg.plotmaster.schematic.Border;
 import org.mcsg.plotmaster.schematic.SchematicBlock
+import org.mcsg.plotmaster.utils.AsyncUtils;
 import org.mcsg.plotmaster.utils.BlockUpdateTask;
 import org.mcsg.plotmaster.utils.Callback
 import org.mcsg.plotmaster.utils.PlatformAdapter;
@@ -51,28 +52,23 @@ class Plot implements Cacheable<Integer>{
 	public void paint(Callback c) {
 		Border border = Border.load(type.border)
 		List updates = new ArrayList()
-		
-		for(int a = 0; a <= w; a++){
-			for(int b = 0; b <=  h; b++){
 
-				int top = 255
+		for(int a = 0; a < w; a++){
+			for(int b = 0; b <  h; b++){
+
+				int top = getTop(world, a + x, b + z)
 				
-				while(PlatformAdapter.toSchematicBlock(world, a + x, top, b + z).material == "AIR"){
-					top--
-				}
-
 				SchematicBlock[] blocks = border.getColumnAt(a, b, w, h)
 
 				if(blocks){
 					blocks.eachWithIndex { SchematicBlock block, int i ->
 						updates.add(PlatformAdapter.createBlockUpdate(world, a + x, top + i, b + z, block.material, block.data as byte))
-						println "Adding ${block.material} at ${a + x}, ${top + i}, ${b + z}"
 					}
 				}
 			}
 		}
-		
-		
+
+
 		def but = new BlockUpdateTask(updates, c)
 
 		TaskQueue.addTask(but)
@@ -81,13 +77,14 @@ class Plot implements Cacheable<Integer>{
 	@CompileStatic
 	public void clear(Map settings, Callback c) {
 		List<Map> levels = (List<Map>)(settings.get("generator") as Map).get("levels")
-		Map map = [:]
+		Map<Integer, String> map = [:]
 
 		levels.each { Map m ->
-			map.put(m.y, m.block)
+			map.put(m.y as Integer, m.block as String)
 		}
 		
-		
+		println map.toMapString()
+
 		List updates = new ArrayList()
 
 		String material = "AIR"
@@ -96,22 +93,38 @@ class Plot implements Cacheable<Integer>{
 
 			for(int xx = 0; xx < w; xx++){
 				for(int zz = 0; zz < h; zz++){
-					updates.add(PlatformAdapter.createBlockUpdate(world, xx, y, zz, material, 0 as byte))
+					updates.add(PlatformAdapter.createBlockUpdate(world, xx + x, y, zz + z, material, 0 as byte))
 				}
 			}
-			
+
 		}
 
-		
+
 		BlockUpdateTask but = new BlockUpdateTask(updates, c)
 
 		TaskQueue.addTask(but)
-		
+
 	}
 
 	public void reset(Map settings, Callback c) {
-		clear(settings) {
-			paint(c)
+		Thread.start {
+			clear(settings) {
+				paint(c)
+			}
 		}
+	}
+
+	@CompileStatic
+	private int getTop(String world, int x, int z){
+		int top = 32
+		while(PlatformAdapter.toSchematicBlock(world, x, top,  z).material != "AIR"){
+			top += 16
+		}
+
+		while(PlatformAdapter.toSchematicBlock(world, x, top, z).material == "AIR" && top > -1){
+			top--
+		}
+
+		return top + 1
 	}
 }

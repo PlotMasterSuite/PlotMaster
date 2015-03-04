@@ -18,7 +18,6 @@ class BorderSubCommand implements PlayerSubCommand{
 
 	@Override
 	public boolean onCommand(PMPlayer player, List<String> args) {
-		player.sendMessage("Hello ${args.size()}" )
 		if(args.size() < 2){
 			return false
 		}

@@ -18,7 +18,7 @@ class BlockUpdateTask implements Task{
 	public boolean step() {
 		def time = System.currentTimeMillis()
 		
-		while (time + 10000 > System.currentTimeMillis()) {
+		while (time + 100 > System.currentTimeMillis()) {
 			int size = updates.size() - 1
 			if(size < 0)
 				return true

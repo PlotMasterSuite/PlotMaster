@@ -57,8 +57,8 @@ class GridManager extends PlotManager{
 
 	@Override
 	public Region getRegionAt(int x, int z, Callback c) {
-		def regx = x
-		def regz = z
+		def regx = getRegionX(x)
+		def regz = getRegionZ(z)
 		asyncWrap(c) {
 			Region r = xzRegionCache.get("$regx:$regz")
 			if(r) {
@@ -141,11 +141,6 @@ class GridManager extends PlotManager{
 
 	@Override
 	public  PlotCreation createPlot(int x, int z, PlotType type, Callback c) {
-		
-		
-		//println "Got region ${region.getPlots()}"
-		
-		
 		asyncWrap(c){
 			if(plotExist(x, z, null))
 				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
@@ -178,8 +173,6 @@ class GridManager extends PlotManager{
 
 	@Override
 	public PlotCreation createPlot(PMPlayer player, int x, int z, PlotType type, Callback c) {
-		
-		
 		asyncWrap(c){
 
 			def creation =  createPlot(x, z, type, null)
@@ -200,10 +193,9 @@ class GridManager extends PlotManager{
 
 	@Override
 	public RegionCreation createRegion(int x, int z, int w, int h, Callback c) {
-		def regx = x
-		def regz = z
+		def regx = getRegionX(x)
+		def regz = getRegionZ(z)
 
-		
 		asyncWrap(c){
 			if(regionExist(regx, regz, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(regx, regz, null))
@@ -218,5 +210,13 @@ class GridManager extends PlotManager{
 		}
 	}
 
-
+	
+	private int getRegionX(int x) {
+		return x / cellWidth + ((x < 0) ? -1 : 1)
+	}
+	
+	private int getRegionZ(int z) {
+		return z / cellWidth + ((z < 0) ? -1 : 1)
+	}
+	
 }

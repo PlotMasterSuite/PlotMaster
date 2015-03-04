@@ -77,8 +77,8 @@ class Border {
 
 		//print "${posx}.${posz}.${h}.${w}.${width}"
 		
-		boolean south = posz > h - width - 1
-		boolean north = posz <  width 
+		boolean north = posz > h - width - 1
+		boolean south = posz <  width 
 		
 		boolean east = posx > w - width - 1
 		boolean west = posx <  width
