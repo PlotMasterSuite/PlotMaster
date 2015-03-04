@@ -5,6 +5,7 @@ import org.mcsg.plotmaster.bridge.PMCommandSender;
 import org.mcsg.plotmaster.command.ConsoleCommand;
 import org.mcsg.plotmaster.command.commands.sub.BorderSubCommand
 import org.mcsg.plotmaster.command.commands.sub.ClaimSubCommand
+import org.mcsg.plotmaster.command.commands.sub.ClearSubCommand
 
 public class PlotCommand extends ConsoleCommand{
 
@@ -18,6 +19,7 @@ public class PlotCommand extends ConsoleCommand{
 	public void registerCommands() {
 		registerCommand("border", new BorderSubCommand())
 		registerCommand("claim", new ClaimSubCommand())
+		registerCommand("clear", new ClearSubCommand())
 	}
 
 	

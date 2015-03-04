@@ -10,6 +10,8 @@ class TaskQueue {
 	static Task current
 	
 	static start(){
+		queue = new PriorityQueue<Task>()
+		
 		SchedulerAdapter.repeating(1, 1) {
 			
 			if(current) {

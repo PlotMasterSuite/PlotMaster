@@ -13,6 +13,7 @@ import org.mcsg.plotmaster.command.CommandHandler;
 import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.grid.GridManager;
 import org.mcsg.plotmaster.managers.unbound.UnboundManager;
+import org.mcsg.plotmaster.utils.TaskQueue;
 
 
 
@@ -68,7 +69,7 @@ class PlotMaster{
 
 			loadConfigurations()
 
-
+			TaskQueue.start()
 		}
 
 

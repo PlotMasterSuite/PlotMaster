@@ -89,8 +89,6 @@ class GridManager extends PlotManager{
 
 	@Override
 	public Plot getPlot(int x, int z, Callback c ) {
-	
-
 		print "getPlot() cellx: ${x},  cellz: ${z}"
 
 		asyncWrap(c) {
@@ -101,7 +99,6 @@ class GridManager extends PlotManager{
 		//	println "PLOTS: ${plots.toString}...${plots.getClass()}...${plots.values()}"
 			
 			for(Plot plot in plots.values()){
-				println "RAN"
 				if(LocationUtils.isInRegion(x, z, plot.getX(), plot.getZ(), plot.getX() + plot.getType().getW(), plot.getZ() + plot.getType().getH())){
 					return plot;
 				}
@@ -170,13 +167,11 @@ class GridManager extends PlotManager{
 				}
 			}
 
-			print "createPlot() cellx: ${x},  cellz: ${z}"
+		/*	print "createPlot() cellx: ${x},  cellz: ${z}"
+			println "Got region ${region.getPlots()}"*/
 			
-			println "Got region ${region.getPlots()}"
+			Plot plot = new Plot(world: world, region: region, x: x, z: z, w: type.w, h: type.h, type: type);
 			
-			Plot plot = new Plot(region: region, x: x, z: z, w: type.w, h: type.h, type: type);
-
-
 			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
 		}
 	}

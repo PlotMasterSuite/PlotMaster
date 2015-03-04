@@ -4,6 +4,7 @@ import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand;
 import org.mcsg.plotmaster.managers.PlotCreation;
+import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.utils.Messages;
 
 class ClaimSubCommand implements PlayerSubCommand{
@@ -33,7 +34,17 @@ class ClaimSubCommand implements PlayerSubCommand{
 				
 				man.createPlot(loc.getX(), loc.getZ(), type){
 					def result = it as 	PlotCreation
-					player.sendMessage(result.getStatus().getMessage())
+					
+					if(result.getStatus() == PlotCreationStatus.SUCCESS){
+						def plot = result.getPlot()
+						player.sendMessage(result.getStatus().getMessage())
+						
+						plot.reset(man.getSettings()) {
+							player.sendMessage("Plot has been created")
+						}
+						
+					}
+					
 				}
 			}
 			

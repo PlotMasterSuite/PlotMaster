@@ -64,7 +64,7 @@ class Settings {
 						width: 99,
 						height: 99,
 						schematic: "",
-						border: ""
+						border: "small"
 					]
 				],
 				generator : [
