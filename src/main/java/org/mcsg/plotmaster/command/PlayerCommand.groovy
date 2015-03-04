@@ -24,7 +24,7 @@ public abstract class PlayerCommand extends RootCommand{
 			def sub = subs.get(args[0].toLowerCase());
 			if(sub){
 				assert sub instanceof PlayerSubCommand, "Cannot invoke a ConsoleSubCommand from a ConsoleCommand!"
-				return ((PlayerSubCommand)sub).onCommand(player, args[1..-1])
+				return ((PlayerSubCommand)sub).onCommand(player, (args.size() ? new ArrayList<String>() : args[1..-1]))
 			}
 			else {
 				return onCommand(player, args);

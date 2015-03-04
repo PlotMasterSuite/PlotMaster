@@ -42,6 +42,6 @@ class CommandHandler {
 				}
 			}
 		}
-		return false
+		return true
 	}
 }
