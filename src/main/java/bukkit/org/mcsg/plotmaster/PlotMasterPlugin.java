@@ -81,8 +81,9 @@ public class PlotMasterPlugin extends JavaPlugin{
 		} else {
 			throw new RuntimeException("Invalid sender");
 		}
+		CommandHandler.sendCommand(send, command, args);
 
-		return CommandHandler.sendCommand(send, command, args);
+		return true;
 
 
 	}

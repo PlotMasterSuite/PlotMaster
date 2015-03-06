@@ -46,8 +46,8 @@ class Settings {
 				world: "world",
 				backend: "flatfile",
 				grid : [
-					width: 99,
-					height: 99,
+					width: 106,
+					height: 106,
 					border: "road",
 					allow_expand: false,
 				],

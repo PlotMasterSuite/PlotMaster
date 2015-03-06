@@ -12,7 +12,6 @@ class BorderSubCommand implements PlayerSubCommand{
 
 	@Override
 	public String help() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -34,11 +33,10 @@ class BorderSubCommand implements PlayerSubCommand{
 		def border = borders.get(name) ?: new Border(name: name)
 		
 		border.setBorder(face, sel.toSchematic())
-
 		player.sendMessage("&aSuccessfully set ${face} of ${name}")
 		
 		borders.put(name, border)
-		
+				
 		return true
 	}
 

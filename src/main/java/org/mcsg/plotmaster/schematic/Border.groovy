@@ -29,8 +29,8 @@ class Border {
 	
 	
 	SchematicBlock getBlockAt(int x, int y, int z , int w, int h, int bottom){
-		def posx = x % w
-		def posz = z % h
+		def posx = Math.abs(x % (w + 1))
+		def posz = Math.abs(z % (h + 1))
 		
 		def face = getFace(posx, posz, h, w)
 		
@@ -49,19 +49,30 @@ class Border {
 	
 	
 	SchematicBlock[] getColumnAt(int x, int z , int w, int h){
-		def posx = Math.abs(x % w)
-		def posz = Math.abs(z % h)
+		def posx = Math.abs(x % (w))
+		def posz = Math.abs(z % (h))
 		
 		//println "${x}_$posx: ${z}_$posz"
 		
 		def face = getFace(posx, posz, h, w)
 		if(face) {
 			Schematic schematic = borders.get(face)
+			
+			if(face.toString().contains("SOUTH")){
+				posz = width - (h - posz)
+			}
+			if(face.toString().contains("EAST")) {
+				posx = width - (w - posx)
+			}
+			
 		
 		/*	int xloc = posx + (face.getXmod() * width)
 			int zloc = posz + (face.getZmod() * width)
 			
 			if(Math.abs(xloc) < width || Math.abs(zloc) < width)*/
+			
+			
+			
 			
 			return schematic.getColumn(posx , posz)
 		}
@@ -77,10 +88,11 @@ class Border {
 
 		//print "${posx}.${posz}.${h}.${w}.${width}"
 		
-		boolean north = posz > h - width - 1
-		boolean south = posz <  width 
+		//These are flipped for some reason??
+		boolean south = posz >= h  - width 
+		boolean north = posz <  width 
 		
-		boolean east = posx > w - width - 1
+		boolean east = posx >= w - width 
 		boolean west = posx <  width
 		
 		

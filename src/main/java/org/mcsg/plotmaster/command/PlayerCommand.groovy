@@ -19,12 +19,11 @@ import org.mcsg.plotmaster.bridge.PMPlayer;
 public abstract class PlayerCommand extends RootCommand{
 
 	public boolean call(PMPlayer player, List<String> args){
-		player.sendMessage(args.toString())
 		if(args.size() > 0){
 			def sub = subs.get(args[0].toLowerCase());
 			if(sub){
-				assert sub instanceof PlayerSubCommand, "Cannot invoke a ConsoleSubCommand from a ConsoleCommand!"
-				return ((PlayerSubCommand)sub).onCommand(player, (args.size() ? new ArrayList<String>() : args[1..-1]))
+				assert sub instanceof PlayerSubCommand, "Cannot invoke a ConsoleSubCommand from a PlayerCommand!"
+				return ((PlayerSubCommand)sub).onCommand(player, (args.size() < 2 ? new ArrayList<String>() : args[1..-1]))
 			}
 			else {
 				return onCommand(player, args);

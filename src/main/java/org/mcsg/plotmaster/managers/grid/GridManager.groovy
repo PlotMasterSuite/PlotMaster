@@ -33,7 +33,6 @@ class GridManager extends PlotManager{
 	String world
 	int cellWidth
 	int cellHeight
-
 	
 	Map settings
 
@@ -151,7 +150,6 @@ class GridManager extends PlotManager{
 			//println "Got region ${region.getX()}, ${region.getZ()}"
 			if(!region) {
 				def regCre = createRegion(x, z, cellWidth, cellHeight, null)
-				println "CREATED REGION ${regCre.getRegion().getPlots()}"
 				
 				
 				if(regCre.getStatus() == RegionCreationStatus.SUCCESS || regCre.getStatus() == RegionCreationStatus.REGION_EXISTS){
@@ -162,10 +160,19 @@ class GridManager extends PlotManager{
 				}
 			}
 
-		/*	print "createPlot() cellx: ${x},  cellz: ${z}"
-			println "Got region ${region.getPlots()}"*/
+			//we'll get to cell packing later, for now just create a single plot in the center of the region
 			
-			Plot plot = new Plot(world: world, region: region, x: x, z: z, w: type.w, h: type.h, type: type);
+			def plox = region.getX()
+			plox += cellWidth / 2
+			plox -= type.w / 2
+			
+			def ploz = region.getZ()
+			ploz += cellHeight / 2
+			ploz - type.h / 2
+			
+			
+			
+			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type);
 			
 			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
 		}
@@ -196,6 +203,8 @@ class GridManager extends PlotManager{
 		def regx = getRegionX(x)
 		def regz = getRegionZ(z)
 
+		println "CreateRegion() ${regx}, ${regz}"
+		
 		asyncWrap(c){
 			if(regionExist(regx, regz, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(regx, regz, null))
@@ -209,14 +218,16 @@ class GridManager extends PlotManager{
 			return new RegionCreation(status: RegionCreationStatus.SUCCESS, region: region)
 		}
 	}
-
 	
 	private int getRegionX(int x) {
-		return x / cellWidth + ((x < 0) ? -1 : 1)
+		//return x / cellWidth + ((x < 0) ? -1 : 1)
+		return x - (x % cellWidth)
 	}
 	
 	private int getRegionZ(int z) {
-		return z / cellWidth + ((z < 0) ? -1 : 1)
+		//return z / cellWidth + ((z < 0) ? -1 : 1)
+		return z - (z % cellHeight) 
+		
 	}
 	
 }

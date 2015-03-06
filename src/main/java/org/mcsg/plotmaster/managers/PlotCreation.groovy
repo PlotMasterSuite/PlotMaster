@@ -10,6 +10,7 @@ class PlotCreation {
 		SUCCESS("&aPlot created successfully."),
 		PLOT_EXISTS("&cA plot already exists in this location!"),
 		NO_PARENT_REGION("&cCannot create a plot without a parent region!"),
+		REGION_FULL("&cCannot create plot, region has no space!"),
 		OTHER("&cFailed to create plot.")
 
 		String message;

@@ -46,7 +46,7 @@ class Selection {
 					SchematicBlock b = PlatformAdapter.toSchematicBlock(world, x, y, z)
 
 					if(b.material != "AIR")
-						schematic.setBlockAt(x - mx, y - my, z - mz, )
+						schematic.setBlockAt(x - mx, y - my, z - mz, b)
 				}
 			}
 		}
