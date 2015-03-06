@@ -49,38 +49,26 @@ class Border {
 	
 	
 	SchematicBlock[] getColumnAt(int x, int z , int w, int h){
+		//Fix x = 0 & z = 0 line
+		if(x > 0)
+			x -= 1
+		if(z > 0)
+			z -=1
+		
 		def posx = Math.abs(x % (w))
 		def posz = Math.abs(z % (h))
+				
+		//Fix negative values
+		if(x < 0)
+			posx = (w - 1) - posx
 		
-		//println "${x}_$posx: ${z}_$posz"
+		if(z < 0)
+			posz = (h - 1) - posz
+		
 		
 		def face = getFace(posx, posz, h, w)
 		if(face) {
 			Schematic schematic = borders.get(face)
-			
-			if(face.toString().contains("SOUTH")){
-				posz = width - (h - posz)
-			}
-			if(face.toString().contains("EAST")) {
-				posx = width - (w - posx)
-			}
-			
-			if(x < 0){
-				posx = w - posx
-			}
-			
-			if(z < 0){
-				posz = h - posz
-			}
-		
-		/*	int xloc = posx + (face.getXmod() * width)
-			int zloc = posz + (face.getZmod() * width)
-			
-			if(Math.abs(xloc) < width || Math.abs(zloc) < width)*/
-			
-			
-			
-			
 			return schematic.getColumn(posx , posz)
 		}
 		return null
@@ -92,12 +80,9 @@ class Border {
 	}
 	
 	private SFace getFace(int posx, int posz, int h, int w){
-
-		//print "${posx}.${posz}.${h}.${w}.${width}"
-		
-		//These are flipped for some reason??
-		boolean south = posz >= h  - width 
-		boolean north = posz <  width 
+	
+		boolean north = posz >= h  - width 
+		boolean south = posz <  width 
 		
 		boolean east = posx >= w - width 
 		boolean west = posx <  width

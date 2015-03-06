@@ -42,20 +42,31 @@ class InfoSubCommand implements PlayerSubCommand{
 			def posx = Math.abs(loc.getX() % (manager.cellWidth))
 			def posz = Math.abs(loc.getZ() % (manager.cellHeight))
 
-
+			if(loc.getX() < 0){
+				posx = manager.getCellWidth() - posx
+			}
+			
+			if(loc.getZ() < 0){
+				posz = manager.getCellHeight() - posz
+			}
+			
 			def face = border.getFace(posx, posz, manager.cellWidth, manager.cellHeight)
 			if(face) {
 
-				if(face.toString().contains("SOUTH")){
+				/*if(face.toString().contains("SOUTH")){
 					posz = border.width - (manager.cellHeight - posz)
 				}
 				if(face.toString().contains("EAST")) {
 					posx = border.width - (manager.cellWidth - posx)
-				}
+				}*/
+				
+				
+
+			
 			}
 
 			SchematicBlock[] blocks = border.getColumnAt(loc.getX(), loc.getZ(), manager.getSettings().grid.width.toInteger(),manager.getSettings().grid.height.toInteger())
-			player.sendMessage("    &eposx: ${posx}, posz: ${posz}")
+			player.sendMessage("    &eface: ${face.toString()}, posx: ${posx}, posz: ${posz}")
 			player.sendMessage("    &eColumn: ${getMaterialString(blocks)}")
 
 
