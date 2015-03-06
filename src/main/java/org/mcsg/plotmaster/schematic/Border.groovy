@@ -65,6 +65,13 @@ class Border {
 				posx = width - (w - posx)
 			}
 			
+			if(x < 0){
+				posx = w - posx
+			}
+			
+			if(z < 0){
+				posz = h - posz
+			}
 		
 		/*	int xloc = posx + (face.getXmod() * width)
 			int zloc = posz + (face.getZmod() * width)
