@@ -29,8 +29,21 @@ class Border {
 	
 	
 	SchematicBlock getBlockAt(int x, int y, int z , int w, int h, int bottom){
+		//Fix x = 0 & z = 0 line
+		if(x > 0)
+			x -= 1
+		if(z > 0)
+			z -=1
+		
 		def posx = Math.abs(x % (w + 1))
 		def posz = Math.abs(z % (h + 1))
+		
+		//Fix negative values
+		if(x < 0)
+			posx = (w - 1) - posx
+		
+		if(z < 0)
+			posz = (h - 1) - posz
 		
 		def face = getFace(posx, posz, h, w)
 		
@@ -38,11 +51,9 @@ class Border {
 			
 			Schematic schematic = borders.get(face)
 			
-			int xloc = posx + (face.getXmod() * w)
 			int yloc = y - bottom
-			int zloc = posz + (face.getZmod() * h)
 			
-			return schematic.getBlockAt(xloc, yloc, zloc)
+			return schematic.getBlockAt(posx, yloc, posz)
 		}
 		return null
 	}
