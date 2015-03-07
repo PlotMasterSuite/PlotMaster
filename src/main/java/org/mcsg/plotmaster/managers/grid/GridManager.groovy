@@ -163,10 +163,13 @@ class GridManager extends PlotManager{
 			//we'll get to cell packing later, for now just create a single plot in the center of the region
 			
 			def plox = region.getX()
+			def ploz = region.getZ()
+			println "CREATE PLOT AT ${plox}, ${ploz}"
+			
+			
 			plox += cellWidth / 2
 			plox -= type.w / 2
 			
-			def ploz = region.getZ()
 			ploz += cellHeight / 2
 			ploz - type.h / 2
 			
