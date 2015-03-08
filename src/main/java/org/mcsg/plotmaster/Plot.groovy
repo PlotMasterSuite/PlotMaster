@@ -58,7 +58,7 @@ class Plot implements Cacheable<Integer>{
 
 				int top = getTop(world, a + x, b + z)
 				
-				SchematicBlock[] blocks = border.getColumnAt(a, b, w, h)
+				SchematicBlock[] blocks = border.getColumnAt(a + 1, b + 1, w , h )
 
 				if(blocks){
 					blocks.eachWithIndex { SchematicBlock block, int i ->
@@ -117,7 +117,8 @@ class Plot implements Cacheable<Integer>{
 	@CompileStatic
 	private int getTop(String world, int x, int z){
 		int top = 32
-		while(PlatformAdapter.toSchematicBlock(world, x, top,  z).material != "AIR"){
+		println "Getting top for ${world}, ${x}, ${z}"
+		while(PlatformAdapter.toSchematicBlock(world, x, top,  z).material != "AIR" && top < 256){
 			top += 16
 		}
 

@@ -171,7 +171,7 @@ class GridManager extends PlotManager{
 			plox -= type.w / 2
 			
 			ploz += cellHeight / 2
-			ploz - type.h / 2
+			ploz -= type.h / 2
 			
 			
 			
