@@ -60,6 +60,7 @@ class Plot implements Cacheable<Integer>{
 
 				int top = getTop(world, a + x, b + z)
 
+				println "Checking schematic"
 				
 				SchematicBlock[] sblocks = null
 				if(schematic)
@@ -75,6 +76,8 @@ class Plot implements Cacheable<Integer>{
 					}
 				}
 				
+				println "Checking border"
+				
 					
 				SchematicBlock[] bblocks = null
 				if(border)
@@ -88,6 +91,7 @@ class Plot implements Cacheable<Integer>{
 			}
 		}
 
+		println "Drawing"
 
 		def but = new BlockUpdateTask(updates, c)
 
@@ -137,7 +141,6 @@ class Plot implements Cacheable<Integer>{
 	@CompileStatic
 	private int getTop(String world, int x, int z){
 		int top = 32
-		println "Getting top for ${world}, ${x}, ${z}"
 		while(PlatformAdapter.toSchematicBlock(world, x, top,  z).material != "AIR" && top < 256){
 			top += 16
 		}

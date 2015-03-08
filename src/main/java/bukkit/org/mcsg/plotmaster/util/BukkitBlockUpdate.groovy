@@ -9,27 +9,33 @@ import org.mcsg.plotmaster.utils.BlockUpdate
 class BukkitBlockUpdate implements BlockUpdate{
 
 	Location loc
-	
+
 	Material type
 	byte data
-	
-	
-	
+
+
+
 	def BukkitBlockUpdate(String world, int x, int y, int z, String type, byte data){
 		this.loc = new Location(Bukkit.getWorld(world), x, y, z)
-		
-		this.type = Material.valueOf(type.toUpperCase())
+
+		Material material = Material.valueOf(type.toUpperCase())
+
+		this.type = material
 		this.data = data
+
 	}
-	
+
 	def BukkitBlockUpdate(String world, int x, int y, int z) {
 		this.loc = new Location(Bukkit.getWorld(world), x, y, z)
 	}
-	
-	
+
+
 	void update(){
-		loc.getBlock().setType(type)
-		loc.getBlock().setData(data)
+		if(!(loc.getBlock().getType() == type)){
+			loc.getBlock().setType(type)
+			loc.getBlock().setData(data)
+		}
+
 	}
-	
+
 }
