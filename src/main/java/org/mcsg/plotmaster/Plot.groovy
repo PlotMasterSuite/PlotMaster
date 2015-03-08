@@ -5,6 +5,7 @@ import groovy.transform.CompileStatic;
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.cache.Cacheable;
 import org.mcsg.plotmaster.schematic.Border;
+import org.mcsg.plotmaster.schematic.Schematic;
 import org.mcsg.plotmaster.schematic.SchematicBlock
 import org.mcsg.plotmaster.utils.AsyncUtils;
 import org.mcsg.plotmaster.utils.BlockUpdateTask;
@@ -51,17 +52,36 @@ class Plot implements Cacheable<Integer>{
 	@CompileStatic
 	public void paint(Callback c) {
 		Border border = Border.load(type.border)
+		Schematic schematic = Schematic.load(type.schematic)
 		List updates = new ArrayList()
 
 		for(int a = 0; a < w; a++){
 			for(int b = 0; b <  h; b++){
 
 				int top = getTop(world, a + x, b + z)
-				
-				SchematicBlock[] blocks = border.getColumnAt(a + 1, b + 1, w , h )
 
-				if(blocks){
-					blocks.eachWithIndex { SchematicBlock block, int i ->
+				
+				SchematicBlock[] sblocks = null
+				if(schematic)
+					sblocks = schematic.getColumn(a, b)
+				
+				if(sblocks){
+					int originTop = top
+					sblocks.eachWithIndex { SchematicBlock block, int i->
+						if(block){
+							top = originTop + i
+							updates.add(PlatformAdapter.createBlockUpdate(world, a + x, top, b + z, block.material, block.data as byte))
+						}
+					}
+				}
+				
+					
+				SchematicBlock[] bblocks = null
+				if(border)
+					border.getColumnAt(a + 1, b + 1, w , h )
+
+				if(bblocks){
+					bblocks.eachWithIndex { SchematicBlock block, int i ->
 						updates.add(PlatformAdapter.createBlockUpdate(world, a + x, top + i, b + z, block.material, block.data as byte))
 					}
 				}
@@ -82,7 +102,7 @@ class Plot implements Cacheable<Integer>{
 		levels.each { Map m ->
 			map.put(m.y as Integer, m.block as String)
 		}
-		
+
 		println map.toMapString()
 
 		List updates = new ArrayList()

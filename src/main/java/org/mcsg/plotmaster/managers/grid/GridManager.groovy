@@ -224,13 +224,21 @@ class GridManager extends PlotManager{
 	
 	private int getRegionX(int x) {
 		//return x / cellWidth + ((x < 0) ? -1 : 1)
-		return x - (x % cellWidth)
-	}
+		
+		if(x > 0)
+			return x - (x % cellWidth)
+		else 
+			return x - (cellWidth - Math.abs(x % cellWidth))
+		}
 	
 	private int getRegionZ(int z) {
 		//return z / cellWidth + ((z < 0) ? -1 : 1)
-		return z - (z % cellHeight) 
-	}
+		
+		if(z > 0)
+			return z - (z % cellWidth)
+		else 
+			return z - (cellWidth - Math.abs(z % cellHeight))	
+		}
 	
 
 }

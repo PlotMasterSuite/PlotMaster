@@ -61,7 +61,7 @@ class Schematic {
 	static File folder
 	
 	static Schematic load(String name){
-
+		checkFolder()
 		File file = new File(folder, "${name}.sch")
 		
 		if(!file.exists())

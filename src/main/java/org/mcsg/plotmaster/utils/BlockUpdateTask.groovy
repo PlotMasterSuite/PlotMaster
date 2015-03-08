@@ -6,25 +6,29 @@ import groovy.transform.CompileStatic;
 class BlockUpdateTask implements Task{
 
 	Callback callback
-	
+
 	List<BlockUpdate> updates
-	
+
 	def BlockUpdateTask(List<BlockUpdate> updates, Callback callback){
 		this.updates = updates
 		this.callback = callback
 	}
-	
+
 	@Override
 	public boolean step() {
 		def time = System.currentTimeMillis()
-		
-		while (time + 100 > System.currentTimeMillis()) {
+
+		def amount = 0
+
+		while (time + 20 > System.currentTimeMillis()) {
 			int size = updates.size() - 1
 			if(size < 0)
 				return true
-			
+
+			amount++
 			updates.remove(size).update()
 		}
+		println "UPDATES ${amount}"
 		return false;
 	}
 
@@ -34,8 +38,8 @@ class BlockUpdateTask implements Task{
 			callback.call(null)
 	}
 
-	
-	
-	
-	
+
+
+
+
 }
