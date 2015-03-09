@@ -20,39 +20,4 @@ class PlotType {
 	int h, w
 
 
-	@CompileStatic
-	void paintPlot(PMPlayer player, String world, int x, int y,  int z){
-		List<BlockUpdate> updates = []
-
-
-		if(schematic){
-			Schematic schem = Schematic.load(schematic)
-
-			if(schem){
-				for (int xx in [x..x+w]) {
-					for(int zz in [z..z+h]){
-						SchematicBlock[] blocks = schem.getColumn(xx, zz)
-						for(int yy in [0..blocks.length]){
-							updates.add(PlatformAdapter.createBlockUpdate(world, xx, yy, zz, blocks[yy].material, blocks[yy].data))
-						}
-					}
-				}
-			} else {
-				PlotMaster.getInstance().sendConsoleMessage("&aCould not load schematic ${schematic} for PlotType ${name}")
-			}
-
-		}
-
-
-		TaskQueue.addTask(
-				new BlockUpdateTask(updates) {
-					
-				}
-			)
-
-
-	}
-
-
-
 }
