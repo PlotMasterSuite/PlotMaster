@@ -62,7 +62,7 @@ class Schematic {
 	
 	static Schematic load(String name){
 		checkFolder()
-		File file = new File(folder, "${name}.sch")
+		File file = new File(folder, "${name}.schematic")
 		
 		if(!file.exists())
 			return null

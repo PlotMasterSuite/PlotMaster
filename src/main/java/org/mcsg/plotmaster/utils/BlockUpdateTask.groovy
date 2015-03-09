@@ -28,7 +28,6 @@ class BlockUpdateTask implements Task{
 			amount++
 			updates.remove(size).update()
 		}
-		println "UPDATES ${amount}"
 		return false;
 	}
 

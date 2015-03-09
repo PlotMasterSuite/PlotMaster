@@ -59,8 +59,6 @@ class Plot implements Cacheable<Integer>{
 			for(int b = 0; b <  h; b++){
 
 				int top = getTop(world, a + x, b + z)
-
-				println "Checking schematic"
 				
 				SchematicBlock[] sblocks = null
 				if(schematic)
@@ -74,14 +72,11 @@ class Plot implements Cacheable<Integer>{
 							updates.add(PlatformAdapter.createBlockUpdate(world, a + x, top, b + z, block.material, block.data as byte))
 						}
 					}
-				}
-				
-				println "Checking border"
-				
+				}				
 					
 				SchematicBlock[] bblocks = null
 				if(border)
-					border.getColumnAt(a + 1, b + 1, w , h )
+					bblocks = border.getColumnAt(a + 1, b + 1, w , h )
 
 				if(bblocks){
 					bblocks.eachWithIndex { SchematicBlock block, int i ->
@@ -90,8 +85,6 @@ class Plot implements Cacheable<Integer>{
 				}
 			}
 		}
-
-		println "Drawing"
 
 		def but = new BlockUpdateTask(updates, c)
 

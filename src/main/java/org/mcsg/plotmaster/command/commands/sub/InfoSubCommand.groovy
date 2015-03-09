@@ -53,11 +53,19 @@ class InfoSubCommand implements PlayerSubCommand{
 			def face = border.getFace(posx, posz, manager.cellWidth, manager.cellHeight)
 			if(face) {
 
-				/*if(face.toString().contains("SOUTH")){
-					posz = border.width - (manager.cellHeight - posz)
+				
+			/*	if(face.toString().contains("SOUTH")){
+					posz = posz - (h % width)
 				}
 				if(face.toString().contains("EAST")) {
-					posx = border.width - (manager.cellWidth - posx)
+					posx = posx - (w % width)
+				}*/
+	
+			/*	if(face.toString().contains("SOUTH")){
+					posz = posz - (manager.cellHeight % border.width )
+				}
+				if(face.toString().contains("EAST")) {
+					posx =  posx - (manager.cellWidth % border.width)
 				}*/
 				
 				
