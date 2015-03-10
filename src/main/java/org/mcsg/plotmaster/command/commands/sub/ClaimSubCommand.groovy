@@ -41,6 +41,8 @@ class ClaimSubCommand implements PlayerSubCommand{
 							player.sendMessage("&aPlot has been generated!")
 						}
 						
+					} else {
+						player.sendMessage(result.getStatus().getMessage())
 					}
 					
 				}

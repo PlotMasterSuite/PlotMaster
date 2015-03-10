@@ -18,14 +18,16 @@ class ClearSubCommand implements PlayerSubCommand{
 
 	@Override
 	public boolean onCommand(PMPlayer player, List<String> args) {
-		
+
 		PlotManager manager = PlotMaster.getInstance().getManager(player.getLocation().getWorld())
 		Plot p = manager.getPlot(player.getLocation().getX(), player.getLocation().getZ(), null)
-		
-		p.clear(manager.getSettings().generator.levels) {
-			player.sendMessage("&aPlot has been cleared!")
+
+		if(p){
+			p.clear(manager.getSettings()) {
+				player.sendMessage("&aPlot has been cleared!")
+			}
 		}
-		
+
 	}
 
 }

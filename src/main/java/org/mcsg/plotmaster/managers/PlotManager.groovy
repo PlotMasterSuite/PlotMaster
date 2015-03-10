@@ -2,6 +2,7 @@ package org.mcsg.plotmaster.managers
 
 import org.bukkit.Location
 import org.mcsg.plotmaster.Plot;
+import org.mcsg.plotmaster.PlotMember
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend
@@ -44,7 +45,8 @@ abstract class PlotManager {
 	
 	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	
+	abstract PlotMember getPlotMemeber(String uuid)
 	
-	
+	abstract PlotMember savePlotMember(PlotMember member)
 	
 }

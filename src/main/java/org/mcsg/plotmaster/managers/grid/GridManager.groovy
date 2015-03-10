@@ -6,6 +6,7 @@ import groovy.transform.CompileStatic;
 import org.bukkit.Location;
 import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotMaster;
+import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
@@ -169,11 +170,15 @@ class GridManager extends PlotManager{
 			
 			plox += cellWidth / 2
 			plox -= type.w / 2
+			plox++
 			
 			ploz += cellHeight / 2
 			ploz -= type.h / 2
+			ploz++
 			
-			
+			if(region.getPlots().size() > 0){
+				return new PlotCreation(status: PlotCreationStatus.REGION_FULL)
+			}
 			
 			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type);
 			
@@ -239,6 +244,16 @@ class GridManager extends PlotManager{
 		else 
 			return z - (cellWidth - Math.abs(z % cellHeight))	
 		}
+
+	@Override
+	public PlotMember getPlotMemeber(String uuid) {
+		return backend.getMember(uuid)
+	}
+
+	@Override
+	public PlotMember savePlotMember(PlotMember member) {
+		backend.saveMember(member)
+	}
 	
 
 }
