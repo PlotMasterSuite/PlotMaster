@@ -45,7 +45,7 @@ abstract class PlotManager {
 	
 	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	
-	abstract PlotMember getPlotMemeber(String uuid)
+	abstract PlotMember getPlotMemeber(PMPlayer player)
 	
 	abstract PlotMember savePlotMember(PlotMember member)
 	

@@ -246,8 +246,14 @@ class GridManager extends PlotManager{
 		}
 
 	@Override
-	public PlotMember getPlotMemeber(String uuid) {
-		return backend.getMember(uuid)
+	public PlotMember getPlotMemeber(PMPlayer player) {
+		PlotMember member =  backend.getMember(player.getUUID())
+		if(!member){
+			member = new PlotMember(uuid: player.getUUID(), name : player.getName())
+			savePlotMember(member)
+		}
+		member.setManager(this)
+		return member
 	}
 
 	@Override

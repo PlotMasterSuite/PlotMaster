@@ -1,5 +1,6 @@
 package org.mcsg.plotmaster.command.commands.sub
 
+import org.mcsg.plotmaster.AccessType;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand;
@@ -36,6 +37,9 @@ class ClaimSubCommand implements PlayerSubCommand{
 					if(result.getStatus() == PlotCreationStatus.SUCCESS){
 						def plot = result.getPlot()
 						player.sendMessage(result.getStatus().getMessage())
+						
+						def member = man.getPlotMemeber(player)
+						member.setAccess(AccessType.OWNER, plot)
 						
 						plot.reset(man.getSettings()) {
 							player.sendMessage("&aPlot has been generated!")

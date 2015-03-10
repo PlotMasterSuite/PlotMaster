@@ -4,6 +4,7 @@ import groovy.lang.Closure;
 
 import org.bukkit.Location;
 import org.mcsg.plotmaster.Plot;
+import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region
 import org.mcsg.plotmaster.bridge.PMPlayer;
@@ -74,6 +75,18 @@ class UnboundManager extends PlotManager{
 	@Override
 	public PlotCreation createPlot(PMPlayer player, int x, int y,
 			PlotType type, Callback c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlotMember getPlotMemeber(PMPlayer player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlotMember savePlotMember(PlotMember member) {
 		// TODO Auto-generated method stub
 		return null;
 	}
