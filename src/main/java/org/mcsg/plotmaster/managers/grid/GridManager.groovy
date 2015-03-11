@@ -19,6 +19,7 @@ import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.RegionCreation
 import org.mcsg.plotmaster.managers.RegionCreation.RegionCreationStatus;
+import org.mcsg.plotmaster.schematic.Border
 import org.mcsg.plotmaster.utils.Callback
 import org.mcsg.plotmaster.utils.LocationUtils;
 
@@ -37,6 +38,10 @@ class GridManager extends PlotManager{
 	
 	Map settings
 
+	Border border
+	int bw2
+	int bw
+	
 	def GridManager(Backend backend, String world) {
 		super(backend, world)
 
@@ -52,6 +57,12 @@ class GridManager extends PlotManager{
 		this.cellHeight = settings.grid.height
 		this.cellWidth = settings.grid.width
 		this.settings = settings
+		
+		border = Border.load(settings.grid.border)
+		if(border) {
+			bw = border.getWidth()
+			bw2 = bw + bw
+		}
 	}
 
 
@@ -230,19 +241,24 @@ class GridManager extends PlotManager{
 	private int getRegionX(int x) {
 		//return x / cellWidth + ((x < 0) ? -1 : 1)
 		
+		def width = cellWidth + bw2
+		
 		if(x > 0)
-			return x - (x % cellWidth)
+			return (x - (x % width)) + bw
 		else 
-			return x - (cellWidth - Math.abs(x % cellWidth))
+			return (x - (width - Math.abs(x % width))) + bw
 		}
 	
 	private int getRegionZ(int z) {
 		//return z / cellWidth + ((z < 0) ? -1 : 1)
 		
+		def height = cellHeight + bw2
+		
+		
 		if(z > 0)
-			return z - (z % cellWidth)
+			return (z - (z % height)) + bw
 		else 
-			return z - (cellWidth - Math.abs(z % cellHeight))	
+			return (z - (height - Math.abs(z % height))) + bw	
 		}
 
 	@Override
