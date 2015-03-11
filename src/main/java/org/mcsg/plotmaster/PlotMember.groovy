@@ -29,16 +29,26 @@ class PlotMember {
 	List<Plot> getPlots() {
 		List<Plot> list = []
 		plots.values().forEach { PlotInfo info
-			list.add(thisObject)
+			list.add(manager.getPlot(info.id, null))
 		}
 	}
 
 	List<Plot> getPlots(AccessLevel access){
-
+		List<Plot> list = []
+		plots.each { AccessLevel level, PlotInfo info ->
+			if(level == access){
+				list.add(manager.getPlot(info.id, null))
+			}
+		}
 	}
 	
 	List<Plot> getPlotsAboveLevel(AccessLevel access){
-		
+		List<Plot> list = []
+		plots.each { AccessLevel level, PlotInfo info ->
+			if(access.getLevel() > level.getLevel()){
+				list.add(manager.getPlot(info.id, null))
+			}
+		}
 	}
 
 	void setAccess(AccessLevel access, Plot plot){

@@ -4,6 +4,7 @@ import groovy.lang.Closure;
 import groovy.transform.CompileStatic;
 
 import org.bukkit.Location;
+import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.PlotMember;
@@ -282,14 +283,24 @@ class GridManager extends PlotManager{
 	public boolean canModifyLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
 		
-		
-		
+		member.getPlotsAboveLevel(AccessLevel.MEMBER).each {
+			if(it.isPartOf(location.x, location.z)) {
+				return true
+			}
+		}
+		return false		
 	}
 
 	@Override
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
-		// TODO Auto-generated method stub
-		return false;
+		PlotMember member = getPlotMember(player)
+		
+		member.getPlots(AccessLevel.DENY).each {
+			if(it.isPartOf(location.x, location.z)) {
+				return false
+			}
+		}
+		return true
 	}
 	
 
