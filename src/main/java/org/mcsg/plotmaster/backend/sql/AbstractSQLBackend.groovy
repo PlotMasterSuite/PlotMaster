@@ -10,7 +10,7 @@ import javax.sql.DataSource
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
-import org.mcsg.plotmaster.AccessType;
+import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.Plot
 import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
@@ -169,7 +169,7 @@ abstract class AbstractSQLBackend implements Backend{
 		PlotMember member = new PlotMember(uuid: uuid, plots: new HashMap<>())
 
 		sql.eachRow("SELECT * FROM ${access_list} WHERE uuid=?", [uuid]) { row ->
-			def type = row.type as AccessType;
+			def type = row.type as AccessLevel;
 			def access = (member.plots.get(type)) ?: new ArrayList<Map<String, Integer>>()
 
 			access.add([plot: row.plot, region: row.region])

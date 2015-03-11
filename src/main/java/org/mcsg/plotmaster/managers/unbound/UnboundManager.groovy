@@ -7,6 +7,7 @@ import org.mcsg.plotmaster.Plot;
 import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region
+import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.managers.PlotCreation;
 import org.mcsg.plotmaster.managers.PlotManager
@@ -80,7 +81,7 @@ class UnboundManager extends PlotManager{
 	}
 
 	@Override
-	public PlotMember getPlotMemeber(PMPlayer player) {
+	public PlotMember getPlotMember(PMPlayer player) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -89,6 +90,18 @@ class UnboundManager extends PlotManager{
 	public PlotMember savePlotMember(PlotMember member) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean canModifyLocation(PMPlayer player, PMLocation location) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
+		// TODO Auto-generated method stub
+		return false;
 	}
  
 	

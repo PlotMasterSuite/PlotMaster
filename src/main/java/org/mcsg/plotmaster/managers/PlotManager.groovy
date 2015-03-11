@@ -6,6 +6,7 @@ import org.mcsg.plotmaster.PlotMember
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.backend.Backend
+import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.utils.Callback
 
@@ -45,8 +46,13 @@ abstract class PlotManager {
 	
 	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	
-	abstract PlotMember getPlotMemeber(PMPlayer player)
+	abstract PlotMember getPlotMember(PMPlayer player)
 	
 	abstract PlotMember savePlotMember(PlotMember member)
 	
+		
+	
+	abstract boolean canModifyLocation(PMPlayer player, PMLocation location)
+	
+	abstract boolean canEnterLocation(PMPlayer player, PMLocation location)
 }

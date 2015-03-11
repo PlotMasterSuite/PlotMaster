@@ -13,6 +13,7 @@ class PlotMember {
 
 	static class PlotInfo {
 		int id;
+		String world
 		RegionCoord coords
 
 		static class RegionCoord {
@@ -20,19 +21,29 @@ class PlotMember {
 		}
 	}
 
-	Map<AccessType, ArrayList<PlotInfo>> plots = [:]
+	Map<AccessLevel, ArrayList<PlotInfo>> plots = [:]
 
+	
+	
+	
 	List<Plot> getPlots() {
-
+		List<Plot> list = []
+		plots.values().forEach { PlotInfo info
+			list.add(thisObject)
+		}
 	}
 
-	List<Plot> getPlots(AccessType access){
+	List<Plot> getPlots(AccessLevel access){
 
 	}
+	
+	List<Plot> getPlotsAboveLevel(AccessLevel access){
+		
+	}
 
-	void setAccess(AccessType access, Plot plot){
+	void setAccess(AccessLevel access, Plot plot){
 		def list = plots.get(access) ?: []
-		list.add(new PlotInfo(id: plot.getId(), coords: new RegionCoord(x: plot.getRegion().getX(), z: plot.getRegion().getZ())))
+		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld(), coords: new RegionCoord(x: plot.getRegion().getX(), z: plot.getRegion().getZ())))
 
 		plots.put(access, list)
 		

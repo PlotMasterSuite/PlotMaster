@@ -11,6 +11,7 @@ import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.backend.Backend
+import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.cache.Cache
 import org.mcsg.plotmaster.cache.CacheFactory;
@@ -262,7 +263,7 @@ class GridManager extends PlotManager{
 		}
 
 	@Override
-	public PlotMember getPlotMemeber(PMPlayer player) {
+	public PlotMember getPlotMember(PMPlayer player) {
 		PlotMember member =  backend.getMember(player.getUUID())
 		if(!member){
 			member = new PlotMember(uuid: player.getUUID(), name : player.getName())
@@ -275,6 +276,20 @@ class GridManager extends PlotManager{
 	@Override
 	public PlotMember savePlotMember(PlotMember member) {
 		backend.saveMember(member)
+	}
+
+	@Override
+	public boolean canModifyLocation(PMPlayer player, PMLocation location) {
+		PlotMember member = getPlotMember(player)
+		
+		
+		
+	}
+
+	@Override
+	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 

@@ -59,6 +59,10 @@ class PlatformAdapter {
 		}
 	}
 
+	
+	static Material toMaterial(org.bukkit.Material material){
+		return Material.valueOf(material.toString())
+	}
 
 
 

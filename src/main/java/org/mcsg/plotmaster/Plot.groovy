@@ -46,7 +46,6 @@ class Plot implements Cacheable<Integer>{
 			player = PlatformAdapter.getPlayerByUUID(OwnerUUID)
 
 		return player.isOnline()
-
 	}
 
 	@CompileStatic
@@ -120,7 +119,6 @@ class Plot implements Cacheable<Integer>{
 		BlockUpdateTask but = new BlockUpdateTask(updates, c)
 
 		TaskQueue.addTask(but)
-
 	}
 
 	public void reset(Map settings, Callback c) {
@@ -143,5 +141,14 @@ class Plot implements Cacheable<Integer>{
 		}
 
 		return top + 1
+	}	
+	
+	
+	public boolean isPartOf(int x, int z){
+		return x >= this.x && x <= this.x + this.w && z >= this.z && z <= this.z + this.h 
 	}
+	
+	
+	
+	
 }
