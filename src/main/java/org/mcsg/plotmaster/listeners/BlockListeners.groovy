@@ -11,7 +11,7 @@ class BlockListeners {
 	static boolean blockPlace(PMPlayer player, PMLocation location, PMBlock block){
 		def man = PlotMaster.getInstance().getManager(location.getWorld())
 		def bol = man.canModifyLocation(player, location)
-
+		
 		if(!bol) {
 			player.sendMessage("&aCannot modify this location!")
 		}

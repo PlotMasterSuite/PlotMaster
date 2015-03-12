@@ -16,6 +16,7 @@ import org.mcsg.plotmaster.utils.PlatformAdapter.PlatformType;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitCommand;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitConsole;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
+import bukkit.org.mcsg.plotmaster.listeners.BlockListener;
 import bukkit.org.mcsg.plotmaster.listeners.EntitySpawnListener;
 import bukkit.org.mcsg.plotmaster.listeners.SelectionListener;
 
@@ -54,6 +55,7 @@ public class PlotMasterPlugin extends JavaPlugin{
 
 		Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
 		Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), this);
+		Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
 		plotMaster.onEnable();
 	}
 

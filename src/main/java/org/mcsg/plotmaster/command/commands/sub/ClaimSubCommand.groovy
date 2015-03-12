@@ -38,7 +38,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 						def plot = result.getPlot()
 						player.sendMessage(result.getStatus().getMessage())
 						
-						def member = man.getPlotMemeber(player)
+						def member = man.getPlotMember(player)
 						member.setAccess(AccessLevel.OWNER, plot)
 						
 						plot.reset(man.getSettings()) {

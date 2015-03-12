@@ -112,7 +112,6 @@ class Plot implements Cacheable<Integer>{
 					updates.add(PlatformAdapter.createBlockUpdate(world, xx + x, y, zz + z, material, 0 as byte))
 				}
 			}
-
 		}
 
 
@@ -145,7 +144,7 @@ class Plot implements Cacheable<Integer>{
 	
 	
 	public boolean isPartOf(int x, int z){
-		return x >= this.x && x <= this.x + this.w && z >= this.z && z <= this.z + this.h 
+		return x >= this.x && x < this.x + this.w && z >= this.z && z < this.z + this.h 
 	}
 	
 	

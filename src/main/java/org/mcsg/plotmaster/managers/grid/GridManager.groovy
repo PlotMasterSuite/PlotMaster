@@ -283,24 +283,30 @@ class GridManager extends PlotManager{
 	public boolean canModifyLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
 		
+		def isPart = false
+				
 		member.getPlotsAboveLevel(AccessLevel.MEMBER).each {
 			if(it.isPartOf(location.x, location.z)) {
-				return true
+				isPart = true
+				return
 			}
 		}
-		return false		
+		return isPart		
 	}
 
 	@Override
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
 		
+		def isPart = true
+		
 		member.getPlots(AccessLevel.DENY).each {
 			if(it.isPartOf(location.x, location.z)) {
-				return false
+				isPart = false
+				return
 			}
 		}
-		return true
+		return isPart
 	}
 	
 
