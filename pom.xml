@@ -49,7 +49,7 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<minimizeJar>true</minimizeJar>
+							<minimizeJar>false</minimizeJar>
 							<artifactSet>
 								<includes>
 									<includes>com.zaxxer:HikariCP-java6</includes>
