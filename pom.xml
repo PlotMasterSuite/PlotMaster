@@ -49,11 +49,12 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<minimizeJar>false</minimizeJar>
+							<minimizeJar>true</minimizeJar>
 							<artifactSet>
 								<includes>
 									<includes>com.zaxxer:HikariCP-java6</includes>
 									<includes>com.google.code.gson</includes>
+									<includes>commons-io:commons-io</includes>
 								</includes>
 							</artifactSet>
 						</configuration>
