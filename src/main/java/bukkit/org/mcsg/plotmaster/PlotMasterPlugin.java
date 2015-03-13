@@ -1,79 +1,83 @@
 package bukkit.org.mcsg.plotmaster;
 
 
+import java.io.File;
+import java.net.URL;
+
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcsg.plotmaster.PlotMaster;
-import org.mcsg.plotmaster.bridge.PMCommandSender;
-import org.mcsg.plotmaster.command.CommandHandler;
-import org.mcsg.plotmaster.utils.PlatformAdapter;
-import org.mcsg.plotmaster.utils.PlatformAdapter.PlatformType;
-
-import bukkit.org.mcsg.plotmaster.bridge.BukkitCommand;
-import bukkit.org.mcsg.plotmaster.bridge.BukkitConsole;
-import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
-import bukkit.org.mcsg.plotmaster.listeners.BlockListener;
-import bukkit.org.mcsg.plotmaster.listeners.EntitySpawnListener;
-import bukkit.org.mcsg.plotmaster.listeners.SelectionListener;
 
 public class PlotMasterPlugin extends JavaPlugin{
 
 	private static PlotMasterPlugin plugin;
-	private PlotMaster plotMaster;
 
+	private boolean hasGroovy = false;
 
+	public PlotMasterPlugin(){
+
+		if(Bukkit.getPluginManager().getPlugin("GroovyRuntime") == null) {
+			sendConsoleMessage(ChatColor.YELLOW+"GroovyRuntime is required to use PlotMaster. It will be automatically downloaded");
+			sendConsoleMessage(ChatColor.YELLOW+"Alternatively, you can stop the server and going to");
+			sendConsoleMessage(ChatColor.YELLOW+"http://ci.mc-sg.org/job/GroovyRuntime/lastBuild/org.mcsg.groovy$GroovyRuntime/");
+			for(int a = 10; a > 0; a--){
+				if(a == 10 || a < 6)
+					sendConsoleMessage(ChatColor.GREEN+"Downloading in "+a+" seconds.");
+				try{ Thread.sleep(1000); } catch (Exception e){}
+			}
+			sendConsoleMessage(ChatColor.GREEN+"Downloading...");
+			try{
+				URL url = new URL("http://ci.mc-sg.org/job/GroovyRuntime/lastBuild/org.mcsg.groovy$GroovyRuntime/artifact/org.mcsg.groovy/GroovyRuntime/1.0/GroovyRuntime-1.0.jar");
+				File file = new File("plugins/", "GroovyRuntime.jar");
+				FileUtils.copyURLToFile(url, file);
+				
+				Plugin groovy = Bukkit.getPluginManager().loadPlugin(file);
+				Bukkit.getPluginManager().enablePlugin(groovy);
+				
+				hasGroovy = true;
+			} catch (Exception e){
+				sendConsoleMessage(ChatColor.RED+"Failed to download GroovyRuntime. Please manually download it and try again.");
+			}
+		} else {
+			hasGroovy = true;
+		}
+
+	}
+	
 	public void onLoad(){
 		plugin = this;
-		
-		PlatformAdapter.setPlatform(PlatformType.BUKKIT);
-		
-		plotMaster =  new PlotMaster();
 
-		plotMaster.onLoad(new BukkitConsole(Bukkit.getConsoleSender()));
+
+
+		if(hasGroovy){
+			StartupOffloader.onLoad();
+		}
 	}
 
 	public void onEnable(){
-
-
-		/*} catch (Exception e){
-			e.printStackTrace();
-
-			sendConsoleMessage(ChatColor.RED+"**********************************************************************************");
-			sendConsoleMessage("");
-			sendConsoleMessage(ChatColor.GOLD+"                GroovyRuntimeSupport is required to run this plugin!");
-			sendConsoleMessage(ChatColor.GOLD+"  http://ci.mc-sg.org/job/GroovyRuntime/lastStableBuild/org.mcsg.groovy$GroovyRuntime/");
-			sendConsoleMessage("");
-			sendConsoleMessage(ChatColor.RED+"***********************************************************************************");
-
-			return;
-		}*/
-
-
-		Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
-		Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), this);
-		Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
-		plotMaster.onEnable();
+		if(hasGroovy){
+			StartupOffloader.onEnable();
+		}
 	}
 
 
 	public void onDisable(){
-
+		StartupOffloader.onDisable();
 	}
 
-	public static PlotMasterPlugin getPlugin(){
-		return plugin;
-	}
+
 
 	private void sendConsoleMessage(String message){
-		Bukkit.getConsoleSender().sendMessage(message);
+		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"[PlotMaster] "+message);
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		BukkitCommand command = new BukkitCommand(cmd);
+
+		/*BukkitCommand command = new BukkitCommand(cmd);
 		PMCommandSender send = null;
 
 		if(sender instanceof Player){
@@ -83,14 +87,20 @@ public class PlotMasterPlugin extends JavaPlugin{
 		} else {
 			throw new RuntimeException("Invalid sender");
 		}
-		CommandHandler.sendCommand(send, command, args);
+		CommandHandler.sendCommand(send, command, args);*/
 
+
+		new RuntimeException().printStackTrace();
 		return true;
 
 
 	}
 
 
+
+	public static PlotMasterPlugin getPlugin(){
+		return plugin;
+	}
 
 
 }
