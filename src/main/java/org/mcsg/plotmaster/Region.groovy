@@ -10,12 +10,12 @@ class Region implements Cacheable<Integer>{
 	int x, z
 	int h, w
 	
-	long createdAt
+	long createdAt = System.currentTimeMillis()
 	
 	boolean changed
 	
-	String world;
-	String name;
+	String world
+	String name = ""
 	
 	Map<Integer, Plot> plots = new HashMap<>();	
 	

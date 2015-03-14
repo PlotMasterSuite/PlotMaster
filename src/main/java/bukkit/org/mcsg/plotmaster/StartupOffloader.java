@@ -1,11 +1,19 @@
 package bukkit.org.mcsg.plotmaster;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.mcsg.plotmaster.PlotMaster;
+import org.mcsg.plotmaster.bridge.PMCommandSender;
+import org.mcsg.plotmaster.command.CommandHandler;
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 import org.mcsg.plotmaster.utils.PlatformAdapter.PlatformType;
 
+import bukkit.org.mcsg.plotmaster.bridge.BukkitCommand;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitConsole;
+import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
 import bukkit.org.mcsg.plotmaster.listeners.BlockListener;
 import bukkit.org.mcsg.plotmaster.listeners.EntitySpawnListener;
 import bukkit.org.mcsg.plotmaster.listeners.SelectionListener;
@@ -42,7 +50,24 @@ public class StartupOffloader {
 	
 	
 	public static void onDisable() {
-		
+		plotMaster.onDisable();
+	}
+	
+	public static boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
+		BukkitCommand command = new BukkitCommand(cmd);
+		PMCommandSender send = null;
+
+		if(sender instanceof Player){
+			send = new BukkitPlayer((Player) sender);
+		} else if (sender instanceof ConsoleCommandSender){
+			send = new BukkitConsole(sender);
+		} else {
+			throw new RuntimeException("Invalid sender");
+		}
+		CommandHandler.sendCommand(send, command, args);
+
+		return true;
 	}
 	
 }

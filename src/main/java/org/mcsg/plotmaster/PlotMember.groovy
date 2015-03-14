@@ -1,6 +1,5 @@
 package org.mcsg.plotmaster
 
-import org.mcsg.plotmaster.PlotMember.PlotInfo.RegionCoord
 import org.mcsg.plotmaster.managers.PlotManager
 
 
@@ -14,17 +13,15 @@ class PlotMember {
 	static class PlotInfo {
 		int id;
 		String world
-		RegionCoord coords
-
-		static class RegionCoord {
-			int x, z
-		}
+		int reg
 	}
 
-	Map<AccessLevel, List<PlotInfo>> plots = [:]
+	Map<AccessLevel, List<PlotInfo>> plots = new HashMap<>()
 
 
-
+	Map<AccessLevel, List<PlotInfo>> getPlotAccessMap(){
+		return plots;
+	}
 
 	List<Plot> getPlots() {
 		List<Plot> list = []
@@ -69,7 +66,7 @@ class PlotMember {
 
 	void setAccess(AccessLevel access, Plot plot){
 		def list = plots.get(access) ?: []
-		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld(), coords: new RegionCoord(x: plot.getRegion().getX(), z: plot.getRegion().getZ())))
+		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld(), reg: plot.getRegion().getId()))
 
 		plots.put(access, list)
 

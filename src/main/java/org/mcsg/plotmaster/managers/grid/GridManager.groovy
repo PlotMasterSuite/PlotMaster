@@ -230,7 +230,7 @@ class GridManager extends PlotManager{
 			if(regionExist(regx, regz, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(regx, regz, null))
 
-			Region region = new Region(x: regx, z: regz, h: h, w: w)
+			Region region = new Region(world: world, x: regx, z: regz, h: h, w: w)
 
 			region = backend.createRegion(region)
 			

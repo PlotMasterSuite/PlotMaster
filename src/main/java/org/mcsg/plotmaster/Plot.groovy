@@ -18,12 +18,12 @@ class Plot implements Cacheable<Integer>{
 
 	int id
 
-	String plotName
-	String ownerName, OwnerUUID
+	String plotName = ""
+	String ownerName = "", OwnerUUID = ""
 	String world
 	int x, z, h, w
 
-	long createdAt
+	long createdAt = System.currentTimeMillis()
 	PlotType type
 
 	List<String> members

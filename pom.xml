@@ -55,6 +55,8 @@
 									<includes>com.zaxxer:HikariCP-java6</includes>
 									<includes>com.google.code.gson</includes>
 									<includes>commons-io:commons-io</includes>
+									<includes>org.slf4j:*</includes>
+									<includes>org.javassist:*</includes>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -97,13 +99,19 @@
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP-java6</artifactId>
 			<version>2.3.1</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-core</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+
 
 	</dependencies>
 </project>
