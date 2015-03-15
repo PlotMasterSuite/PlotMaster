@@ -19,6 +19,7 @@ import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
 import org.mcsg.plotmaster.PlotMember.PlotInfo
 import org.mcsg.plotmaster.backend.Backend;
+import org.mcsg.plotmaster.backend.sql.sqlite.SQLiteBackend
 import org.mcsg.plotmaster.managers.PlotManager;
 
 abstract class AbstractSQLBackend implements Backend{
@@ -36,52 +37,7 @@ abstract class AbstractSQLBackend implements Backend{
 		users  = "${world}_users"
 		access_list = "${world}_access_list"
 
-		def sql = getSql();
 
-		sql.execute("""
-			CREATE TABLE IF NOT EXISTS `${regions}` (
-				 `id` int(11) NOT NULL AUTO_INCREMENT,
-				 `name` varchar(128) NOT NULL DEFAULT '',
-				 `world` varchar(64) NOT NULL,
-				 `x` int(11) NOT NULL,
-				 `z` int(11) NOT NULL,
-				 `h` int(11) NOT NULL,
-				 `w` int(11) NOT NULL,
-				 `createdAt` bigint(32) NOT NULL,
-				 PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
-		""".toString())
-
-		sql.execute("""
-			CREATE TABLE IF NOT EXISTS `${plots}` (
-				 `id` int(11) NOT NULL AUTO_INCREMENT,
-				 `region` int(11) NOT NULL,
-				 `world` varchar(64) NOT NULL DEFAULT '',
-				 `name` varchar(64) NOT NULL DEFAULT '',
-				 `owner` varchar(16) NOT NULL DEFAULT '',
-				 `uuid` varchar(36) NOT NULL DEFAULT '',
-				 `x` int(11) NOT NULL,
-				 `z` int(11) NOT NULL,
-				 `h` int(11) NOT NULL,
-				 `w` int(11) NOT NULL,
-				 `createdAt` bigint(32) NOT NULL,
-				 `type` varchar(32) NOT NULL,
-				  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
-		""".toString())
-
-		sql.execute("""
-			CREATE TABLE IF NOT EXISTS`${access_list}` (
-				 `id` int(11) NOT NULL AUTO_INCREMENT,
-				 `uuid` varchar(36) NOT NULL,
-				 `name` varchar(16) ,
-				 `type` enum('OWNER', 'ADMIN', 'MEMBER', 'ALLOW', 'DENY') NOT NULL,
-				 `plot` int(11) NOT NULL,
-				 PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1
-		""".toString())
-
-		sql.close()
 	}
 
 
@@ -146,13 +102,16 @@ abstract class AbstractSQLBackend implements Backend{
 
 		sql.execute("INSERT INTO ${regions} (world, x, z, h, w, createdAt) VALUES(?,?,?,?,?, ?); ".toString()
 				, [region.world, region.x, region.z, region.h, region.w, region.createdAt])
-		def res = sql.firstRow("SELECT LAST_INSERT_ID() as id FROM ${regions}".toString())
+
+		def res = (this instanceof SQLiteBackend)
+				?sql.firstRow("SELECT last_insert_rowid() as id FROM ${regions}".toString())
+				: sql.firstRow("SELECT last_insert_id() as id FROM ${regions}".toString())
 
 		def time = System.currentTimeMillis()
 		region.setId(res.id)
 
 		println "Created: $region"
-		
+
 		closeReturn(sql, region)
 	}
 
@@ -161,14 +120,16 @@ abstract class AbstractSQLBackend implements Backend{
 
 		sql.execute( "INSERT INTO ${plots} (world, region, owner, uuid, x, z, h, w, type,createdAt) VALUES(?,?,?,?,?,?,?,?,?, ?);".toString()
 				, [region.world, region.id, plot.ownerName, plot.ownerUUID, plot.x, plot.z, plot.h, plot.w, plot.type.name, plot.createdAt])
-		def res = sql.firstRow("SELECT LAST_INSERT_ID() as id FROM ${plots}".toString())
+		def res = (this instanceof SQLiteBackend)
+				? sql.firstRow("SELECT last_insert_rowid() as id FROM ${plots}".toString())
+				: sql.firstRow("SELECT last_insert_id() as id FROM ${plots}".toString())
 
 		def time = System.currentTimeMillis()
 		plot.setId(res.id)
 		plot.setCreatedAt(time)
 
 		region.plots.put(plot.id, plot)
-		
+
 		closeReturn(sql, plot)
 	}
 
@@ -241,7 +202,7 @@ abstract class AbstractSQLBackend implements Backend{
 
 
 
-	private Sql getSql(){
+	Sql getSql(){
 		new Sql(ds)
 	}
 
