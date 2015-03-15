@@ -76,7 +76,7 @@ abstract class AbstractSQLBackend implements Backend{
 				 `uuid` varchar(36) NOT NULL,
 				 `name` varchar(16) ,
 				 `type` enum('OWNER', 'ADMIN', 'MEMBER', 'ALLOW', 'DENY') NOT NULL,
-				 `plot` varchar(32) NOT NULL,
+				 `plot` int(11) NOT NULL,
 				 PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1
 		""".toString())
@@ -121,9 +121,10 @@ abstract class AbstractSQLBackend implements Backend{
 		def reg = [region.name, region.x, region.z, region.h, region.w, region.id]
 		sql.execute "UPDATE ${regions} SET name=?, x=?, z=?, h=?, w=? WHERE id=?".toString(), reg
 
-		region.getPlots().values().each {
-			def plot = [it.ownerName, it.OwnerUUID, it.plotName, it.x, it.z, it.h, it.w]
-			sql.execute "UPDATE ${plots} SET owner=?, uuid=?, name=?, x=?, z=?, h=?, w=? WHERE id={$it.id}".toString(), plot
+		region.plots.values().each {
+			def plot = [it.ownerName, it.ownerUUID, it.plotName, it.x, it.z, it.h, it.w]
+			println "SAVING: ${plot}"
+			sql.execute "UPDATE ${plots} SET owner=?, uuid=?, name=?, x=?, z=?, h=?, w=? WHERE id=${it.id}".toString(), plot
 		}
 		sql.close()
 	}
@@ -149,8 +150,9 @@ abstract class AbstractSQLBackend implements Backend{
 
 		def time = System.currentTimeMillis()
 		region.setId(res.id)
-		region.setCreatedAt(time)
 
+		println "Created: $region"
+		
 		closeReturn(sql, region)
 	}
 
@@ -165,6 +167,8 @@ abstract class AbstractSQLBackend implements Backend{
 		plot.setId(res.id)
 		plot.setCreatedAt(time)
 
+		region.plots.put(plot.id, plot)
+		
 		closeReturn(sql, plot)
 	}
 

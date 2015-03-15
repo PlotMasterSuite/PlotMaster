@@ -37,13 +37,13 @@ class GridManager extends PlotManager{
 	String world
 	int cellWidth
 	int cellHeight
-	
+
 	Map settings
 
 	Border border
 	int bw2
 	int bw
-	
+
 	def GridManager(Backend backend, String world) {
 		super(backend, world)
 
@@ -59,7 +59,7 @@ class GridManager extends PlotManager{
 		this.cellHeight = settings.grid.height
 		this.cellWidth = settings.grid.width
 		this.settings = settings
-		
+
 		border = Border.load(settings.grid.border)
 		if(border) {
 			bw = border.getWidth()
@@ -79,7 +79,6 @@ class GridManager extends PlotManager{
 			} else {
 				r = backend.getRegionByLocation(regx, regz)
 				xzRegionCache.cache("$regx:$regz", r)
-				println "R: $r"
 				return r
 			}
 		}
@@ -108,7 +107,7 @@ class GridManager extends PlotManager{
 			Region r = getRegionAt(x, z, null)
 			if(!r) return null
 			def plots = r.plots
-			
+
 			for(Plot plot in plots.values()){
 				if(LocationUtils.isInRegion(x, z, plot.getX(), plot.getZ(), plot.getX() + plot.getW(), plot.getZ() + plot.getH())){
 					return plot;
@@ -156,14 +155,14 @@ class GridManager extends PlotManager{
 			if(plotExist(x, z, null))
 				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
 
-				
-				
+
+
 			Region region = getRegionAt(x, z, null)
 			//println "Got region ${region.getX()}, ${region.getZ()}"
 			if(!region) {
 				def regCre = createRegion(x, z, cellWidth, cellHeight, null)
-				
-				
+
+
 				if(regCre.getStatus() == RegionCreationStatus.SUCCESS || regCre.getStatus() == RegionCreationStatus.REGION_EXISTS){
 					region = regCre.getRegion()
 				} else {
@@ -173,26 +172,26 @@ class GridManager extends PlotManager{
 			}
 
 			//we'll get to cell packing later, for now just create a single plot in the center of the region
-			
+
 			def plox = region.getX()
 			def ploz = region.getZ()
 			println "CREATE PLOT AT ${plox}, ${ploz}"
-			
-			
+
+
 			plox += cellWidth / 2
 			plox -= type.w / 2
 			plox++
-			
+
 			ploz += cellHeight / 2
 			ploz -= type.h / 2
 			ploz++
-			
+
 			if(region.getPlots().size() > 0){
 				return new PlotCreation(status: PlotCreationStatus.REGION_FULL)
 			}
-			
+
 			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type);
-			
+
 			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
 		}
 	}
@@ -202,7 +201,7 @@ class GridManager extends PlotManager{
 		asyncWrap(c){
 
 			def creation =  createPlot(x, z, type, null)
-			
+
 			if(creation.getStatus() == PlotCreationStatus.SUCCESS){
 				creation.getPlot().setOwnerName(player.getName())
 				creation.getPlot().setOwnerUUID(player.getUUID())
@@ -223,7 +222,7 @@ class GridManager extends PlotManager{
 		def regz = getRegionZ(z)
 
 		println "CreateRegion() ${regx}, ${regz}"
-		
+
 		asyncWrap(c){
 			if(regionExist(regx, regz, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(regx, regz, null))
@@ -231,35 +230,35 @@ class GridManager extends PlotManager{
 			Region region = new Region(world: world, x: regx, z: regz, h: h, w: w)
 
 			region = backend.createRegion(region)
-			
+
 			xzRegionCache.cache("${region.getX()}:${region.getZ()}", region)
-			
+
 			return new RegionCreation(status: RegionCreationStatus.SUCCESS, region: region)
 		}
 	}
-	
+
 	private int getRegionX(int x) {
 		//return x / cellWidth + ((x < 0) ? -1 : 1)
-		
+
 		def width = cellWidth + bw2
-		
+
 		if(x > 0)
 			return (x - (x % width)) + bw
-		else 
+		else
 			return (x - (width - Math.abs(x % width))) + bw
-		}
-	
+	}
+
 	private int getRegionZ(int z) {
 		//return z / cellWidth + ((z < 0) ? -1 : 1)
-		
+
 		def height = cellHeight + bw2
-		
-		
+
+
 		if(z > 0)
 			return (z - (z % height)) + bw
-		else 
-			return (z - (height - Math.abs(z % height))) + bw	
-		}
+		else
+			return (z - (height - Math.abs(z % height))) + bw
+	}
 
 	@Override
 	public PlotMember getPlotMember(PMPlayer player) {
@@ -280,24 +279,24 @@ class GridManager extends PlotManager{
 	@Override
 	public boolean canModifyLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
-		
+
 		def isPart = false
-				
+
 		member.getPlotsAboveLevel(AccessLevel.MEMBER).each {
 			if(it.isPartOf(location.x, location.z)) {
 				isPart = true
 				return
 			}
 		}
-		return isPart		
+		return isPart
 	}
 
 	@Override
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
-		
+
 		def isPart = true
-		
+
 		member.getPlots(AccessLevel.DENY).each {
 			if(it.isPartOf(location.x, location.z)) {
 				isPart = false
@@ -306,6 +305,19 @@ class GridManager extends PlotManager{
 		}
 		return isPart
 	}
-	
+
+	@Override
+	public void saveRegion(Region region, Callback c) {
+		asyncWrap(c) {
+			backend.saveRegion(region)
+		}
+
+	}
+
+	@Override
+	public void savePlot(Plot plot, Callback c) {
+		saveRegion(plot.getRegion(), c)
+	}
+
 
 }

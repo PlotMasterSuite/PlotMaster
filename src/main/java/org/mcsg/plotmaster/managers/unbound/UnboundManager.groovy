@@ -103,6 +103,18 @@ class UnboundManager extends PlotManager{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void saveRegion(Region plot, Callback c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void savePlot(Plot plot, Callback c) {
+		// TODO Auto-generated method stub
+		
+	}
  
 	
 }
