@@ -19,7 +19,7 @@ class Plot implements Cacheable<Integer>{
 	int id
 
 	String plotName = ""
-	String ownerName = "", OwnerUUID = ""
+	String ownerName = "", ownerUUID = ""
 	String world
 	int x, z, h, w
 

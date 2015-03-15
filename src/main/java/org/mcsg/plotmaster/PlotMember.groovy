@@ -13,7 +13,6 @@ class PlotMember {
 	static class PlotInfo {
 		int id;
 		String world
-		int reg
 	}
 
 	Map<AccessLevel, List<PlotInfo>> plots = new HashMap<>()
@@ -66,7 +65,7 @@ class PlotMember {
 
 	void setAccess(AccessLevel access, Plot plot){
 		def list = plots.get(access) ?: []
-		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld(), reg: plot.getRegion().getId()))
+		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld()))
 
 		plots.put(access, list)
 

@@ -79,7 +79,7 @@ class GridManager extends PlotManager{
 			} else {
 				r = backend.getRegionByLocation(regx, regz)
 				xzRegionCache.cache("$regx:$regz", r)
-			
+				println "R: $r"
 				return r
 			}
 		}
@@ -107,12 +107,10 @@ class GridManager extends PlotManager{
 		asyncWrap(c) {
 			Region r = getRegionAt(x, z, null)
 			if(!r) return null
-			def plots = r.getPlots()
-
-		//	println "PLOTS: ${plots.toString}...${plots.getClass()}...${plots.values()}"
+			def plots = r.plots
 			
 			for(Plot plot in plots.values()){
-				if(LocationUtils.isInRegion(x, z, plot.getX(), plot.getZ(), plot.getX() + plot.getType().getW(), plot.getZ() + plot.getType().getH())){
+				if(LocationUtils.isInRegion(x, z, plot.getX(), plot.getZ(), plot.getX() + plot.getW(), plot.getZ() + plot.getH())){
 					return plot;
 				}
 			}

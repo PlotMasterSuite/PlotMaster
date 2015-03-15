@@ -13,10 +13,13 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.Plot
+import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
+import org.mcsg.plotmaster.PlotMember.PlotInfo
 import org.mcsg.plotmaster.backend.Backend;
+import org.mcsg.plotmaster.managers.PlotManager;
 
 abstract class AbstractSQLBackend implements Backend{
 
@@ -74,7 +77,6 @@ abstract class AbstractSQLBackend implements Backend{
 				 `name` varchar(16) ,
 				 `type` enum('OWNER', 'ADMIN', 'MEMBER', 'ALLOW', 'DENY') NOT NULL,
 				 `plot` varchar(32) NOT NULL,
-				 `reg` varchar(32) NOT NULL,
 				 PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1
 		""".toString())
@@ -155,8 +157,8 @@ abstract class AbstractSQLBackend implements Backend{
 	public Plot createPlot(Region region, Plot plot) {
 		Sql sql = getSql()
 
-		sql.execute( "INSERT INTO ${plots} (world, region, x, z, h, w, type, createdAt) VALUES(?,?,?,?,?,?,?, ?);".toString()
-				, [region.world, region.id, plot.x, plot.z, plot.h, plot.w, plot.type.name, plot.createdAt])
+		sql.execute( "INSERT INTO ${plots} (world, region, owner, uuid, x, z, h, w, type,createdAt) VALUES(?,?,?,?,?,?,?,?,?, ?);".toString()
+				, [region.world, region.id, plot.ownerName, plot.ownerUUID, plot.x, plot.z, plot.h, plot.w, plot.type.name, plot.createdAt])
 		def res = sql.firstRow("SELECT LAST_INSERT_ID() as id FROM ${plots}".toString())
 
 		def time = System.currentTimeMillis()
@@ -173,11 +175,11 @@ abstract class AbstractSQLBackend implements Backend{
 		PlotMember member = new PlotMember(uuid: uuid, plots: new HashMap<>())
 
 		sql.eachRow("SELECT * FROM ${access_list} WHERE uuid=?".toString(), [uuid]) { row ->
-			def type = row.type as AccessLevel;
-			def access = (member.plots.get(type)) ?: new ArrayList<Map<String, Integer>>()
+			def type = AccessLevel.valueOf(row.type);
+			def access = (member.getPlotAccessMap().get(type)) ?: new ArrayList<PlotInfo>()
 
-			access.add([plot: row.plot, region: row.region])
-			member.plots.put(type, access)
+			access.add(new PlotInfo(id: row.plot, world: world))
+			member.getPlotAccessMap().put(type, access)
 		}
 
 		closeReturn(sql, member)
@@ -191,10 +193,10 @@ abstract class AbstractSQLBackend implements Backend{
 		sql.execute("DELETE FROM ${access_list} WHERE uuid=?".toString(), [member.uuid])
 
 		//id, uuid, name, type, plot, reg
-		sql.withBatch("INSERT INTO ${access_list} VALUES(NULL, ?, ?, ?, ?, ?)".toString()) { BatchingPreparedStatementWrapper ps ->
+		sql.withBatch("INSERT INTO ${access_list} VALUES(NULL, ?, ?, ?, ?)".toString()) { BatchingPreparedStatementWrapper ps ->
 			member.getPlotAccessMap().each { level, list ->
 				list?.each {
-					ps.addBatch([member.uuid, member.name, level.toString(), it.id, it.reg])
+					ps.addBatch([member.uuid, member.name, level.toString(), it.id])
 				}
 			}
 
@@ -205,7 +207,7 @@ abstract class AbstractSQLBackend implements Backend{
 
 	private Region regionFromQuery(row){
 		if(row) {
-			new Region(id: row.id, name: row.name, world: row.world, x: row.x, z: row.z,
+			return new Region(id: row.id, name: row.name, world: row.world, x: row.x, z: row.z,
 			h: row.h, w: row.w, createdAt: row.createdAt)
 		} else {
 			return null
@@ -214,9 +216,9 @@ abstract class AbstractSQLBackend implements Backend{
 
 	protected Plot plotFromQuery(row, reg){
 		if(row){
-			new Plot(id: row.id, region: reg, plotName: row.name, ownerName: row.owner,
-			ownerUUID: row.uuid, x: row.x, z: row.z, h: row.h, w: row.w,
-			createdAt: row.createdAt)
+			return new Plot(id: row.id, region: reg, plotName: row.name, ownerName: row.owner,
+			ownerUUID: row.uuid, x: row.x, z: row.z, h: row.h, w: row.w, world: world,
+			createdAt: row.createdAt, type: PlotMaster.getInstance().getPlotType(world, row.type))
 		}
 		return null
 	}
@@ -224,10 +226,11 @@ abstract class AbstractSQLBackend implements Backend{
 
 	private Region loadPlotsForRegion(Sql sql, Region reg){
 		if(reg)
-			sql.eachRow("SELECT * FROM ${world}_plots WHERE region=${reg.id}".toString()) { row ->
+			sql.eachRow("SELECT * FROM ${plots} WHERE region=${reg.id}".toString()) { row ->
 				def plot = plotFromQuery(row, reg)
-				if(plot)
+				if(plot) {
 					reg.plots.put(plot.id, plot)
+				}
 			}
 		return reg
 	}
