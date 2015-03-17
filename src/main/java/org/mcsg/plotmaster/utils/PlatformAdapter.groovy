@@ -17,10 +17,10 @@ import bukkit.org.mcsg.plotmaster.util.BukkitBlockUpdate;
 class PlatformAdapter {
 
 	enum PlatformType {
-		BUKKIT
+		NONE, BUKKIT
 	}
 
-	static PlatformType platform
+	static PlatformType platform = PlatformType.NONE
 
 	static BlockUpdate createBlockUpdate(String world, int x, int y, int z, String material, byte data){
 		if(platform == PlatformType.BUKKIT){
@@ -54,6 +54,10 @@ class PlatformAdapter {
 	static File getDataFolder(){
 		if(platform == PlatformType.BUKKIT) {
 			def file  = new File("plugins/PlotMaster")
+			file.mkdirs()
+			return file
+		} else {
+			def file = new File("PlotMaster/")
 			file.mkdirs()
 			return file
 		}

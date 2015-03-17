@@ -72,6 +72,9 @@ class GridManager extends PlotManager{
 	public Region getRegionAt(int x, int z, Callback c) {
 		def regx = getRegionX(x)
 		def regz = getRegionZ(z)
+		
+		println "getRegionAt() regx: $regx, regz: $regz"
+		
 		asyncWrap(c) {
 			Region r = xzRegionCache.get("$regx:$regz")
 			if(r) {
@@ -100,8 +103,8 @@ class GridManager extends PlotManager{
 
 
 	@Override
-	public Plot getPlot(int x, int z, Callback c ) {
-		print "getPlot() cellx: ${x},  cellz: ${z}"
+	public Plot getPlotAt(int x, int z, Callback c ) {
+		print "getPlotAt() cellx: ${x},  cellz: ${z}"
 
 		asyncWrap(c) {
 			Region r = getRegionAt(x, z, null)
@@ -143,7 +146,7 @@ class GridManager extends PlotManager{
 	@Override
 	public boolean plotExist(int x, int z, Callback c) {
 		asyncWrap(c) {
-			return getPlot(x, z, null) != null
+			return getPlotAt(x, z, null) != null
 		}
 	}
 

@@ -74,13 +74,13 @@ class FlatFileBackend implements Backend{
 	}
 
 	public Region getRegion(int id) {
-		XZLoc loc = regionMap.get(id.toString())
+		XZLoc loc = regionMap.get(id)
 
 		if(loc == null){
 			return null
 		}
 
-		return getRegionByLocation(loc.x, id)
+		return getRegionByLocation(loc.x, loc.z)
 	}
 
 	public Region getRegionByLocation(int x, int z) {

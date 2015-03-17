@@ -32,7 +32,7 @@ abstract class PlotManager {
 	
 	abstract Region getRegion(int id, Callback c)
 	
-	abstract Plot getPlot(int x, int z, Callback c)
+	abstract Plot getPlotAt(int x, int z, Callback c)
 	
 	abstract Plot getPlot(int id, Callback c)
 	

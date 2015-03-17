@@ -38,7 +38,7 @@ class UnboundManager extends PlotManager{
 	}
 
 	@Override
-	public Plot getPlot(int x, int z, Callback c) {
+	public Plot getPlotAt(int x, int z, Callback c) {
 		// TODO Auto-generated method stub
 		return null;
 	}

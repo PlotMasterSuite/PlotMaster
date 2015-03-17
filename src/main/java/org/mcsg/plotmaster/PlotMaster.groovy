@@ -13,6 +13,7 @@ import org.mcsg.plotmaster.command.CommandHandler;
 import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.grid.GridManager;
 import org.mcsg.plotmaster.managers.unbound.UnboundManager;
+import org.mcsg.plotmaster.rest.RestServer
 import org.mcsg.plotmaster.utils.TaskQueue;
 
 
@@ -91,9 +92,7 @@ class PlotMaster{
 				
 				registerPlotType(conf.world, plot)
 			}
-			
 			loadManager(conf, conf.backend, conf.type, conf.world )
-			
 		}
 	}
 

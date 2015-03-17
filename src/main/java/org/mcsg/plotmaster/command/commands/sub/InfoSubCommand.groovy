@@ -24,7 +24,7 @@ class InfoSubCommand implements PlayerSubCommand{
 	@Override
 	public boolean onCommand(PMPlayer player, List<String> args) {
 		def loc = player.getLocation()
-		PlotMaster.getInstance().getManager(loc.getWorld()).getPlot(loc.getX(), loc.getZ()) { Plot plot ->
+		PlotMaster.getInstance().getManager(loc.getWorld()).getPlotAt(loc.getX(), loc.getZ()) { Plot plot ->
 
 			if(plot) {
 

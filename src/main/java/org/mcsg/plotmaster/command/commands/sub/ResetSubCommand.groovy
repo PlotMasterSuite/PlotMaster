@@ -20,7 +20,7 @@ class ResetSubCommand implements PlayerSubCommand {
 	public boolean onCommand(PMPlayer player, List<String> args) {
 		
 		PlotManager manager = PlotMaster.getInstance().getManager(player.getLocation().getWorld())
-		Plot p = manager.getPlot(player.getLocation().getX(), player.getLocation().getZ(), null)
+		Plot p = manager.getPlotAt(player.getLocation().getX(), player.getLocation().getZ(), null)
 		
 		p.reset(manager.getSettings()) {
 			player.sendMessage("&aPlot has been cleared!")
