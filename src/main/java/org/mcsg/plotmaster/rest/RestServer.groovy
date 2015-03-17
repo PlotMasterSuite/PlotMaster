@@ -2,6 +2,7 @@ package org.mcsg.plotmaster.rest;
 
 import static spark.Spark.*;
 
+import org.mcsg.plotmaster.Plot
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMConsole;
 import org.mcsg.plotmaster.managers.PlotManager
@@ -25,12 +26,10 @@ class RestServer {
 		pm = new PlotMaster()
 		
 		pm.onLoad(new DefaultConsole())
-		
 		pm.onEnable()
 		
 		man = PlotMaster.getInstance().getManager("world")
 		
-
 		new RestServer().start()
 	}
 	
@@ -40,6 +39,8 @@ class RestServer {
 	
 	void start(){
 		before { Request req, Response res ->
+			pm.sendConsoleMessage("&7[WebServer] Request to ${req.url()}")
+			
 			res.type("application/json")
 		}
 		
@@ -53,7 +54,13 @@ class RestServer {
 			for(index in start..start+amount-1){
 				def reg = man.getRegion(index, null)
 				if(reg){
-					regions.add([href: getUrl(req, "/region/$reg.id"), id: reg.id])
+					def say = [href: getUrl(req, "/region/$reg.id"), id: reg.id] as HashMap<String, Object>
+					def plots = []
+					for(Plot plot : reg.plots.values()) {
+						plots.add([	href: getUrl(req, "/plot/${plot.id}"), id: plot.id])
+					}
+					say.put("plots", plots)
+					regions.add(say)
 				} 
 			}
 			return toJson(regions)
@@ -74,7 +81,24 @@ class RestServer {
 		}
 		
 		get("/plots") { Request req, Response res ->
+			def regions = []
+			int start = ((req.queryParams("start")?.toInteger()) ?: 1)
+			int amount = ((req.queryParams("amount")?.toInteger()) ?: 25)
+			amount = (amount < 25) ? amount : 25
 			
+			for(index in start..start+amount-1){
+				def plot = man.getPlot(index, null)
+				if(plot){
+					regions.add([
+						_href: getUrl(req, "/plot/${plot.id}"), 
+						id: plot.id, 
+						region: [
+								_href: getUrl(req, "/region/${plot.getRegion().id}"),
+								id: plot.id
+							] ])
+				}
+			}
+			return toJson(regions)
 		}
 		
 		get("/plot/:id") { Request req, Response res ->

@@ -105,14 +105,21 @@ class FlatFileBackend implements Backend{
 	}
 
 	public Plot getPlot(int id) {
-		XZLoc loc = regionMap.get(plotMap.get(id))
+		def rg = plotMap.get(id)
+		if(!rg)
+			return null
+		
+		XZLoc loc = regionMap.get(rg)
 
 		if(!loc)
 			return null
 
 		Region region = getRegionByLocation(loc.x, loc.z)
 
-		return region.plots.get(id)
+		def plot = region.plots.get(id);
+		plot.region = region
+		
+		return plot
 	}
 
 
