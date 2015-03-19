@@ -61,6 +61,10 @@ interface Backend {
 	Region createRegion(Region region)
 	
 	
+	
+	void deleteRegion(Region region)
+	
+	
 	///////////////////////////////////// PLOTS ////////////////////////////////
 	
 	/**
@@ -79,6 +83,9 @@ interface Backend {
 	 */
 	//int x, int y, int h, int w, PlotType type
 	Plot createPlot(Region region, Plot plot)
+	
+	
+	void deletePlot(Plot plot)
 	
 	
 	///////////////////////////////////// MEMBERS //////////////////////////////

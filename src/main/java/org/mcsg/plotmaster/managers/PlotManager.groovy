@@ -48,6 +48,10 @@ abstract class PlotManager {
 	
 	abstract void savePlot(Plot plot, Callback c)
 	
+	abstract void deleteRegion(Region region, Callback c)
+	
+	abstract void deletePlot(Plot plot, Callback c)
+	
 	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	
 	abstract PlotMember getPlotMember(PMPlayer player)
