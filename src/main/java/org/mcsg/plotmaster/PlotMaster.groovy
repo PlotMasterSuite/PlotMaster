@@ -108,9 +108,7 @@ class PlotMaster{
 	private loadConfigurations(){
 		for(Map conf in Settings.config.configurations) {
 
-			conf.plotTypes.each { key, value ->
-				sendConsoleMessage('93  '+value.toString())
-				
+			conf.plotTypes.each { key, value ->				
 				def plot = new PlotType(name: value.name, w: value.width, h: value.height,
 					schematic: value.schematic, border: value.border)
 				
@@ -153,7 +151,7 @@ class PlotMaster{
 	}
 
 	void registerPlotType(String world, PlotType type){
-		console.sendMessage("&aLoaded PlotType ${type.name} for ${world}")
+		console.sendMessage("&aLoaded PlotType \"${type.name}\" for ${world}")
 		
 		def worldmap = plottypes.get(world) ?: [:]
 

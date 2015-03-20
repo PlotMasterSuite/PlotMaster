@@ -40,10 +40,8 @@ class FlatFileBackend implements Backend{
 	}
 
 	public void load(String world, Map settings) {
-		println settings.toMapString()
 		if(settings.debug) {
 			gson = new GsonBuilder().setPrettyPrinting().create()
-			println settings.debug
 		} else {
 			gson = new Gson()
 		}
