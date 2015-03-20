@@ -200,6 +200,22 @@ abstract class AbstractSQLBackend implements Backend{
 		return reg
 	}
 
+	@Override
+	public void deleteRegion(Region region) {
+		Sql sql = getSql()
+
+		sql.execute "DELETE FROM ${plots} WHERE region=${region.getId()}".toString()
+		sql.execute "DELETE FROM ${regions} WHERE id=${region.getId()}".toString()
+
+		sql.close()
+	}
+
+	@Override
+	public void deletePlot(Plot plot) {
+		Sql sql = getSql()
+		sql.execute "DELETE FROM ${plots} WHERE id=${plot.getId()}".toString()
+		sql.close()
+	}
 
 
 	Sql getSql(){
@@ -210,5 +226,7 @@ abstract class AbstractSQLBackend implements Backend{
 		sql.close()
 		ret
 	}
+
+
 
 }

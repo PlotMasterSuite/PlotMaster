@@ -36,7 +36,7 @@ class FlatFileBackend implements Backend{
 	Gson gson
 
 	static class XZLoc {
-		int x, z 
+		int x, z
 	}
 
 	public void load(String world, Map settings) {
@@ -47,7 +47,7 @@ class FlatFileBackend implements Backend{
 		} else {
 			gson = new Gson()
 		}
-		
+
 		File loc = new File(PlatformAdapter.getDataFolder(), settings.location.toString());
 		loc.mkdirs()
 
@@ -96,10 +96,10 @@ class FlatFileBackend implements Backend{
 		assert region != null, "Region cannot be null"
 
 		def file = new File(regionFolder, "${region.x}.${region.z}.rg")
-		
+
 		file.createNewFile()
 		file.setText(gson.toJson(region))
-				
+
 		savePlotMap()
 		saveRegionMap()
 	}
@@ -108,7 +108,7 @@ class FlatFileBackend implements Backend{
 		def rg = plotMap.get(id)
 		if(!rg)
 			return null
-		
+
 		XZLoc loc = regionMap.get(rg)
 
 		if(!loc)
@@ -118,24 +118,24 @@ class FlatFileBackend implements Backend{
 
 		def plot = region.plots.get(id);
 		plot.region = region
-		
+
 		return plot
 	}
 
 
 	public Region createRegion(Region region) {
 		def en  = regionMap.lastEntry()
-		
+
 		def id = ((en) ? en.getKey() : 0) + 1
-		
+
 		region.setId(id)
 		region.setCreatedAt(System.currentTimeMillis())
 
 		regionMap.put(id,
-			 new XZLoc(x: region.getX(), z: region.getZ()))
-		
+				new XZLoc(x: region.getX(), z: region.getZ()))
+
 		saveRegion(region)
-		
+
 		return region
 	}
 
@@ -148,14 +148,14 @@ class FlatFileBackend implements Backend{
 
 	public Plot createPlot(Region region, Plot plot) {
 		def en  = plotMap.lastEntry()
-				
+
 		Integer id = ((en) ? en.getKey() : 0) + 1
 
 		plot.setId(id)
 		plot.setCreatedAt(System.currentTimeMillis())
 
 		region.plots.put(id, plot)
-		
+
 		plotMap.put(id, region.getId())
 		saveRegion(region)
 
@@ -184,6 +184,21 @@ class FlatFileBackend implements Backend{
 
 	private void saveRegionMap(){
 		regionMapFile.setText(gson.toJson(regionMap))
+	}
+
+	@Override
+	public void deleteRegion(Region region) {
+		def file = new File(regionFolder, "${region.x}.${region.z}.rg")
+		file.delete()
+		
+		regionMap.remove(region.getId())
+		saveRegionMap()
+
+	}
+
+	@Override
+	public void deletePlot(Plot plot) {
+		saveRegion(plot.getRegion())
 	}
 
 }

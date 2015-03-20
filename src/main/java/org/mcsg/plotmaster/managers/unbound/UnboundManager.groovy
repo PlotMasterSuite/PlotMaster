@@ -115,6 +115,18 @@ class UnboundManager extends PlotManager{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void deleteRegion(Region region, Callback c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deletePlot(Plot plot, Callback c) {
+		// TODO Auto-generated method stub
+		
+	}
  
 	
 }

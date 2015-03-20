@@ -72,9 +72,9 @@ class GridManager extends PlotManager{
 	public Region getRegionAt(int x, int z, Callback c) {
 		def regx = getRegionX(x)
 		def regz = getRegionZ(z)
-		
+
 		println "getRegionAt() regx: $regx, regz: $regz"
-		
+
 		asyncWrap(c) {
 			Region r = xzRegionCache.get("$regx:$regz")
 			if(r) {
@@ -320,6 +320,24 @@ class GridManager extends PlotManager{
 	@Override
 	public void savePlot(Plot plot, Callback c) {
 		saveRegion(plot.getRegion(), c)
+	}
+
+	@Override
+	public void deleteRegion(Region region, Callback c) {
+		asyncWrap(c){
+			region.getPlots().values().each {
+				it.reset(settings, null)
+			}
+			backend.deleteRegion(region)
+		}
+	}
+
+	@Override
+	public void deletePlot(Plot plot, Callback c) {
+		asyncWrap(c) {
+			plot.reset(settings, null)
+			backend.deletePlot(plot)
+		}
 	}
 
 
