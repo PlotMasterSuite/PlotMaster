@@ -1,8 +1,11 @@
 
 package org.mcsg.plotmaster
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.mcsg.plotmaster.bridge.PMConsole;
 import org.mcsg.plotmaster.backend.Backend;
 import org.mcsg.plotmaster.backend.flatfile.FlatFileBackend;
@@ -14,6 +17,7 @@ import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.grid.GridManager;
 import org.mcsg.plotmaster.managers.unbound.UnboundManager;
 import org.mcsg.plotmaster.rest.RestServer
+import org.mcsg.plotmaster.utils.PlatformAdapter;
 import org.mcsg.plotmaster.utils.TaskQueue;
 
 
@@ -50,6 +54,13 @@ class PlotMaster{
 		} else {
 			console.warn("&6Plugin is in setup mode! Skipping load of backends & managers")
 		}
+		
+		
+		copyFile("borders/", "beacon.border")
+		copyFile("borders/", "small.border")
+		copyFile("borders/", "road.border")
+		copyFile("borders/", "dir.border")
+		
 	}
 
 	void onEnable(){
@@ -80,6 +91,19 @@ class PlotMaster{
 
 	}
 
+	private copyFile(String dir, String file){
+		File folder = new File(PlatformAdapter.getDataFolder(), dir)
+		File f = new File(folder, file)
+		if(!f.exists()){
+			folder.mkdirs()
+			f.createNewFile()
+			
+			def input = this.getClass().getResource("/files/"+dir+file)
+						
+			FileUtils.copyURLToFile(input, f)
+		}
+	}
+	
 
 	private loadConfigurations(){
 		for(Map conf in Settings.config.configurations) {
@@ -116,7 +140,6 @@ class PlotMaster{
 	void sendConsoleMessage(String msg){
 		console.sendMessage(msg)
 	}
-
 
 	
 

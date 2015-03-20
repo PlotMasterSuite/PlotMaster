@@ -132,7 +132,7 @@ class Border {
 		checkFolder()
 
 		def json = Settings.getGson().toJson(this)
-		def file = new File(folder, "${name}.border.gz")
+		def file = new File(folder, "${name}.border")
 
 		def writer = new OutputStreamWriter(new GZIPOutputStream(
 				new FileOutputStream(file)))
@@ -153,7 +153,7 @@ class Border {
 
 	static Border load(String name){
 		checkFolder()
-		File file = new File(folder, "${name}.border.gz")
+		File file = new File(folder, "${name}.border")
 
 		if(!file.exists())
 			return null
