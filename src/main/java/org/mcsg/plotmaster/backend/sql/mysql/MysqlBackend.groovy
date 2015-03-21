@@ -58,6 +58,7 @@ class MysqlBackend extends AbstractSQLBackend {
 				 `w` int(11) NOT NULL,
 				 `createdAt` bigint(32) NOT NULL,
 				 `type` varchar(32) NOT NULL,
+				 `settings` TEXT,
 				  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 		""".toString())

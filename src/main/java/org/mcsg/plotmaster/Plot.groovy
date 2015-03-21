@@ -1,5 +1,6 @@
 package org.mcsg.plotmaster
 
+import com.google.gson.Gson
 import groovy.transform.CompileStatic;
 
 import org.mcsg.plotmaster.bridge.PMPlayer
@@ -16,19 +17,23 @@ import org.mcsg.plotmaster.utils.TaskQueue;
 
 class Plot implements Cacheable<Integer>{
 
+	static transient final Gson gson = new Gson()
+	
+	
 	int id
 
 	String plotName = ""
-	String ownerName = "", ownerUUID = ""
+	String ownerName = "", ownerUUID = "" 
 	String world
-	int x, z, h, w
+	int x, z, h, w 
 
-	long createdAt = System.currentTimeMillis()
-	PlotType type
+	long createdAt = System.currentTimeMillis() 
+	PlotType type 
 
-	List<String> members
-	List<String> deny
+	List<String> members 
+	List<String> deny 
 
+	Map settings = [:] 
 
 	transient boolean changed
 	transient Region region
@@ -46,6 +51,15 @@ class Plot implements Cacheable<Integer>{
 			player = PlatformAdapter.getPlayerByUUID(OwnerUUID)
 
 		return player.isOnline()
+	}
+	
+	
+	String settingsToJson(){
+		return gson.toJson(settings)
+	}
+	
+	void settingsFromJson(String json){
+		this.settings = gson.fromJson(json, Map.class)
 	}
 
 	@CompileStatic

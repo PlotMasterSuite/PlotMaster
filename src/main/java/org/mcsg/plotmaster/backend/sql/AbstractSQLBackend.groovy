@@ -78,9 +78,8 @@ abstract class AbstractSQLBackend implements Backend{
 		sql.execute "UPDATE ${regions} SET name=?, x=?, z=?, h=?, w=? WHERE id=?".toString(), reg
 
 		region.plots.values().each {
-			def plot = [it.ownerName, it.ownerUUID, it.plotName, it.x, it.z, it.h, it.w]
-			println "SAVING: ${plot}"
-			sql.execute "UPDATE ${plots} SET owner=?, uuid=?, name=?, x=?, z=?, h=?, w=? WHERE id=${it.id}".toString(), plot
+			def plot = [it.ownerName, it.ownerUUID, it.plotName, it.x, it.z, it.h, it.w, it.settingsToJson()]
+			sql.execute "UPDATE ${plots} SET owner=?, uuid=?, name=?, x=?, z=?, h=?, w=?, settings=? WHERE id=${it.id}".toString(), plot
 		}
 		sql.close()
 	}
@@ -118,8 +117,10 @@ abstract class AbstractSQLBackend implements Backend{
 	public Plot createPlot(Region region, Plot plot) {
 		Sql sql = getSql()
 
-		sql.execute( "INSERT INTO ${plots} (world, region, owner, uuid, x, z, h, w, type,createdAt) VALUES(?,?,?,?,?,?,?,?,?, ?);".toString()
-				, [region.world, region.id, plot.ownerName, plot.ownerUUID, plot.x, plot.z, plot.h, plot.w, plot.type.name, plot.createdAt])
+		sql.execute( "INSERT INTO ${plots} (world, region, owner, uuid, x, z, h, w, type,createdAt) VALUES(?,?,?,?,?,?,?,?,?, ?, ?);".toString()
+				, [region.world, region.id, plot.ownerName, plot.ownerUUID, plot.x, plot.z, 
+					plot.h, plot.w, plot.type.name, plot.createdAt, plot.settingsToJson()])
+		
 		def res = (this instanceof SQLiteBackend)
 				? sql.firstRow("SELECT last_insert_rowid() as id FROM ${plots}".toString())
 				: sql.firstRow("SELECT last_insert_id() as id FROM ${plots}".toString())
@@ -181,9 +182,11 @@ abstract class AbstractSQLBackend implements Backend{
 
 	protected Plot plotFromQuery(row, reg){
 		if(row){
-			return new Plot(id: row.id, region: reg, plotName: row.name, ownerName: row.owner,
+			Plot plot = new Plot(id: row.id, region: reg, plotName: row.name, ownerName: row.owner,
 			ownerUUID: row.uuid, x: row.x, z: row.z, h: row.h, w: row.w, world: world,
 			createdAt: row.createdAt, type: PlotMaster.getInstance().getPlotType(world, row.type))
+			plot.settingsFromJson(row.settings)
+			return plot
 		}
 		return null
 	}
