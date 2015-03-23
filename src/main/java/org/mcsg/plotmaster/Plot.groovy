@@ -48,7 +48,7 @@ class Plot implements Cacheable<Integer>{
 	@Override
 	public boolean isStale() {
 		if(!player)
-			player = PlatformAdapter.getPlayerByUUID(OwnerUUID)
+			player = PlatformAdapter.getPlayerByUUID(ownerUUID)
 
 		return player.isOnline()
 	}
