@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.mcsg.plotmaster.listeners.BlockListeners;
+import org.mcsg.plotmaster.listener.BlockListeners;
 
 class BlockListener implements Listener{
 

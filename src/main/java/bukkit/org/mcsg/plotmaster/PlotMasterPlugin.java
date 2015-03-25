@@ -62,7 +62,7 @@ public class PlotMasterPlugin extends JavaPlugin{
 
 
 		if(hasGroovy){
-			StartupOffloader.onLoad();
+			StartupOffloader.onLoad(this);
 		}
 	}
 

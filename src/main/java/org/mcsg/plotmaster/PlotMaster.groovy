@@ -1,6 +1,8 @@
 
 package org.mcsg.plotmaster
 
+import groovy.transform.CompileStatic;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -19,6 +21,10 @@ import org.mcsg.plotmaster.managers.unbound.UnboundManager;
 import org.mcsg.plotmaster.rest.RestServer
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 import org.mcsg.plotmaster.utils.TaskQueue;
+
+import bukkit.org.mcsg.plotmaster.listeners.WorldEditListener;
+
+import com.sk89q.worldedit.WorldEdit;
 
 
 
@@ -54,15 +60,16 @@ class PlotMaster{
 		} else {
 			console.warn("&6Plugin is in setup mode! Skipping load of backends & managers")
 		}
-		
-		
+
+
 		copyFile("borders/", "beacon.border")
 		copyFile("borders/", "small.border")
 		copyFile("borders/", "road.border")
 		copyFile("borders/", "dir.border")
-		
+
 	}
 
+	@CompileStatic
 	void onEnable(){
 
 		CommandHandler.load()
@@ -80,8 +87,9 @@ class PlotMaster{
 		} else {
 
 			loadConfigurations()
-
 			TaskQueue.start()
+
+			
 		}
 
 
@@ -97,21 +105,21 @@ class PlotMaster{
 		if(!f.exists()){
 			folder.mkdirs()
 			f.createNewFile()
-			
+
 			def input = this.getClass().getResource("/files/"+dir+file)
-						
+
 			FileUtils.copyURLToFile(input, f)
 		}
 	}
-	
+
 
 	private loadConfigurations(){
 		for(Map conf in Settings.config.configurations) {
 
-			conf.plotTypes.each { key, value ->				
+			conf.plotTypes.each { key, value ->
 				def plot = new PlotType(name: value.name, w: value.width, h: value.height,
-					schematic: value.schematic, border: value.border)
-				
+				schematic: value.schematic, border: value.border)
+
 				registerPlotType(conf.world, plot)
 			}
 			loadManager(conf, conf.backend, conf.type, conf.world )
@@ -131,7 +139,7 @@ class PlotMaster{
 
 		manager.load(conf)
 		managers.put(world,  manager)
-		
+
 		return manager
 	}
 
@@ -139,7 +147,9 @@ class PlotMaster{
 		console.sendMessage(msg)
 	}
 
-	
+	PMConsole getConsole(){
+		return this.console;
+	}
 
 	//////////////////////////////// API //////////////////////////////////
 	void registerBackend(String name, Class<? extends Backend> backend){
@@ -152,7 +162,7 @@ class PlotMaster{
 
 	void registerPlotType(String world, PlotType type){
 		console.sendMessage("&aLoaded PlotType \"${type.name}\" for ${world}")
-		
+
 		def worldmap = plottypes.get(world) ?: [:]
 
 		worldmap.put(type.name, type)
@@ -180,9 +190,9 @@ class PlotMaster{
 
 		return list
 	}
-	
+
 	Map getBackendConfiguration(String backend){
-		return Settings.config.backends.get(backend) 
+		return Settings.config.backends.get(backend)
 	}
 
 

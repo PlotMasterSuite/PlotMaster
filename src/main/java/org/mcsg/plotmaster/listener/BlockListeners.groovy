@@ -1,4 +1,4 @@
-package org.mcsg.plotmaster.listeners
+package org.mcsg.plotmaster.listener
 
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMBlock

@@ -3,6 +3,7 @@ package org.mcsg.plotmaster
 import com.google.gson.Gson
 import groovy.transform.CompileStatic;
 
+import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.cache.Cacheable;
 import org.mcsg.plotmaster.schematic.Border;
@@ -62,6 +63,13 @@ class Plot implements Cacheable<Integer>{
 		this.settings = gson.fromJson(json, Map.class)
 	}
 
+	PMLocation getMax(){
+		return PlatformAdapter.toLocation(world, x + h, 255, z + w)
+	}
+	PMLocation getMin(){
+		return PlatformAdapter.toLocation(world, x, 0, z)
+	}
+	
 	@CompileStatic
 	public void paint(Callback c) {
 		Border border = Border.load(type.border)
