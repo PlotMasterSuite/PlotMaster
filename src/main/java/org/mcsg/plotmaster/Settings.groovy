@@ -47,7 +47,7 @@ class Settings {
 				backend: "flatfile",
 				grid : [
 					width: 99,
-					height: 199,
+					height: 99,
 					border: "road",
 					allow_expand: false,
 				],
