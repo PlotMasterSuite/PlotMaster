@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster
 
+import java.util.Map.Entry;
+
 import org.mcsg.plotmaster.managers.PlotManager
 
 
@@ -63,6 +65,18 @@ class PlotMember {
 		return list
 	}
 
+	
+	AccessLevel getAccessLevel(Plot plot){
+		for(Entry e : plots.entrySet()) {
+			for(Plot p : e.getValue()){
+				if(p.id == plot.id){
+					return e.getKey()
+				}
+			}
+		}
+		return AccessLevel.NONE
+	}
+	
 	void setAccess(AccessLevel access, Plot plot){
 		def list = plots.get(access) ?: []
 		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld()))

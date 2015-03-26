@@ -56,7 +56,8 @@ class SQLiteBackend extends AbstractSQLBackend {
 				 `h` INTEGER NOT NULL,
 				 `w` INTEGER NOT NULL,
 				 `createdAt` bigint(32) NOT NULL,
-				 `type` varchar(32) NOT NULL
+				 `type` text NOT NULL
+				 `accessmode` TEXT NOT NULL DEFAULT 'ALLOW',
 				 `settings` TEXT,
 			);
 		""".toString())

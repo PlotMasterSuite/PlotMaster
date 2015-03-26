@@ -2,7 +2,7 @@ package org.mcsg.plotmaster
 
 enum AccessLevel {
 
-	OWNER(10), ADMIN(5), MEMBER(1), ALLOW(0), DENY(-1)
+	OWNER(10), ADMIN(5), MEMBER(2), ALLOW(1), NONE(0), DENY(-1)
 	 
 	int level
 	

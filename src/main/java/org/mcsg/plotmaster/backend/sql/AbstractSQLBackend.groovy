@@ -117,9 +117,9 @@ abstract class AbstractSQLBackend implements Backend{
 	public Plot createPlot(Region region, Plot plot) {
 		Sql sql = getSql()
 
-		sql.execute( "INSERT INTO ${plots} (world, region, owner, uuid, x, z, h, w, type,createdAt) VALUES(?,?,?,?,?,?,?,?,?, ?, ?);".toString()
+		sql.execute( "INSERT INTO ${plots} (world, region, owner, uuid, x, z, h, w, type, accessmode, createdAt, settings) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);".toString()
 				, [region.world, region.id, plot.ownerName, plot.ownerUUID, plot.x, plot.z, 
-					plot.h, plot.w, plot.type.name, plot.createdAt, plot.settingsToJson()])
+					plot.h, plot.w, plot.type.name, plot.accessMode,  plot.createdAt, plot.settingsToJson()])
 		
 		def res = (this instanceof SQLiteBackend)
 				? sql.firstRow("SELECT last_insert_rowid() as id FROM ${plots}".toString())
@@ -183,7 +183,7 @@ abstract class AbstractSQLBackend implements Backend{
 	protected Plot plotFromQuery(row, reg){
 		if(row){
 			Plot plot = new Plot(id: row.id, region: reg, plotName: row.name, ownerName: row.owner,
-			ownerUUID: row.uuid, x: row.x, z: row.z, h: row.h, w: row.w, world: world,
+			ownerUUID: row.uuid, x: row.x, z: row.z, h: row.h, w: row.w, world: world, accessMode: row.accessmode,
 			createdAt: row.createdAt, type: PlotMaster.getInstance().getPlotType(world, row.type))
 			plot.settingsFromJson(row.settings)
 			return plot

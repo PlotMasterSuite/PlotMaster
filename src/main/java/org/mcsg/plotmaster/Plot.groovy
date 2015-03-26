@@ -20,6 +20,9 @@ class Plot implements Cacheable<Integer>{
 
 	static transient final Gson gson = new Gson()
 	
+	enum AccessMode {
+		ALLOW, DENY
+	}
 	
 	int id
 
@@ -30,9 +33,7 @@ class Plot implements Cacheable<Integer>{
 
 	long createdAt = System.currentTimeMillis() 
 	PlotType type 
-
-	List<String> members 
-	List<String> deny 
+	AccessMode accessMode = AccessMode.ALLOW
 
 	Map settings = [:] 
 
@@ -51,7 +52,7 @@ class Plot implements Cacheable<Integer>{
 		if(!player)
 			player = PlatformAdapter.getPlayerByUUID(ownerUUID)
 
-		return player.isOnline()
+		return (player) && player.isOnline()
 	}
 	
 	
