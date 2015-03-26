@@ -37,7 +37,7 @@ class PlayerListener implements Listener{
 					player.sendMessage("&cYou are not allowed to enter this plot!")
 				}
 			} else {
-				if(level.getLevel() < AccessLevel.ALLOW) {
+				if(level.getLevel() < AccessLevel.ALLOW.getLevel()) {
 					e.setTo(e.getFrom())
 					player.sendMessage("&cYou are not allowed to enter this plot!")
 				}

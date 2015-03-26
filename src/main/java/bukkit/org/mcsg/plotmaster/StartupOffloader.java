@@ -18,6 +18,7 @@ import bukkit.org.mcsg.plotmaster.bridge.BukkitConsole;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
 import bukkit.org.mcsg.plotmaster.listeners.BlockListener;
 import bukkit.org.mcsg.plotmaster.listeners.EntitySpawnListener;
+import bukkit.org.mcsg.plotmaster.listeners.PlayerListener;
 import bukkit.org.mcsg.plotmaster.listeners.SelectionListener;
 import bukkit.org.mcsg.plotmaster.listeners.WorldEditListener;
 
@@ -33,10 +34,8 @@ import bukkit.org.mcsg.plotmaster.listeners.WorldEditListener;
 public class StartupOffloader {
 
 	static private PlotMaster plotMaster;
-	static private PlotMasterPlugin plugin;
 
-	public static void onLoad(PlotMasterPlugin pmplugin) {
-		plugin = pmplugin;
+	public static void onLoad() {
 		PlatformAdapter.setPlatform(PlatformType.BUKKIT);
 
 		plotMaster =  new PlotMaster();
@@ -49,6 +48,8 @@ public class StartupOffloader {
 		Bukkit.getPluginManager().registerEvents(new SelectionListener(), PlotMasterPlugin.getPlugin());
 		Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), PlotMasterPlugin.getPlugin());
 		Bukkit.getPluginManager().registerEvents(new BlockListener(), PlotMasterPlugin.getPlugin());
+		Bukkit.getPluginManager().registerEvents(new BlockListener(), PlotMasterPlugin.getPlugin());
+		Bukkit.getPluginManager().registerEvents(new PlayerListener(), PlotMasterPlugin.getPlugin());
 
 		try {
 			if(Integer.parseInt(Bukkit.getPluginManager().getPlugin("WorldEdit").getDescription().getVersion().substring(0, 1)) < 5) {
