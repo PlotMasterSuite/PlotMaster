@@ -73,7 +73,7 @@ class GridManager extends PlotManager{
 		def regx = getRegionX(x)
 		def regz = getRegionZ(z)
 
-		println "getRegionAt() regx: $regx, regz: $regz"
+		//println "getRegionAt() regx: $regx, regz: $regz"
 
 		asyncWrap(c) {
 			Region r = xzRegionCache.get("$regx:$regz")
@@ -104,7 +104,7 @@ class GridManager extends PlotManager{
 
 	@Override
 	public Plot getPlotAt(int x, int z, Callback c ) {
-		print "getPlotAt() cellx: ${x},  cellz: ${z}"
+		//print "getPlotAt() cellx: ${x},  cellz: ${z}"
 
 		asyncWrap(c) {
 			Region r = getRegionAt(x, z, null)
@@ -178,7 +178,7 @@ class GridManager extends PlotManager{
 
 			def plox = region.getX()
 			def ploz = region.getZ()
-			println "CREATE PLOT AT ${plox}, ${ploz}"
+			///println "CREATE PLOT AT ${plox}, ${ploz}"
 
 
 			plox += cellWidth / 2
@@ -224,7 +224,7 @@ class GridManager extends PlotManager{
 		def regx = getRegionX(x)
 		def regz = getRegionZ(z)
 
-		println "CreateRegion() ${regx}, ${regz}"
+		//println "CreateRegion() ${regx}, ${regz}"
 
 		asyncWrap(c){
 			if(regionExist(regx, regz, null))
@@ -335,8 +335,9 @@ class GridManager extends PlotManager{
 	@Override
 	public void deletePlot(Plot plot, Callback c) {
 		asyncWrap(c) {
-			plot.reset(settings, null)
+			plot.clear(settings, null)
 			backend.deletePlot(plot)
+			plot.getRegion().getPlots().remove(plot.id)
 		}
 	}
 

@@ -27,7 +27,7 @@ class PlayerListener implements Listener{
 
 		if(plot) {
 			def mode = plot.getAccessMode()
-			def player = new BukkitPlayer(e.getPlayer)
+			def player = new BukkitPlayer(e.getPlayer())
 			def member = manager.getPlotMember(player)
 			def level = member.getAccessLevel(plot)
 
