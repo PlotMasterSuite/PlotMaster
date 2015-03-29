@@ -52,7 +52,7 @@ class Plot implements Cacheable<Integer>{
 	transient Region region
 	transient PMPlayer player
 	transient PlotManager manager
-
+	transient long loadedAt
 
 	
 	Integer getId(){
@@ -215,5 +215,18 @@ class Plot implements Cacheable<Integer>{
 
 
 
+	public boolean onLoad() {
+		
+		
+		
+		
+		
+		loadedAt = System.currentTimeMillis()
+		return true
+	}
+	
+	public boolean onUnload() {
+		
+	}
 
 }

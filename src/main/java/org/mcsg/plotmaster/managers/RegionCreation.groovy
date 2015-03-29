@@ -7,6 +7,7 @@ class RegionCreation {
 	enum RegionCreationStatus {
 		SUCCESS("Region created successfully."),
 		REGION_EXISTS("A region already exists in this location!"),
+		CANCELLED(""),
 		OTHER("Failed to create region.")
 
 		String message;

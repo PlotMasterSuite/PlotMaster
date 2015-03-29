@@ -125,8 +125,8 @@ class GridManager extends PlotManager{
 			return null;
 		}
 	}
-	
-	@Override 
+
+	@Override
 	public Plot getPlotAt(PMLocation loc, Callback c){
 		return getPlotAt(loc.getX(), loc.getZ(), c)
 	}
@@ -206,8 +206,12 @@ class GridManager extends PlotManager{
 			}
 
 			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type, settings: type.settings);
-
-			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
+			def load = plot.onLoad()
+			if(load){
+				return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
+			} else {
+				return new PlotCreation(status: PlotCreationStatus.CANCELLED)
+			}
 		}
 	}
 
