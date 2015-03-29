@@ -23,18 +23,6 @@ class RestServer {
 
 	//Yes, PM is 100% standalone and the core can be started without a server
 	public static void main(args){
-
-		Test2 t = new Test2()
-		Test3 n = new Test3()
-		
-		n.no = "hello"
-		
-		transformClass(t, n)
-		
-		println n.hi
-
-		System.exit(0)
-
 		pm = new PlotMaster()
 
 		pm.onLoad(new DefaultConsole())
@@ -44,26 +32,6 @@ class RestServer {
 
 		new RestServer().start()
 
-	}
-
-	private static transformClass(class1, class2){
-		class1.getProperties().each { key, value ->
-			if(!(value instanceof Class))
-				class2.getMetaClass().setProperty(class2, key as String, value)
-		}
-	}
-
-
-	static class Test {
-		String hi
-	}
-	
-	static class Test3 {
-		String no = "no"
-	}
-
-	static class Test2 extends Test{
-		
 	}
 
 	static PlotMaster pm
