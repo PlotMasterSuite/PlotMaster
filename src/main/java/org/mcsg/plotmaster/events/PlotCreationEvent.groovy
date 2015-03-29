@@ -1,6 +1,6 @@
 package org.mcsg.plotmaster.events
 
-class PlotCreationEvent  implements IEvent, Cancellable{
+class PlotCreationEvent  implements Cancellable{
 
 	public boolean isCancelled() {
 		// TODO Auto-generated method stub

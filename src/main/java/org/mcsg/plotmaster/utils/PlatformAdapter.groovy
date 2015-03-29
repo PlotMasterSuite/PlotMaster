@@ -9,7 +9,6 @@ import org.bukkit.event.Event
 import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.events.Cancellable
-import org.mcsg.plotmaster.events.IEvent
 import org.mcsg.plotmaster.events.PlotCreationEvent;
 import org.mcsg.plotmaster.events.PlotLoadEvent;
 import org.mcsg.plotmaster.events.PlotUnloadEvent
