@@ -82,6 +82,9 @@ class GridManager extends PlotManager{
 			} else {
 				r = backend.getRegionByLocation(regx, regz)
 				xzRegionCache.cache("$regx:$regz", r)
+				r.plots.values().each {
+					it.setManager(this)
+				}
 				return r
 			}
 		}
@@ -96,6 +99,9 @@ class GridManager extends PlotManager{
 			} else {
 				r = backend.getRegion(id)
 				regionCache.cache(id, r)
+				r.plots.values().each {
+					it.setManager(this)
+				}
 				return r
 			}
 		}
@@ -119,6 +125,11 @@ class GridManager extends PlotManager{
 			return null;
 		}
 	}
+	
+	@Override 
+	public Plot getPlotAt(PMLocation loc, Callback c){
+		return getPlotAt(loc.getX(), loc.getZ(), c)
+	}
 
 	@Override
 	public Plot getPlot(int id, Callback c) {
@@ -129,6 +140,7 @@ class GridManager extends PlotManager{
 			} else {
 				p = backend.getPlot(id)
 				plotCache.cache(id, p)
+				p.setManager(this)
 				return p
 			}
 		}
@@ -193,7 +205,7 @@ class GridManager extends PlotManager{
 				return new PlotCreation(status: PlotCreationStatus.REGION_FULL)
 			}
 
-			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type);
+			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type, settings: type.settings);
 
 			return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
 		}

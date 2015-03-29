@@ -21,8 +21,8 @@ import spark.Route
 class RestServer {
 
 	
-	
-	public static void main(args){		
+	//Yes, PM is 100% standalone and the core can be started without a server
+	public static void main(args){	
 		pm = new PlotMaster()
 		
 		pm.onLoad(new DefaultConsole())
@@ -31,6 +31,7 @@ class RestServer {
 		man = PlotMaster.getInstance().getManager("world")
 		
 		new RestServer().start()
+		
 	}
 	
 	static PlotMaster pm

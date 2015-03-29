@@ -20,4 +20,5 @@ class PlotType {
 	int h, w
 
 
+	Map settings
 }

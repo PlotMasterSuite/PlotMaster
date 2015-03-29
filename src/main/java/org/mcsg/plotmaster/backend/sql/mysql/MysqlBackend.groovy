@@ -60,6 +60,7 @@ class MysqlBackend extends AbstractSQLBackend {
 				 `type` varchar(32) NOT NULL,
 				 `accessmode` enum('ALLOW', 'DENY') NOT NULL DEFAULT 'ALLOW',
 				 `settings` TEXT,
+				 `metadata` TEXT,
 				  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 		""".toString())

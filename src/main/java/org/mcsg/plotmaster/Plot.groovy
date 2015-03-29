@@ -6,6 +6,7 @@ import groovy.transform.CompileStatic;
 import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.cache.Cacheable;
+import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.schematic.Border;
 import org.mcsg.plotmaster.schematic.Schematic;
 import org.mcsg.plotmaster.schematic.SchematicBlock
@@ -19,34 +20,47 @@ import org.mcsg.plotmaster.utils.TaskQueue;
 class Plot implements Cacheable<Integer>{
 
 	static transient final Gson gson = new Gson()
-	
+
 	enum AccessMode {
 		ALLOW, DENY
 	}
-	
+
 	int id
 
 	String plotName = ""
-	String ownerName = "", ownerUUID = "" 
+	String ownerName = "", ownerUUID = ""
 	String world
-	int x, z, h, w 
+	int x, z, h, w
 
-	long createdAt = System.currentTimeMillis() 
-	PlotType type 
+	long createdAt = System.currentTimeMillis()
+	PlotType type
 	AccessMode accessMode = AccessMode.ALLOW
 
-	Map settings = [:] 
+	//eg gamemode, pvp mod etc
+	Map settings = [
+		gamemode: "creative",
+		pvp: "false",
+		fly: "true",
+		time: "default",
+		"time-progression": "true",
+		"save-mobs" : "false"
+	]
 
-	transient boolean changed
+	//eg mobs on plot, time in plot, other data
+	Map metadata = [:]
+
 	transient Region region
 	transient PMPlayer player
+	transient PlotManager manager
 
 
+	
 	Integer getId(){
 		return id
 	}
 
-
+	
+	
 	@Override
 	public boolean isStale() {
 		if(!player)
@@ -54,14 +68,39 @@ class Plot implements Cacheable<Integer>{
 
 		return (player) && player.isOnline()
 	}
-	
-	
+
+
+	def getSetting(setting){
+		return settings[setting]
+	}
+
+	def getMetaData(data){
+		return metadata[data]
+	}
+
+	void setSetting(key, value){
+		settings.put(key, value)
+	}
+
+	void setMetaData(key, value){
+		metadata.put(key, value)
+	}
+
+
 	String settingsToJson(){
 		return gson.toJson(settings)
 	}
-	
+
 	void settingsFromJson(String json){
 		this.settings = gson.fromJson(json, Map.class)
+	}
+
+	String metadataToJson(){
+		return gson.toJson(metadata)
+	}
+
+	void metadataFromJson(String json){
+		this.metadata = gson.fromJson(json, Map.class)
 	}
 
 	PMLocation getMax(){
@@ -70,7 +109,7 @@ class Plot implements Cacheable<Integer>{
 	PMLocation getMin(){
 		return PlatformAdapter.toLocation(world, x, 0, z)
 	}
-	
+
 	@CompileStatic
 	public void paint(Callback c) {
 		Border border = Border.load(type.border)
@@ -81,11 +120,11 @@ class Plot implements Cacheable<Integer>{
 			for(int b = 0; b <  h; b++){
 
 				int top = getTop(world, a + x, b + z)
-				
+
 				SchematicBlock[] sblocks = null
 				if(schematic)
 					sblocks = schematic.getColumn(a, b)
-				
+
 				if(sblocks){
 					int originTop = top
 					sblocks.eachWithIndex { SchematicBlock block, int i->
@@ -94,8 +133,8 @@ class Plot implements Cacheable<Integer>{
 							updates.add(PlatformAdapter.createBlockUpdate(world, a + x, top, b + z, block.material, block.data as byte))
 						}
 					}
-				}				
-					
+				}
+
 				SchematicBlock[] bblocks = null
 				if(border)
 					bblocks = border.getColumnAt(a + 1, b + 1, w , h )
@@ -163,14 +202,18 @@ class Plot implements Cacheable<Integer>{
 		}
 
 		return top + 1
-	}	
-	
-	
-	public boolean isPartOf(int x, int z){
-		return x >= this.x && x < this.x + this.w && z >= this.z && z < this.z + this.h 
 	}
-	
-	
-	
-	
+
+
+	public boolean isPartOf(int x, int z){
+		return x >= this.x && x < this.x + this.w && z >= this.z && z < this.z + this.h
+	}
+
+	public void save(){
+		manager?.savePlot(this) {}
+	}
+
+
+
+
 }

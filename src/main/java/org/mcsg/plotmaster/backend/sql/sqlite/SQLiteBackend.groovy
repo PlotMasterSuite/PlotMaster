@@ -13,6 +13,9 @@ import org.mcsg.plotmaster.backend.sql.AbstractSQLBackend;
 
 class SQLiteBackend extends AbstractSQLBackend {
 
+	
+	
+	
 	public void load(String world, Map conf) {
 		Class.forName("org.sqlite.JDBC")
 		HikariConfig config = new HikariConfig();
@@ -59,6 +62,8 @@ class SQLiteBackend extends AbstractSQLBackend {
 				 `type` text NOT NULL
 				 `accessmode` TEXT NOT NULL DEFAULT 'ALLOW',
 				 `settings` TEXT,
+				 `metadata` TEXT,
+
 			);
 		""".toString())
 

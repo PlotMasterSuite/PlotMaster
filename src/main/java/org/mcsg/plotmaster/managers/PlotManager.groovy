@@ -34,6 +34,8 @@ abstract class PlotManager {
 	
 	abstract Plot getPlotAt(int x, int z, Callback c)
 	
+	abstract Plot getPlotAt(PMLocation location, Callback c)
+	
 	abstract Plot getPlot(int id, Callback c)
 	
 	abstract boolean plotExist(int x, int z, Callback c)
