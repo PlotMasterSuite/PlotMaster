@@ -5,19 +5,29 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.Location
 import org.bukkit.block.Block;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event
 import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
+import org.mcsg.plotmaster.events.Cancellable
 import org.mcsg.plotmaster.events.IEvent
+import org.mcsg.plotmaster.events.IPlotCreationEvent;
+import org.mcsg.plotmaster.events.IPlotLoadEvent;
+import org.mcsg.plotmaster.events.IPlotUnloadEvent
 import org.mcsg.plotmaster.events.IRegionCreationEvent
+import org.mcsg.plotmaster.events.IRegionLoadEvent;
+import org.mcsg.plotmaster.events.IRegionUnloadEvent;
 import org.mcsg.plotmaster.schematic.SchematicBlock;
 
 import groovy.lang.Closure;
 import groovy.transform.CompileStatic;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitLocation
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
+import bukkit.org.mcsg.plotmaster.event.PlotCreationEvent
+import bukkit.org.mcsg.plotmaster.event.PlotLoadEvent;
+import bukkit.org.mcsg.plotmaster.event.PlotUnloadEvent
 import bukkit.org.mcsg.plotmaster.event.RegionCreationEvent;
+import bukkit.org.mcsg.plotmaster.event.RegionLoadEvent;
+import bukkit.org.mcsg.plotmaster.event.RegionUnloadEvent
 import bukkit.org.mcsg.plotmaster.util.BukkitBlockUpdate;
 
 @CompileStatic
@@ -79,17 +89,11 @@ class PlatformAdapter {
 		return Material.valueOf(material.toString())
 	}
 
-	static enum EventMapper {
-
-		RegionCreation(IRegionCreationEvent.class, RegionCreationEvent.class)
-
-
-		private EventMap(Class internal, Class bukkit){
-			this.internal = internal
+	static class EventMapper {
+		def EventMapper(Class bukkit){
 			this.bukkit = bukkit
 		}
 
-		Class internal
 		Class bukkit
 
 		Class toExternalClass() {
@@ -100,9 +104,14 @@ class PlatformAdapter {
 	}
 
 	static {
-		EventMapper.values().each { EventMapper e
-			eventMap.put(e.internal, e)
-		}
+		eventMap.put(IPlotCreationEvent.class, new EventMapper(PlotCreationEvent.class))
+		eventMap.put(IPlotUnloadEvent.class, new EventMapper(PlotUnloadEvent.class))
+		eventMap.put(IPlotLoadEvent.class, new EventMapper(PlotLoadEvent.class))
+		
+		eventMap.put(IRegionCreationEvent.class, new EventMapper(RegionCreationEvent.class))
+		eventMap.put(IRegionLoadEvent.class, new EventMapper(RegionLoadEvent.class))
+		eventMap.put(IRegionUnloadEvent.class, new EventMapper(RegionUnloadEvent.class))
+
 	}
 
 	static Map<Class, EventMapper> eventMap  = [:]
@@ -111,7 +120,7 @@ class PlatformAdapter {
 
 
 	//Oh groovy, you are amazing
-	
+
 	//Take an internal event and covert it to the external form
 	static boolean fireEvent(IEvent internal){
 
@@ -125,7 +134,7 @@ class PlatformAdapter {
 				return (e as Cancellable).isCancelled()
 			} else return false
 		}
-	
+
 
 	}
 
