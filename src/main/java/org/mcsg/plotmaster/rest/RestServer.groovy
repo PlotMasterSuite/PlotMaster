@@ -24,12 +24,14 @@ class RestServer {
 	//Yes, PM is 100% standalone and the core can be started without a server
 	public static void main(args){
 
-		Test t1 = new Test(hi: "yes")
-		Test2 t2 = new Test2()
-
-		transformClass(t1, t2)
-
-		println t2.hi
+		Test2 t = new Test2()
+		Test3 n = new Test3()
+		
+		n.no = "hello"
+		
+		transformClass(t, n)
+		
+		println n.hi
 
 		System.exit(0)
 
@@ -55,9 +57,13 @@ class RestServer {
 	static class Test {
 		String hi
 	}
+	
+	static class Test3 {
+		String no = "no"
+	}
 
-	static class Test2 extends Test {
-		String ok = "no"
+	static class Test2 extends Test{
+		
 	}
 
 	static PlotMaster pm
