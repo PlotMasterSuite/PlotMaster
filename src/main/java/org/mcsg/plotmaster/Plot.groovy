@@ -1,11 +1,14 @@
 package org.mcsg.plotmaster
 
 import com.google.gson.Gson
+
+import de.greenrobot.event.EventBus;
 import groovy.transform.CompileStatic;
 
 import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.cache.Cacheable;
+import org.mcsg.plotmaster.events.PlotLoadEvent;
 import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.schematic.Border;
 import org.mcsg.plotmaster.schematic.Schematic;
@@ -39,11 +42,13 @@ class Plot implements Cacheable<Integer>{
 	//eg gamemode, pvp mod etc
 	Map settings = [
 		gamemode: "creative",
-		pvp: "false",
-		fly: "true",
+		pvp: false,
+		fly: true,
 		time: "default",
-		"time-progression": "true",
-		"save-mobs" : "false"
+		"time-progression": true,
+		"clear-entities-unload" : true,
+		"save-entities" : false,
+		
 	]
 
 	//eg mobs on plot, time in plot, other data
@@ -216,13 +221,21 @@ class Plot implements Cacheable<Integer>{
 
 
 	public boolean onLoad() {
-		
-		
-		
-		
-		
 		loadedAt = System.currentTimeMillis()
-		return true
+		
+		PlotLoadEvent e = new PlotLoadEvent(plot : this)
+		EventBus.getDefault().post(e)
+		
+		if(!e.isCancelled()) {
+			
+			
+			
+			
+			
+		}
+		
+		
+		return e.isCancelled()
 	}
 	
 	public boolean onUnload() {

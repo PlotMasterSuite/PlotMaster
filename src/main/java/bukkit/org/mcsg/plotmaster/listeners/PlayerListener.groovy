@@ -22,7 +22,7 @@ class PlayerListener implements Listener{
 	void PlayerMove(PlayerMoveEvent e){
 		def manager = getManager(e.getFrom().getWorld());
 		def loc = e.getTo()
-
+		
 		def plot = manager.getPlotAt(loc.getBlockX(), loc.getBlockZ(), null)
 
 		if(plot) {
