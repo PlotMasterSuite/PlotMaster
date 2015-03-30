@@ -21,7 +21,7 @@ class DeleteSubCommand implements PlayerSubCommand {
 		
 		manager.getPlotAt(location.getX(), location.getZ()){
 			manager.deletePlot(it) {
-				player.sendMessage("&aPlot has been deleted")
+				player.sendMessage("&aPlot has been deleted!")
 			}
 		}
 		
