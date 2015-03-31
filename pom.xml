@@ -7,9 +7,6 @@
 	<version>0.1</version>
 	<name>PlotMaster</name>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<repositories>
 		<repository>
@@ -46,7 +43,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.3</version>
+				<version>2.2</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -54,18 +51,18 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<minimizeJar>false</minimizeJar>
+							<minimizeJar>true</minimizeJar>
 							<artifactSet>
 								<includes>
-									<includes>com.zaxxer:HikariCP-java6</includes>
-									<includes>com.google.code.gson</includes>
-									<includes>commons-io:commons-io</includes>
-									<includes>org.slf4j:*</includes>
-									<includes>org.javassist:*</includes>
-									<includes>com.sparkjava:*</includes>
-									<includes>org.eclipse.jetty:*</includes>
-									<includes>javax.servlet:*</includes>
-									<includes>de.greenrobot:*</includes>
+									<include>com.zaxxer:HikariCP-java6</include>
+									<include>com.google.code.gson</include>
+									<include>commons-io:commons-io</include>
+									<include>org.slf4j:*</include>
+									<include>org.javassist:*</include>
+									<include>com.sparkjava:*</include>
+									<include>org.eclipse.jetty:*</include>
+									<include>javax.servlet:*</include>
+									<include>de.greenrobot:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -109,7 +106,7 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP-java6</artifactId>
-			<version>2.3.2</version>
+			<version>2.3.5</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
