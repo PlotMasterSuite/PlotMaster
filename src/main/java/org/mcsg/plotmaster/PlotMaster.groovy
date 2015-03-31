@@ -24,9 +24,9 @@ import org.mcsg.plotmaster.utils.TaskQueue;
 
 import bukkit.org.mcsg.plotmaster.listeners.WorldEditListener;
 
+import com.google.common.eventbus.EventBus;
 import com.sk89q.worldedit.WorldEdit;
 
-import de.greenrobot.event.EventBus;
 
 
 
@@ -37,7 +37,9 @@ class PlotMaster{
 	private static Map<String, Map<String, PlotType>> plottypes = [:]
 	private Map<String, PlotManager> managers = [:]
 	private boolean setup = true
-	private PMConsole console;
+	private PMConsole console
+	private EventBus eventBus
+	
 	static PlotMaster instance;
 
 
@@ -69,6 +71,8 @@ class PlotMaster{
 		copyFile("borders/", "road.border")
 		copyFile("borders/", "dir.border")
 
+		eventBus = new EventBus()
+		
 	}
 
 	@CompileStatic
@@ -199,9 +203,13 @@ class PlotMaster{
 
 	
 	void registerEvent(Object o){
-		EventBus.getDefault().register(o)
+		eventBus.register(o)
 	}
 
+	
+	void fireEvent(Object o) {
+		eventBus.post(o)
+	}
 
 
 	//////////////////////////////////////////////////////////////////////////

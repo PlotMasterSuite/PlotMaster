@@ -2,7 +2,6 @@ package org.mcsg.plotmaster
 
 import com.google.gson.Gson
 
-import de.greenrobot.event.EventBus;
 import groovy.transform.CompileStatic;
 
 import org.mcsg.plotmaster.bridge.PMLocation
@@ -224,7 +223,7 @@ class Plot implements Cacheable<Integer>{
 		loadedAt = System.currentTimeMillis()
 		
 		PlotLoadEvent e = new PlotLoadEvent(plot : this)
-		EventBus.getDefault().post(e)
+		PlotMaster.fireEvent(e)
 		
 		if(!e.isCancelled()) {
 			

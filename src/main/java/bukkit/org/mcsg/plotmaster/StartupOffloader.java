@@ -13,7 +13,6 @@ import org.mcsg.plotmaster.utils.PlatformAdapter.PlatformType;
 
 import com.sk89q.worldedit.WorldEdit;
 
-import de.greenrobot.event.EventBus;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitCommand;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitConsole;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;

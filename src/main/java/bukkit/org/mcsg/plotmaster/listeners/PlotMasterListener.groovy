@@ -12,8 +12,11 @@ import org.mcsg.plotmaster.events.PlayerEnterPlotEvent
 import org.mcsg.plotmaster.events.PlotLoadEvent
 import org.mcsg.plotmaster.events.PlotUnloadEvent
 
+import com.google.common.eventbus.Subscribe;
+
 class PlotMasterListener {
 
+	@Subscribe
 	public void PlotLoad(PlotLoadEvent e) {
 		Plot plot = e.getPlot()
 		
@@ -27,6 +30,7 @@ class PlotMasterListener {
 		}
 	}
 	
+	@Subscribe
 	public void PlotUnload(PlotUnloadEvent e){
 		Plot plot = e.getPlot()
 		World w = Bukkit.getWorld(plot.getWorld())
