@@ -23,7 +23,20 @@ package org.mcsg.plotmaster.cache
 	  * @param value
 	  * @return
 	  */
-	 def cache(K id, V value)
+	 void cache(K id, V value)
 	 
+	 
+	 /**
+	  * 
+	  * @return size of this cache
+	  */
+	 int size()
+	 
+	 
+	 int request()
+	 
+	 int hits()
+	 
+	 int misses()
 	 
 }

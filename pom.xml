@@ -59,10 +59,10 @@
 									<include>commons-io:commons-io</include>
 									<include>org.slf4j:*</include>
 									<include>org.javassist:*</include>
-									<include>com.sparkjava:*</include>
-									<include>org.eclipse.jetty:*</include>
-									<include>javax.servlet:*</include>
-									<include>de.greenrobot:*</include>
+									 <include>com.sparkjava:*</include>
+									<include>org.eclipse.jetty:jetty-servlet</include>
+									<include>javax.servlet:*</include> 
+									<include>com.google.guava:guava</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -123,11 +123,11 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		<dependency>
+		 <dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldedit</artifactId>
 			<version>6.0.0-SNAPSHOT</version>
-		</dependency>
+		</dependency> 
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
