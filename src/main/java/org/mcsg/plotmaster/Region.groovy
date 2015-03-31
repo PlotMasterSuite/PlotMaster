@@ -4,7 +4,7 @@ import org.bukkit.World
 import org.mcsg.plotmaster.cache.Cacheable;
 
 
-class Region implements Cacheable<Integer>{
+class Region implements Cacheable{
 
 	int id;	
 	int x, z
@@ -19,9 +19,6 @@ class Region implements Cacheable<Integer>{
 	
 	Map<Integer, Plot> plots = new HashMap<>();	
 	
-	Integer getId(){
-		return id
-	}
 
 	@Override
 	public boolean isStale() {

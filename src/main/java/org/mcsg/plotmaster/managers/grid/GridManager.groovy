@@ -28,74 +28,77 @@ import org.mcsg.plotmaster.utils.LocationUtils;
 import static org.mcsg.plotmaster.utils.AsyncUtils.asyncWrap;
 
 class GridManager extends PlotManager{
-
+	
 	Cache regionCache;
 	Cache xzRegionCache;
-
+	
 	Cache plotCache;
-
+	
 	String world
 	int cellWidth
 	int cellHeight
-
+	
 	Map settings
-
+	
 	Border border
 	int bw2
 	int bw
-
+	
 	def GridManager(Backend backend, String world) {
 		super(backend, world)
-
+		
 		this.world = world
-
+		
 		regionCache = CacheFactory.createCache()
 		xzRegionCache = CacheFactory.createCache()
 		plotCache = CacheFactory.createCache()
-
+		
 	}
-
+	
 	void load(Map settings){
 		this.cellHeight = settings.grid.height
 		this.cellWidth = settings.grid.width
 		this.settings = settings
-
+		
 		border = Border.load(settings.grid.border)
 		if(border) {
 			bw = border.getWidth()
 			bw2 = bw + bw
 		}
 	}
-
-
+	
+	
 	@Override
 	public Region getRegionAt(int x, int z, Callback c) {
 		def regx = getRegionX(x)
 		def regz = getRegionZ(z)
-
+		
 		//println "getRegionAt() regx: $regx, regz: $regz"
-
+		
 		asyncWrap(c) {
-			Region r = xzRegionCache.get("$regx:$regz")
-			if(r) {
-				return r
+			def r
+			if(xzRegionCache.contains("$regx:$regz")) {
+				return xzRegionCache.get("$regx:$regz")
 			} else {
 				r = backend.getRegionByLocation(regx, regz)
 				xzRegionCache.cache("$regx:$regz", r)
-				r.plots.values().each {
-					it.setManager(this)
+				
+				if(r) {
+					r.plots.values().each {
+						it.setManager(this)
+					}
 				}
 				return r
 			}
 		}
 	}
-
+	
 	@Override
 	public Region getRegion(int id, Callback c) {
+		def r
 		asyncWrap(c) {
-			Region r = regionCache.get(id)
-			if(r) {
-				return r
+			if(regionCache.contains(id)) {
+				return regionCache.get(id)
 			} else {
 				r = backend.getRegion(id)
 				regionCache.cache(id, r)
@@ -106,17 +109,17 @@ class GridManager extends PlotManager{
 			}
 		}
 	}
-
-
+	
+	
 	@Override
 	public Plot getPlotAt(int x, int z, Callback c ) {
 		//print "getPlotAt() cellx: ${x},  cellz: ${z}"
-
+		
 		asyncWrap(c) {
 			Region r = getRegionAt(x, z, null)
 			if(!r) return null
 			def plots = r.plots
-
+			
 			for(Plot plot in plots.values()){
 				if(LocationUtils.isInRegion(x, z, plot.getX(), plot.getZ(), plot.getX() + plot.getW(), plot.getZ() + plot.getH())){
 					return plot;
@@ -125,18 +128,18 @@ class GridManager extends PlotManager{
 			return null;
 		}
 	}
-
+	
 	@Override
 	public Plot getPlotAt(PMLocation loc, Callback c){
 		return getPlotAt(loc.getX(), loc.getZ(), c)
 	}
-
+	
 	@Override
 	public Plot getPlot(int id, Callback c) {
 		asyncWrap(c) {
-			Plot p = plotCache.get(id)
-			if(p) {
-				return p
+			Plot p 
+			if(plotCache.contains(id)) {
+				return plotCache.get(id)
 			} else {
 				p = backend.getPlot(id)
 				plotCache.cache(id, p)
@@ -145,39 +148,39 @@ class GridManager extends PlotManager{
 			}
 		}
 	}
-
-
+	
+	
 	@Override
 	public boolean regionExist(int x, int z, Callback c) {
 		asyncWrap(c) {
 			return getRegionAt(x, z, null) != null
 		}
 	}
-
-
+	
+	
 	@Override
 	public boolean plotExist(int x, int z, Callback c) {
 		asyncWrap(c) {
 			return getPlotAt(x, z, null) != null
 		}
 	}
-
-
-
+	
+	
+	
 	@Override
 	public  PlotCreation createPlot(int x, int z, PlotType type, Callback c) {
 		asyncWrap(c){
 			if(plotExist(x, z, null))
 				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
-
-
-
+			
+			
+			
 			Region region = getRegionAt(x, z, null)
 			//println "Got region ${region.getX()}, ${region.getZ()}"
 			if(!region) {
 				def regCre = createRegion(x, z, cellWidth, cellHeight, null)
-
-
+				
+				
 				if(regCre.getStatus() == RegionCreationStatus.SUCCESS || regCre.getStatus() == RegionCreationStatus.REGION_EXISTS){
 					region = regCre.getRegion()
 				} else {
@@ -185,26 +188,26 @@ class GridManager extends PlotManager{
 					return new PlotCreation(status: PlotCreationStatus.NO_PARENT_REGION)
 				}
 			}
-
+			
 			//we'll get to cell packing later, for now just create a single plot in the center of the region
-
+			
 			def plox = region.getX()
 			def ploz = region.getZ()
 			///println "CREATE PLOT AT ${plox}, ${ploz}"
-
-
+			
+			
 			plox += cellWidth / 2
 			plox -= type.w / 2
 			plox++
-
+			
 			ploz += cellHeight / 2
 			ploz -= type.h / 2
 			ploz++
-
+			
 			if(region.getPlots().size() > 0){
 				return new PlotCreation(status: PlotCreationStatus.REGION_FULL)
 			}
-
+			
 			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type, settings: type.settings);
 			def load = plot.onLoad()
 			if(load){
@@ -214,71 +217,71 @@ class GridManager extends PlotManager{
 			}
 		}
 	}
-
+	
 	@Override
 	public PlotCreation createPlot(PMPlayer player, int x, int z, PlotType type, Callback c) {
 		asyncWrap(c){
-
+			
 			def creation =  createPlot(x, z, type, null)
-
+			
 			if(creation.getStatus() == PlotCreationStatus.SUCCESS){
 				creation.getPlot().setOwnerName(player.getName())
 				creation.getPlot().setOwnerUUID(player.getUUID())
-
+				
 				backend.saveRegion(creation.getPlot().getRegion())
-
+				
 				return creation
 			} else {
 				return creation
 			}
 		}
 	}
-
-
+	
+	
 	@Override
 	public RegionCreation createRegion(int x, int z, int w, int h, Callback c) {
 		def regx = getRegionX(x)
 		def regz = getRegionZ(z)
-
+		
 		//println "CreateRegion() ${regx}, ${regz}"
-
+		
 		asyncWrap(c){
 			if(regionExist(regx, regz, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(regx, regz, null))
-
+			
 			Region region = new Region(world: world, x: regx, z: regz, h: h, w: w)
-
+			
 			region = backend.createRegion(region)
-
+			
 			xzRegionCache.cache("${region.getX()}:${region.getZ()}", region)
-
+			
 			return new RegionCreation(status: RegionCreationStatus.SUCCESS, region: region)
 		}
 	}
-
+	
 	private int getRegionX(int x) {
 		//return x / cellWidth + ((x < 0) ? -1 : 1)
-
+		
 		def width = cellWidth + bw2
-
+		
 		if(x > 0)
 			return (x - (x % width)) + bw
 		else
 			return (x - (width - Math.abs(x % width))) + bw
 	}
-
+	
 	private int getRegionZ(int z) {
 		//return z / cellWidth + ((z < 0) ? -1 : 1)
-
+		
 		def height = cellHeight + bw2
-
-
+		
+		
 		if(z > 0)
 			return (z - (z % height)) + bw
 		else
 			return (z - (height - Math.abs(z % height))) + bw
 	}
-
+	
 	@Override
 	public PlotMember getPlotMember(PMPlayer player) {
 		PlotMember member =  backend.getMember(player.getUUID())
@@ -289,18 +292,18 @@ class GridManager extends PlotManager{
 		member.setManager(this)
 		return member
 	}
-
+	
 	@Override
 	public PlotMember savePlotMember(PlotMember member) {
 		backend.saveMember(member)
 	}
-
+	
 	@Override
 	public boolean canModifyLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
-
+		
 		def isPart = false
-
+		
 		member.getPlotsAboveLevel(AccessLevel.MEMBER).each {
 			if(it.isPartOf(location.x, location.z)) {
 				isPart = true
@@ -309,13 +312,13 @@ class GridManager extends PlotManager{
 		}
 		return isPart
 	}
-
+	
 	@Override
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
-
+		
 		def isPart = true
-
+		
 		member.getPlots(AccessLevel.DENY).each {
 			if(it.isPartOf(location.x, location.z)) {
 				isPart = false
@@ -324,20 +327,20 @@ class GridManager extends PlotManager{
 		}
 		return isPart
 	}
-
+	
 	@Override
 	public void saveRegion(Region region, Callback c) {
 		asyncWrap(c) {
 			backend.saveRegion(region)
 		}
-
+		
 	}
-
+	
 	@Override
 	public void savePlot(Plot plot, Callback c) {
 		saveRegion(plot.getRegion(), c)
 	}
-
+	
 	@Override
 	public void deleteRegion(Region region, Callback c) {
 		asyncWrap(c){
@@ -347,7 +350,7 @@ class GridManager extends PlotManager{
 			backend.deleteRegion(region)
 		}
 	}
-
+	
 	@Override
 	public void deletePlot(Plot plot, Callback c) {
 		asyncWrap(c) {
@@ -356,6 +359,6 @@ class GridManager extends PlotManager{
 			plot.getRegion().getPlots().remove(plot.id)
 		}
 	}
-
-
+	
+	
 }

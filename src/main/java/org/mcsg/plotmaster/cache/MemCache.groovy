@@ -1,12 +1,14 @@
 package org.mcsg.plotmaster.cache
 
+import org.mcsg.plotmaster.utils.NullCachable;
 import org.mcsg.plotmaster.utils.SchedulerAdapter;
 
 import groovy.transform.CompileStatic;
+
 import java.util.concurrent.ConcurrentHashMap
 
 @CompileStatic
-class MemCache<K, V extends Cacheable<K>> implements Cache{
+class MemCache<K, V extends Cacheable> implements Cache{
 	Map<K, V> cache;
 	Map<K, Long> last;
 	
@@ -31,9 +33,9 @@ class MemCache<K, V extends Cacheable<K>> implements Cache{
 	
 	
 	boolean contains(K id){
-		cache.containsKey(id)
+		return cache.containsKey(id)
 	}
-
+	
 	V get(K id){
 		def val = cache.get(id);
 		if(val) {
@@ -42,49 +44,56 @@ class MemCache<K, V extends Cacheable<K>> implements Cache{
 		} else {
 			misses++
 		}
-		return val
+		return (val instanceof NullCachable) ? null : val
 	}
 	
 	
 	void cache(K id, V value){
+		assert id != null, "Id cannot be null!"
+		
+		println "Caching ${id}, ${value}"
+		
+		if(value == null) {
+			value = new NullCachable()
+		}
+		
 		cache.put(id, value)
 		last.put(id, System.currentTimeMillis())
 	}
 	
-	 private cullProccessor(){
-		 SchedulerAdapter.asyncRepeating(cullPeriod, cullPeriod) {
-			 cache = cache.findAll {
-				 if(it.value) {
-				 	def val = !(it.value.isStale() 
-						 && (System.currentTimeMillis() > last.get(it) + cullTime || cache.size() > hardSize)
-						 && cache.size() > softSize)
+	private cullProccessor(){
+		SchedulerAdapter.asyncRepeating(cullPeriod, cullPeriod) {
+			cache = cache.findAll {
+				if(it) {
+					def val = !(it.value.isStale()
+					&& (System.currentTimeMillis() > last.get(it) + cullTime || cache.size() > hardSize)
+					&& cache.size() > softSize)
 					if(!val) {
-						 last.remove(it)
-						 println "removing ${it.toString()} from cache"
+						last.remove(it)
+						println "removing ${it.toString()} from cache"
 					}
-					return val
-				 }
-				 else
+					return (it.value instanceof NullCachable) ? null : val
+				} else {
 					return false
-			 }
-		 }
-	 }
-	 
-	 
-	 int size() {
-		 return cache.size()
-	 }
-	 
-	 
-	 int request() {
-		 return misses + hits
-	 }
-	 
-	 int hits() {
-		 return hits
-	 }
-	 
-	 int misses() {
-		 return misses
-	 }
+				}
+			}
+		}
+	}
+		
+		
+	int size() {
+		return cache.size()
+	}
+	
+	int request() {
+		return misses + hits
+	}
+	
+	int hits() {
+		return hits
+	}
+	
+	int misses() {
+		return misses
+	}
 }

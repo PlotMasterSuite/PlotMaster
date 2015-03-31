@@ -19,7 +19,7 @@ import org.mcsg.plotmaster.utils.PlatformAdapter;
 import org.mcsg.plotmaster.utils.TaskQueue;
 
 
-class Plot implements Cacheable<Integer>{
+class Plot implements Cacheable{
 
 	static transient final Gson gson = new Gson()
 
@@ -58,12 +58,6 @@ class Plot implements Cacheable<Integer>{
 	transient PlotManager manager
 	transient long loadedAt
 
-	
-	Integer getId(){
-		return id
-	}
-
-	
 	
 	@Override
 	public boolean isStale() {

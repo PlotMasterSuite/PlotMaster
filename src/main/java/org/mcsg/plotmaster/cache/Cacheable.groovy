@@ -1,6 +1,6 @@
 package org.mcsg.plotmaster.cache
 
-interface Cacheable<T> {
+interface Cacheable {
 
 	
 	/**
@@ -11,14 +11,7 @@ interface Cacheable<T> {
 	
 	
 	
-	/**
-	 * 
-	 *  Get the Unique ID of this cache item
-	 * 
-	 * @return ID
-	 */
-	T getId();
-	
+
 	
 	
 	

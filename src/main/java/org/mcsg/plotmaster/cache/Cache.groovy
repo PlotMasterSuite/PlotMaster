@@ -1,7 +1,7 @@
 package org.mcsg.plotmaster.cache
 
 
- interface Cache<K, V extends Cacheable<K>> {
+ interface Cache<K, V extends Cacheable> {
 	 
 	 /**
 	  * Does this cache contain this item
