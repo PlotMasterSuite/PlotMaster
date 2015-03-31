@@ -103,18 +103,7 @@ class Settings {
 		]
 	]
 
-	/* Java
-	 *
-	 *
-	 * class Configuration {
-	 String type
-	 String world
-	 String backend
-	 }
-	 class ManagerConfiguration {
-	 String border
-	 Map<String, PlotType> types
-	 }*/
+
 
 
 }

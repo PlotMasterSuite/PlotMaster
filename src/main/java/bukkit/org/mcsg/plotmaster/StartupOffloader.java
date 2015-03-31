@@ -13,12 +13,14 @@ import org.mcsg.plotmaster.utils.PlatformAdapter.PlatformType;
 
 import com.sk89q.worldedit.WorldEdit;
 
+import de.greenrobot.event.EventBus;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitCommand;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitConsole;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
 import bukkit.org.mcsg.plotmaster.listeners.BlockListener;
 import bukkit.org.mcsg.plotmaster.listeners.EntitySpawnListener;
 import bukkit.org.mcsg.plotmaster.listeners.PlayerListener;
+import bukkit.org.mcsg.plotmaster.listeners.PlotMasterListener;
 import bukkit.org.mcsg.plotmaster.listeners.SelectionListener;
 import bukkit.org.mcsg.plotmaster.listeners.WorldEditListener;
 
@@ -50,6 +52,8 @@ public class StartupOffloader {
 		Bukkit.getPluginManager().registerEvents(new BlockListener(), PlotMasterPlugin.getPlugin());
 		Bukkit.getPluginManager().registerEvents(new BlockListener(), PlotMasterPlugin.getPlugin());
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(), PlotMasterPlugin.getPlugin());
+		
+		plotMaster.registerEvent(new PlotMasterListener());
 
 		try {
 			if(Integer.parseInt(Bukkit.getPluginManager().getPlugin("WorldEdit").getDescription().getVersion().substring(0, 1)) < 5) {

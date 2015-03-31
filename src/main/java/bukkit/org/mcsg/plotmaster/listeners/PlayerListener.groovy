@@ -23,6 +23,8 @@ class PlayerListener implements Listener{
 		def manager = getManager(e.getFrom().getWorld());
 		def loc = e.getTo()
 		
+		//TODO: Dont load the plot
+		
 		def plot = manager.getPlotAt(loc.getBlockX(), loc.getBlockZ(), null)
 
 		if(plot) {

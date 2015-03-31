@@ -26,6 +26,8 @@ import bukkit.org.mcsg.plotmaster.listeners.WorldEditListener;
 
 import com.sk89q.worldedit.WorldEdit;
 
+import de.greenrobot.event.EventBus;
+
 
 
 class PlotMaster{
@@ -195,6 +197,10 @@ class PlotMaster{
 		return Settings.config.backends.get(backend)
 	}
 
+	
+	void registerEvent(Object o){
+		EventBus.getDefault().register(o)
+	}
 
 
 
