@@ -54,7 +54,7 @@ class PlotMember {
 		List<Plot> list = []
 		plots.each { AccessLevel level, List<PlotInfo> info ->
 			println "Level is ${access.getLevel()}, ${level.getLevel()} "
-			if(level.getLevel() > access.getLevel()){
+			if(level.getLevel() >= access.getLevel()){
 				if(info){
 					info.each {
 						list.add(manager.getPlot(it.id, null))

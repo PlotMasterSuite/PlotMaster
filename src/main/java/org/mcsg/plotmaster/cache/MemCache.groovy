@@ -50,9 +50,7 @@ class MemCache<K, V extends Cacheable> implements Cache{
 	
 	void cache(K id, V value){
 		assert id != null, "Id cannot be null!"
-		
-		println "Caching ${id}, ${value}"
-		
+				
 		if(value == null) {
 			value = new NullCachable()
 		}
@@ -66,13 +64,12 @@ class MemCache<K, V extends Cacheable> implements Cache{
 			cache = cache.findAll {
 				if(it) {
 					def val = !(it.value.isStale()
-					&& (System.currentTimeMillis() > last.get(it) + cullTime || cache.size() > hardSize)
+					&& (System.currentTimeMillis() > last.get(it.key) + cullTime || cache.size() > hardSize)
 					&& cache.size() > softSize)
 					if(!val) {
 						last.remove(it)
-						println "removing ${it.toString()} from cache"
 					}
-					return (it.value instanceof NullCachable) ? null : val
+					return val
 				} else {
 					return false
 				}

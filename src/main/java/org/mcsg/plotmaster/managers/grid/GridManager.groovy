@@ -137,7 +137,7 @@ class GridManager extends PlotManager{
 	@Override
 	public Plot getPlot(int id, Callback c) {
 		asyncWrap(c) {
-			Plot p 
+			Plot p
 			if(plotCache.contains(id)) {
 				return plotCache.get(id)
 			} else {
@@ -317,12 +317,21 @@ class GridManager extends PlotManager{
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
 		
-		def isPart = true
+		def isPart = settings.get("default-access-mode").toString().toLowerCase().equals("allow")
 		
-		member.getPlots(AccessLevel.DENY).each {
-			if(it.isPartOf(location.x, location.z)) {
-				isPart = false
-				return
+		if(isPart) {
+			member.getPlots(AccessLevel.DENY).each {
+				if(it.isPartOf(location.x, location.z)) {
+					isPart = false
+					return
+				}
+			}
+		} else {
+			member.getPlotsAboveLevel(AccessLevel.ALLOW).each {
+				if(it.isPartOf(location.x, location.z)) {
+					isPart = true
+					return
+				}
 			}
 		}
 		return isPart
