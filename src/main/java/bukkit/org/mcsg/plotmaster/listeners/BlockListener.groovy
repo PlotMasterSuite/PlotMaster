@@ -13,13 +13,13 @@ import org.eclipse.jetty.io.ArrayByteBufferPool.Bucket;
 import org.mcsg.plotmaster.listener.BlockListeners;
 
 class BlockListener implements Listener{
-
+	
 	
 	@EventHandler
 	public void BlockPlace(BlockPlaceEvent e){
 		
-		e.setCancelled(BlockListeners.blockPlace(new BukkitPlayer(e.getPlayer()), 
-			new BukkitLocation(e.getBlock().getLocation()), new BukkitBlock(e.getBlock())))
+		e.setCancelled(BlockListeners.blockPlace(new BukkitPlayer(e.getPlayer()),
+				new BukkitLocation(e.getBlock().getLocation()), new BukkitBlock(e.getBlock())))
 		
 	}
 	
@@ -28,7 +28,7 @@ class BlockListener implements Listener{
 	public void BlockBreak(BlockBreakEvent e){
 		
 		e.setCancelled(BlockListeners.blockBreak(new BukkitPlayer(e.getPlayer()),
-			new BukkitLocation(e.getBlock().getLocation()), new BukkitBlock(e.getBlock())))
+				new BukkitLocation(e.getBlock().getLocation()), new BukkitBlock(e.getBlock())))
 		
 	}
 	
@@ -39,11 +39,13 @@ class BlockListener implements Listener{
 		def loc = new BukkitLocation(e.getClickedBlock()?.getLocation())
 		def block = new BukkitBlock(e.getClickedBlock())
 		
+		if(block)
+			e.setCancelled(BlockListeners.blockBreak(player, loc, block) || BlockListeners.blockPlace(player,  loc, block))
 		
-		e.setCancelled(BlockListeners.blockBreak(player, loc, block) || BlockListeners.blockPlace(player,  loc, block))
-					
 		
 	}
+	
+	
 	
 	
 	

@@ -324,9 +324,8 @@ class GridManager extends PlotManager{
 		PlotMember member = getPlotMember(player)
 		
 		def mode = settings.get("default-access-mode").toString().toLowerCase()
-		def isPart = !mode.equals("deny")
+		def isPart = !"deny".equals(mode)
 		
-		println "Yes ${mode} - ${isPart}"
 		
 		if(isPart) {
 			member.getPlots(AccessLevel.DENY)?.each {
@@ -416,7 +415,7 @@ class GridManager extends PlotManager{
 	@Override
 	public boolean isInPlotFast(PMPlayer player, Callback c) {
 		asyncWrap(c){
-			double ls = speed[player.getUUID()]
+			def ls = speed[player.getUUID()]?.doubleValue()
 			def vec = player.getVelocity()
 			double vel = Math.abs(vec.getX() + vec.getZ())
 			
