@@ -51,13 +51,13 @@ class GridManager extends PlotManager{
 		
 		this.world = world
 		
-		regionCache = new MemCache(200, 400, 1000, 3000) 
-		xzRegionCache = new MemCache(200, 400, 1000, 3000) 
-
-		plotCache = new MemCache(200, 400, 3000, 5000) 
+		regionCache = new MemCache(200, 400, 1000, 3000)
+		xzRegionCache = new MemCache(200, 400, 1000, 3000)
+		
+		plotCache = new MemCache(200, 400, 3000, 5000)
 		
 		//remove users from cache when they go offline
-		memberCache = new MemCache(-1, 0, 0, 0) 
+		memberCache = new MemCache(-1, 0, 0, 0)
 		
 	}
 	
@@ -265,8 +265,6 @@ class GridManager extends PlotManager{
 	}
 	
 	private int getRegionX(int x) {
-		//return x / cellWidth + ((x < 0) ? -1 : 1)
-		
 		def width = cellWidth + bw2
 		
 		if(x > 0)
@@ -276,8 +274,6 @@ class GridManager extends PlotManager{
 	}
 	
 	private int getRegionZ(int z) {
-		//return z / cellWidth + ((z < 0) ? -1 : 1)
-		
 		def height = cellHeight + bw2
 		
 		
@@ -381,7 +377,7 @@ class GridManager extends PlotManager{
 			plot.getRegion().getPlots().remove(plot.id)
 		}
 	}
-
+	
 	@Override
 	public void playerOffline(PMPlayer player) {
 		PlotMember member = memberCache.remove(player.getUUID())
@@ -390,7 +386,7 @@ class GridManager extends PlotManager{
 			it.memberOffline(member)
 		}
 	}
-
+	
 	@Override
 	public void playerOnline(PMPlayer player) {
 		def member = getPlotMember(player)
@@ -400,8 +396,56 @@ class GridManager extends PlotManager{
 			it.memberOnline(member)
 		}
 	}
-
-
+	
+	@Override
+	public boolean isInRegion(PMPlayer player, Callback c) {
+		asyncWrap(c){
+			
+		}
+	}
+	
+	@Override
+	public boolean isInPlot(PMPlayer player, Callback c) {
+		asyncWrap(c){
+			return plotExist(player.getLocation().getX(), player.getLocation().getZ(), null)
+		}
+	}
+	
+	Map<String, Double> speed = [:]
+	
+	@Override
+	public boolean isInPlotFast(PMPlayer player, Callback c) {
+		asyncWrap(c){
+			double ls = speed[player.getUUID()]
+			def vec = player.getVelocity()
+			double vel = Math.abs(vec.getX() + vec.getZ())
+			
+			speed[player.getUUID()] = vel
+			
+			if(!player.isFlying()) {
+				return isInPlot(player, null)
+			} 
+			
+			else { 
+			
+				if(!ls) {
+					if(vel < 0.3) {
+						return isInPlot(player, null)
+					} else {
+						return false
+					}
+				} else if(vel < ls && vel < 0.3) {
+					return isInPlot(player, null)
+				} else {
+					return false
+				}
+			}
+		}
+	}
+	
+	
+	
+	
 	
 	
 }

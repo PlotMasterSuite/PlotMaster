@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer
+import org.mcsg.plotmaster.bridge.PMVector
 
 class BukkitPlayer implements PMPlayer{
 
@@ -31,7 +32,7 @@ class BukkitPlayer implements PMPlayer{
 
 	@Override
 	public void sendMessage(String message) {
-		player.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, "${message}"))
+		player.sendMessage(ChatColor.translateAlternateColorCodes('&' as char, message))
 	}
 
 
@@ -50,6 +51,16 @@ class BukkitPlayer implements PMPlayer{
 	@Override
 	public boolean isOnline() {
 		return player.isOnline()
+	}
+
+
+	public PMVector getVelocity() {
+		return new BukkitVector(player.getVelocity())
+	}
+
+
+	public boolean isFlying() {
+		player.isFlying()
 	}
 
 	

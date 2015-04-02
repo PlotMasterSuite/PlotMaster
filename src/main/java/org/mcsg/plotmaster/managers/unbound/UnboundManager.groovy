@@ -156,5 +156,23 @@ class UnboundManager extends PlotManager{
 		
 	}
 
+	@Override
+	public boolean isInPlot(PMPlayer player, Callback c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isInPlotFast(PMPlayer player, Callback c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isInRegion(PMPlayer player, Callback c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.mcsg.plotmaster.Plot.AccessMode;
 import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.PlotMaster;
+import org.mcsg.plotmaster.events.PlayerEnterPlotEvent;
 import org.mcsg.plotmaster.managers.PlotManager
 
 class PlayerListener implements Listener{
@@ -22,6 +23,7 @@ class PlayerListener implements Listener{
 		return PlotMaster.getInstance().getManager(world.getName())
 	}
 	
+	Map<String, Boolean> isInPlot = [:]
 	
 	@EventHandler
 	void PlayerMove(PlayerMoveEvent e){
@@ -33,6 +35,21 @@ class PlayerListener implements Listener{
 			e.setTo(e.getFrom())
 			player.sendMessage("&cYou are not allowed to enter this plot!")
 		}
+		
+		
+		manager.isInPlotFast(player) { boolean is ->
+			if(is && !isInPlot[player.getUUID()]) {
+				manager.getPlotAt(player.getLocation()) {
+					PlayerEnterPlotEvent ev = new PlayerEnterPlotEvent(plot: it, player: player)
+					PlotMaster.getInstance().fireEvent(ev)
+				}
+				isInPlot[player.getUUID()] = is	
+			}
+		}
+		
+		
+		
+		
 	}
 	
 	@EventHandler

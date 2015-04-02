@@ -8,4 +8,8 @@ interface PMPlayer extends PMCommandSender {
 	PMLocation getLocation()
 	
 	boolean isOnline()
+	
+	PMVector getVelocity()
+	
+	boolean isFlying()
 }

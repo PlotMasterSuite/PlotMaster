@@ -2,10 +2,11 @@ package org.mcsg.plotmaster
 
 import java.util.Map.Entry;
 
+import org.mcsg.plotmaster.cache.Cacheable;
 import org.mcsg.plotmaster.managers.PlotManager
 
 
-class PlotMember {
+class PlotMember implements Cacheable{
 
 	String uuid;
 	String name;
@@ -86,6 +87,10 @@ class PlotMember {
 
 		if(manager)
 			manager.savePlotMember(this)
+	}
+
+	public boolean isStale() {
+		return false;
 	}
 
 

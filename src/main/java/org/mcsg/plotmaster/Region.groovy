@@ -22,7 +22,7 @@ class Region implements Cacheable{
 
 	@Override
 	public boolean isStale() {
-		return false;
+		return plots.values()*.isStale();
 	}
 	
 	

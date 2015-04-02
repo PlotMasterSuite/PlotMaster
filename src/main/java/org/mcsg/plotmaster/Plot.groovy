@@ -63,50 +63,108 @@ class Plot implements Cacheable{
 	
 	@Override
 	public boolean isStale() {
+		return isOnline()
+	}
+	
+	/**
+	 * @return true if members of this plot are online
+	 */
+	public boolean isOnline() {
 		return online != 0
 	}
 	
-	
+	/**
+	 * Returns the settings specified for this plot
+	 */
 	def getSetting(setting){
 		return settings[setting]
 	}
 	
+	/**
+	 * returns the metadata specified for this plot
+	 */
 	def getMetaData(data){
 		return metadata[data]
 	}
 	
-	void setSetting(key, value){
+	/**
+	 * Set a setting for this plot
+	 * @param key
+	 * @param value
+	 * 
+	 * @return this
+	 */
+	Plot setSetting(key, value){
 		settings.put(key, value)
+		return this
 	}
 	
-	void setMetaData(key, value){
+	/**
+	 * Set metadata for this plot
+	 * @param key
+	 * @param value
+	 * 
+	 * @return this
+	 */
+	Plot setMetaData(key, value){
 		metadata.put(key, value)
+		return this
 	}
 	
-	
+	/**
+	 * Internal use. Return the settings for this plot is JSON form
+	 * @return
+	 */
 	String settingsToJson(){
 		return gson.toJson(settings)
 	}
 	
+	/**
+	 * Internal use. Set the settings for this plot in json form
+	 * @param json
+	 */
 	void settingsFromJson(String json){
 		this.settings = gson.fromJson(json, Map.class)
 	}
 	
+	/**
+	 * Internal use, return the metadata for htis plot in Json form
+	 * @return
+	 */
 	String metadataToJson(){
 		return gson.toJson(metadata)
 	}
 	
+	/**
+	 * Internal use, set the metadata for htis plot in json form
+	 * 
+	 * @param json
+	 */
 	void metadataFromJson(String json){
 		this.metadata = gson.fromJson(json, Map.class)
 	}
 	
+	/**
+	 * Gets the max location for this plot. Y = 255
+	 * @return
+	 */
 	PMLocation getMax(){
 		return PlatformAdapter.toLocation(world, x + h, 255, z + w)
 	}
+	
+	/**
+	 * Gest the min location for htis plot, y = 0
+	 * @return
+	 */
 	PMLocation getMin(){
 		return PlatformAdapter.toLocation(world, x, 0, z)
 	}
 	
+	/**
+	 * Internal use. Sets a member of this plot as offline. 
+	 * @param member
+	 * @return
+	 */
 	def memberOffline(PlotMember member) {
 		if(member) {
 			online--
@@ -117,6 +175,11 @@ class Plot implements Cacheable{
 		}
 	}
 	
+	/**
+	 * Internal use. Set a member of this plot as online
+	 * @param member
+	 * @return
+	 */
 	def memberOnline(PlotMember member) {
 		if(member) {
 			if(online == 0){
@@ -127,7 +190,11 @@ class Plot implements Cacheable{
 		}
 	}
 	
-	
+	/**
+	 * Paints this plot. Draws the borders and schematics for this plot
+	 * 
+	 * @param c
+	 */
 	@CompileStatic
 	public void paint(Callback c) {
 		Border border = Border.load(type.border)
@@ -170,6 +237,11 @@ class Plot implements Cacheable{
 		TaskQueue.addTask(but)
 	}
 	
+	/**
+	 * Clears everything from this plot and resets it to the base generator
+	 * @param settings
+	 * @param c
+	 */
 	@CompileStatic
 	public void clear(Map settings, Callback c) {
 		List<Map> levels = (List<Map>)(settings.get("generator") as Map).get("levels")
@@ -200,6 +272,11 @@ class Plot implements Cacheable{
 		TaskQueue.addTask(but)
 	}
 	
+	/**
+	 * Clears, then paints this plot
+	 * @param settings
+	 * @param c
+	 */
 	public void reset(Map settings, Callback c) {
 		Thread.start {
 			clear(settings) {
@@ -207,6 +284,7 @@ class Plot implements Cacheable{
 			}
 		}
 	}
+	
 	
 	@CompileStatic
 	private int getTop(String world, int x, int z){
@@ -222,11 +300,16 @@ class Plot implements Cacheable{
 		return top + 1
 	}
 	
-	
+	/**
+	 * Returns true if this x,z loc is part of this plot
+	 */
 	public boolean isPartOf(int x, int z){
 		return x >= this.x && x < this.x + this.w && z >= this.z && z < this.z + this.h
 	}
 	
+	/**
+	 * Saves this plots data 
+	 */
 	public void save(){
 		manager?.savePlot(this) {}
 	}
