@@ -7,7 +7,6 @@ import groovy.transform.CompileStatic;
 import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.cache.Cacheable;
-import org.mcsg.plotmaster.events.PlotLoadEvent;
 import org.mcsg.plotmaster.events.PlotOfflineEvent;
 import org.mcsg.plotmaster.events.PlotOnlineEvent
 import org.mcsg.plotmaster.managers.PlotManager
@@ -230,20 +229,6 @@ class Plot implements Cacheable{
 	
 	public void save(){
 		manager?.savePlot(this) {}
-	}
-	
-	
-	
-	public void onLoad() {
-		loadedAt = System.currentTimeMillis()
-		
-		PlotLoadEvent e = new PlotLoadEvent(plot : this)
-		PlotMaster.getInstance().fireEvent(e)
-		
-	}
-	
-	public void onUnload() {
-		
 	}
 	
 }
