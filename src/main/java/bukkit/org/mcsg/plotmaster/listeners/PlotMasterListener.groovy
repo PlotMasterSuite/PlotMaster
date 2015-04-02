@@ -9,6 +9,7 @@ import org.bukkit.Location
 import org.bukkit.World
 import org.mcsg.plotmaster.Plot
 import org.mcsg.plotmaster.events.PlayerEnterPlotEvent
+import org.mcsg.plotmaster.events.PlotCreationEvent;
 import org.mcsg.plotmaster.events.PlotOfflineEvent;
 import org.mcsg.plotmaster.events.PlotOnlineEvent;
 
@@ -56,5 +57,27 @@ class PlotMasterListener {
 			}
 		}
 	}
+	
+	@Subscribe
+	public void PlotCreate(PlotCreationEvent e) {
+		println "Plot Created ${e.getPlot().getId()}"
+	}
+	
+	@Subscribe
+	public void PlotOffline(PlotOfflineEvent e) {
+		println "Plot Offline ${e.getPlot().getId()}"
+	}
+	
+	@Subscribe
+	public void plotOnline(PlotOnlineEvent e) {
+		println "Plot Online ${e.getPlot().getId()}"
+	}
+	
+	@Subscribe
+	public void PlayerEnterPlot(PlayerEnterPlotEvent e) {
+		println "Entered Plot ${e.getPlot().getId()}"
+	}
+	
+	
 	
 }

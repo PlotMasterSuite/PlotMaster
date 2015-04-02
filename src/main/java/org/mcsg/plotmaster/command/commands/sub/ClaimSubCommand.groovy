@@ -36,7 +36,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 					
 					if(result.getStatus() == PlotCreationStatus.SUCCESS){
 						def plot = result.getPlot()
-						player.sendMessage(result.getStatus().getMessage())
+						player.sendMessage(result.getMessage())
 						
 						def member = man.getPlotMember(player)
 						member.setAccess(AccessLevel.OWNER, plot)
@@ -46,7 +46,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 						}
 						
 					} else {
-						player.sendMessage(result.getStatus().getMessage())
+						player.sendMessage(result.getMessage())
 					}
 					
 				}

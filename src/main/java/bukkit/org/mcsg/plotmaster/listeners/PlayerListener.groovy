@@ -43,18 +43,14 @@ class PlayerListener implements Listener{
 					PlayerEnterPlotEvent ev = new PlayerEnterPlotEvent(plot: it, player: player)
 					PlotMaster.getInstance().fireEvent(ev)
 				}
-				isInPlot[player.getUUID()] = is	
 			}
+			isInPlot[player.getUUID()] = is
 		}
-		
-		
-		
-		
 	}
 	
 	@EventHandler
 	void PlayerChangeWorld(PlayerChangedWorldEvent e){
-		getManager(e.getFrom()).playerOnline(new BukkitPlayer(e.getPlayer()))
+		getManager(e.getFrom()).playerOffline(new BukkitPlayer(e.getPlayer()))
 		getManager(e.getPlayer().getWorld()).playerOnline(new BukkitPlayer(e.getPlayer()))
 	}
 	
@@ -65,6 +61,6 @@ class PlayerListener implements Listener{
 	
 	@EventHandler
 	void PlayerQuit(PlayerQuitEvent e) {
-		getManager(e.getPlayer().getWorld()).playerOnline(new BukkitPlayer(e.getPlayer()))
+		getManager(e.getPlayer().getWorld()).playerOffline(new BukkitPlayer(e.getPlayer()))
 	}
 }

@@ -2,6 +2,7 @@ package bukkit.org.mcsg.plotmaster.bridge
 
 import org.bukkit.World
 import org.mcsg.plotmaster.bridge.PMLocation;
+import org.mcsg.plotmaster.bridge.PMVector;
 
 class BukkitWorld implements PMLocation{
 
@@ -29,6 +30,11 @@ class BukkitWorld implements PMLocation{
 
 	public String getWorld() {
 		return world.getName()
+	}
+
+
+	public PMVector asVector() {
+		return null;
 	}
 	
 }

@@ -11,7 +11,7 @@ interface PMLocation {
 	
 	String getWorld()
 	
-	
+	PMVector asVector()
 	
 	
 }

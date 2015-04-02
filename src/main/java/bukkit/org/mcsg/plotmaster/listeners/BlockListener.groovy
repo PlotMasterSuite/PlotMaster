@@ -39,7 +39,7 @@ class BlockListener implements Listener{
 		def loc = new BukkitLocation(e.getClickedBlock()?.getLocation())
 		def block = new BukkitBlock(e.getClickedBlock())
 		
-		if(block)
+		if(block && loc)
 			e.setCancelled(BlockListeners.blockBreak(player, loc, block) || BlockListeners.blockPlace(player,  loc, block))
 		
 		

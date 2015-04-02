@@ -8,6 +8,8 @@ class PlotCreationEvent  implements Cancellable{
 	
 	Plot plot
 	
+	String message
+	
 	public boolean isCancelled() {
 		// TODO Auto-generated method stub
 		return false;

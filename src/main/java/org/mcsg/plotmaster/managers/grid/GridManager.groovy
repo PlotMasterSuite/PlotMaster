@@ -14,8 +14,10 @@ import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.backend.Backend
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer;
+import org.mcsg.plotmaster.bridge.PMVector
 import org.mcsg.plotmaster.cache.Cache
 import org.mcsg.plotmaster.cache.MemCache
+import org.mcsg.plotmaster.events.PlotCreationEvent
 import org.mcsg.plotmaster.managers.PlotCreation
 import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.managers.PlotManager
@@ -215,10 +217,14 @@ class GridManager extends PlotManager{
 			}
 			
 			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type, settings: type.settings);
-			if(load){
+			
+			PlotCreationEvent e = new PlotCreationEvent(plot: plot)
+			PlotMaster.getInstance().fireEvent(e)
+			
+			if(!e.isCancelled()){
 				return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
 			} else {
-				return new PlotCreation(status: PlotCreationStatus.CANCELLED)
+				return new PlotCreation(status: PlotCreationStatus.CANCELLED, message: e.getMessage())
 			}
 		}
 	}
@@ -410,41 +416,45 @@ class GridManager extends PlotManager{
 		}
 	}
 	
-	Map<String, Double> speed = [:]
+	Map<String, PMVector> lastloc = [:]
+	Map<String, Double> lastspeed = [:]
+	Map<String, Boolean> value = [:]
+	Map<String, Long> lasttime = [:]
+	
+	//So much work into not loading a plot lol
 	
 	@Override
 	public boolean isInPlotFast(PMPlayer player, Callback c) {
 		asyncWrap(c){
-			def ls = speed[player.getUUID()]?.doubleValue()
-			def vec = player.getVelocity()
-			double vel = Math.abs(vec.getX() + vec.getZ())
+			def uuid = player.getUUID()
+			def ll = lastloc[uuid]
+			def ls = lastspeed[uuid]?.doubleValue()
+			def lt = (lasttime[uuid]) ?: 0
 			
-			speed[player.getUUID()] = vel
+			def loc = player.getLocation().asVector()
+			
+			double change = 0
+			if(ll)
+				change = Math.abs(ll.getX() - loc.getX()) +  Math.abs(ll.getZ() - loc.getZ())
+			
+			lastloc[uuid] = loc
+			lastspeed[uuid] = change
+			
+			boolean val = value.get(player.getUUID()) ?: false;
 			
 			if(!player.isFlying()) {
-				return isInPlot(player, null)
-			} 
-			
-			else { 
-			
-				if(!ls) {
-					if(vel < 0.3) {
-						return isInPlot(player, null)
-					} else {
-						return false
+				val = isInPlot(player, null)
+			}
+			else {
+				if(ll) {
+					if(change < ls && change < 0.3  && lt + 100 < System.currentTimeMillis()) {
+						val =  isInPlot(player, null)
 					}
-				} else if(vel < ls && vel < 0.3) {
-					return isInPlot(player, null)
-				} else {
-					return false
+					lasttime[uuid] = System.currentTimeMillis()
 				}
 			}
+			value[player.getUUID()] = val
+			return val
 		}
 	}
-	
-	
-	
-	
-	
-	
 }

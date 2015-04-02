@@ -4,8 +4,8 @@ import org.mcsg.plotmaster.Plot
 
 
 class PlotCreation {
-
-
+	
+	
 	enum PlotCreationStatus {
 		SUCCESS("&aPlot created successfully."),
 		PLOT_EXISTS("&cA plot already exists in this location!"),
@@ -13,17 +13,28 @@ class PlotCreation {
 		REGION_FULL("&cCannot create plot, region has no space!"),
 		CANCELLED("&cCreation was cancelled by a plugin."),
 		OTHER("&cFailed to create plot.")
-
+		
 		String message;
-
+		
 		public PlotCreationStatus(String message){
 			this.message = message;
 		}
 	}
-
+	
 	
 	
 	PlotCreationStatus status
-	Plot plot
-}
+	String message
 	
+	Plot plot
+	
+	
+	
+	public String getMessage() {
+		if(message)
+			return message
+		else
+			return status.message
+	}
+}
+
