@@ -25,6 +25,13 @@ package org.mcsg.plotmaster.cache
 	  */
 	 void cache(K id, V value)
 	 
+	 	/**
+	 	 * Remove from cache
+	 	 * @param id
+	 	 * @return
+	 	 */
+	 V remove(K id)
+	 
 	 
 	 /**
 	  * 

@@ -56,6 +56,8 @@ abstract class PlotManager {
 	
 	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	
+	abstract PlotMember getPlotMember(String uuid)
+	
 	abstract PlotMember getPlotMember(PMPlayer player)
 	
 	abstract PlotMember savePlotMember(PlotMember member)
@@ -64,4 +66,9 @@ abstract class PlotManager {
 	abstract boolean canModifyLocation(PMPlayer player, PMLocation location)
 	
 	abstract boolean canEnterLocation(PMPlayer player, PMLocation location)
+	
+	
+	abstract void playerOffline(PMPlayer player)
+	
+	abstract void playerOnline(PMPlayer player)
 }

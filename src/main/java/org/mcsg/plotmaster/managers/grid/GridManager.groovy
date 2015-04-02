@@ -15,7 +15,7 @@ import org.mcsg.plotmaster.backend.Backend
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.cache.Cache
-import org.mcsg.plotmaster.cache.CacheFactory;
+import org.mcsg.plotmaster.cache.MemCache
 import org.mcsg.plotmaster.managers.PlotCreation
 import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.managers.PlotManager
@@ -34,6 +34,8 @@ class GridManager extends PlotManager{
 	
 	Cache plotCache;
 	
+	Cache memberCache;
+	
 	String world
 	int cellWidth
 	int cellHeight
@@ -49,9 +51,13 @@ class GridManager extends PlotManager{
 		
 		this.world = world
 		
-		regionCache = CacheFactory.createCache()
-		xzRegionCache = CacheFactory.createCache()
-		plotCache = CacheFactory.createCache()
+		regionCache = new MemCache(200, 400, 1000, 3000) 
+		xzRegionCache = new MemCache(200, 400, 1000, 3000) 
+
+		plotCache = new MemCache(200, 400, 3000, 5000) 
+		
+		//remove users from cache when they go offline
+		memberCache = new MemCache(-1, 0, 0, 0) 
 		
 	}
 	
@@ -209,7 +215,6 @@ class GridManager extends PlotManager{
 			}
 			
 			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type, settings: type.settings);
-			def load = plot.onLoad()
 			if(load){
 				return new PlotCreation(status: PlotCreationStatus.SUCCESS, plot: backend.createPlot(region, plot))
 			} else {
@@ -280,6 +285,11 @@ class GridManager extends PlotManager{
 			return (z - (z % height)) + bw
 		else
 			return (z - (height - Math.abs(z % height))) + bw
+	}
+	
+	@Override
+	public PlotMember getPlotMember(String uuid) {
+		
 	}
 	
 	@Override
@@ -369,6 +379,25 @@ class GridManager extends PlotManager{
 			plot.clear(settings, null)
 			backend.deletePlot(plot)
 			plot.getRegion().getPlots().remove(plot.id)
+		}
+	}
+
+	@Override
+	public void playerOffline(PMPlayer player) {
+		PlotMember member = memberCache.remove(player.getUUID())
+		
+		member.getPlots().each {
+			it.memberOffline(member)
+		}
+	}
+
+	@Override
+	public void playerOnline(PMPlayer player) {
+		def member = getPlotMember(player)
+		memberCache.cache(member.uuid, member)
+		
+		member.getPlots().each {
+			it.memberOnline(member)
 		}
 	}
 

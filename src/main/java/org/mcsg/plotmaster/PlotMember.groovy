@@ -9,6 +9,7 @@ class PlotMember {
 
 	String uuid;
 	String name;
+	int homeid;
 
 	transient PlotManager manager
 

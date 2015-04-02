@@ -8,7 +8,4 @@ class PlayerEnterPlotEvent {
 	Plot plot
 	PMPlayer player
 	
-	
-	
-	
 }

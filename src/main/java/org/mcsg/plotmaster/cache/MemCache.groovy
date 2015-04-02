@@ -28,7 +28,8 @@ class MemCache<K, V extends Cacheable> implements Cache{
 		this.softSize = softSize;
 		this.hardSize = hardSize;
 		
-		cullProccessor()
+		if(cullPeriod != -1)
+			cullProccessor()
 	}
 	
 	
@@ -50,7 +51,7 @@ class MemCache<K, V extends Cacheable> implements Cache{
 	
 	void cache(K id, V value){
 		assert id != null, "Id cannot be null!"
-				
+		
 		if(value == null) {
 			value = new NullCachable()
 		}
@@ -59,20 +60,31 @@ class MemCache<K, V extends Cacheable> implements Cache{
 		last.put(id, System.currentTimeMillis())
 	}
 	
+	V remove(K id) {
+		last.remove(id)
+		cache.remove(id)
+	}
+	
 	private cullProccessor(){
 		SchedulerAdapter.asyncRepeating(cullPeriod, cullPeriod) {
-			cache = cache.findAll {
-				if(it) {
-					def val = !(it.value.isStale()
-					&& (System.currentTimeMillis() > last.get(it.key) + cullTime || cache.size() > hardSize)
-					&& cache.size() > softSize)
-					if(!val) {
-						last.remove(it)
-					}
-					return val
-				} else {
-					return false
+			process()
+		}
+	}
+	
+	
+	
+	private process() {
+		cache = cache.findAll {
+			if(it) {
+				def val = !(it.value.isStale()
+				&& (System.currentTimeMillis() > last.get(it.key) + cullTime || cache.size() > hardSize)
+				&& cache.size() > softSize)
+				if(!val) {
+					last.remove(it)
 				}
+				return val
+			} else {
+				return false
 			}
 		}
 	}
@@ -93,4 +105,4 @@ class MemCache<K, V extends Cacheable> implements Cache{
 	int misses() {
 		return misses
 	}
-}
+	}

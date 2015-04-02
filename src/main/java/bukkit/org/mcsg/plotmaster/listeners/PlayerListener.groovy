@@ -2,11 +2,15 @@ package bukkit.org.mcsg.plotmaster.listeners
 
 import bukkit.org.mcsg.plotmaster.bridge.BukkitLocation
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer
+import bukkit.org.mcsg.plotmaster.bridge.BukkitWorld
 
 import org.bukkit.World
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.mcsg.plotmaster.Plot.AccessMode;
 import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.PlotMaster;
@@ -25,11 +29,25 @@ class PlayerListener implements Listener{
 		def player = new BukkitPlayer(e.getPlayer())
 		def can = manager.canEnterLocation(player, new BukkitLocation(e.getTo()))
 		
-		println can
-		
 		if(!can) {
 			e.setTo(e.getFrom())
 			player.sendMessage("&cYou are not allowed to enter this plot!")
 		}
+	}
+	
+	@EventHandler
+	void PlayerChangeWorld(PlayerChangedWorldEvent e){
+		getManager(e.getFrom()).playerOnline(new BukkitPlayer(e.getPlayer()))
+		getManager(e.getPlayer().getWorld()).playerOnline(new BukkitPlayer(e.getPlayer()))
+	}
+	
+	@EventHandler
+	void PlayerJoin(PlayerJoinEvent e) {
+		getManager(e.getPlayer().getWorld()).playerOnline(new BukkitPlayer(e.getPlayer()))
+	}
+	
+	@EventHandler
+	void PlayerQuit(PlayerQuitEvent e) {
+		getManager(e.getPlayer().getWorld()).playerOnline(new BukkitPlayer(e.getPlayer()))
 	}
 }
