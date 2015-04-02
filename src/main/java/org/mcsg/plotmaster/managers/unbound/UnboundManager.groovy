@@ -138,5 +138,23 @@ class UnboundManager extends PlotManager{
 		return false;
 	}	
 
+	@Override
+	public PlotMember getPlotMember(String uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void playerOffline(PMPlayer player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playerOnline(PMPlayer player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
