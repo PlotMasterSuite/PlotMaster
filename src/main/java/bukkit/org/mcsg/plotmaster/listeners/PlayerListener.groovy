@@ -25,6 +25,8 @@ class PlayerListener implements Listener{
 		def player = new BukkitPlayer(e.getPlayer())
 		def can = manager.canEnterLocation(player, new BukkitLocation(e.getTo()))
 		
+		println can
+		
 		if(!can) {
 			e.setTo(e.getFrom())
 			player.sendMessage("&cYou are not allowed to enter this plot!")

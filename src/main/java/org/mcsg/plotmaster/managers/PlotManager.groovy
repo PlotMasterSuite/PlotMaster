@@ -61,7 +61,6 @@ abstract class PlotManager {
 	abstract PlotMember savePlotMember(PlotMember member)
 	
 		
-	
 	abstract boolean canModifyLocation(PMPlayer player, PMLocation location)
 	
 	abstract boolean canEnterLocation(PMPlayer player, PMLocation location)

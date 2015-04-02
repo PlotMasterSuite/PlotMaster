@@ -36,7 +36,7 @@ class BlockListener implements Listener{
 	public void Interact(PlayerInteractEvent e) {
 		
 		def player = new BukkitPlayer(e.getPlayer());
-		def loc = new BukkitLocation(e.getClickedBlock().getLocation())
+		def loc = new BukkitLocation(e.getClickedBlock()?.getLocation())
 		def block = new BukkitBlock(e.getClickedBlock())
 		
 		

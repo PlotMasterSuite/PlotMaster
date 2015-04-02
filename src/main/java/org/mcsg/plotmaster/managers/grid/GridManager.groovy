@@ -317,17 +317,20 @@ class GridManager extends PlotManager{
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player)
 		
-		def isPart = settings.get("default-access-mode").toString().toLowerCase().equals("allow")
+		def mode = settings.get("default-access-mode").toString().toLowerCase()
+		def isPart = !mode.equals("deny")
+		
+		println "Yes ${mode} - ${isPart}"
 		
 		if(isPart) {
-			member.getPlots(AccessLevel.DENY).each {
+			member.getPlots(AccessLevel.DENY)?.each {
 				if(it.isPartOf(location.x, location.z)) {
 					isPart = false
 					return
 				}
 			}
 		} else {
-			member.getPlotsAboveLevel(AccessLevel.ALLOW).each {
+			member.getPlotsAboveLevel(AccessLevel.ALLOW)?.each {
 				if(it.isPartOf(location.x, location.z)) {
 					isPart = true
 					return
@@ -368,6 +371,8 @@ class GridManager extends PlotManager{
 			plot.getRegion().getPlots().remove(plot.id)
 		}
 	}
+
+
 	
 	
 }

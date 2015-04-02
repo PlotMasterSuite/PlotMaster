@@ -2,16 +2,8 @@ package org.mcsg.plotmaster.events
 
 import org.mcsg.plotmaster.Plot
 
-class PlotLoadEvent  implements Cancellable{
+class PlotLoadEvent {
 
-	boolean cancelled
-	
 	Plot plot
 	
-	
-	public boolean isCancelled() {
-		return false;
-	}
-
-
 }

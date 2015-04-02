@@ -37,7 +37,8 @@ class Plot implements Cacheable{
 	long createdAt = System.currentTimeMillis()
 	PlotType type
 	AccessMode accessMode = AccessMode.ALLOW
-
+	Map<String, AccessLevel> accessMap
+	
 	//eg gamemode, pvp mod etc
 	Map settings = [
 		gamemode: "creative",
@@ -47,7 +48,6 @@ class Plot implements Cacheable{
 		"time-progression": true,
 		"clear-entities-unload" : true,
 		"save-entities" : false,
-		
 	]
 
 	//eg mobs on plot, time in plot, other data
@@ -213,25 +213,15 @@ class Plot implements Cacheable{
 
 
 
-	public boolean onLoad() {
+	public void onLoad() {
 		loadedAt = System.currentTimeMillis()
 		
 		PlotLoadEvent e = new PlotLoadEvent(plot : this)
-		PlotMaster.fireEvent(e)
-		
-		if(!e.isCancelled()) {
-			
-			
-			
-			
-			
-		}
-		
-		
-		return e.isCancelled()
+		PlotMaster.getInstance().fireEvent(e)
+
 	}
 	
-	public boolean onUnload() {
+	public void onUnload() {
 		
 	}
 
