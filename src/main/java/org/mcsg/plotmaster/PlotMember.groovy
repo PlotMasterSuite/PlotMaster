@@ -7,25 +7,34 @@ import org.mcsg.plotmaster.managers.PlotManager
 
 
 class PlotMember implements Cacheable{
-
+	
 	String uuid;
 	String name;
 	int homeid;
-
+	
 	transient PlotManager manager
-
+	
 	static class PlotInfo {
 		int id;
 		String world
 	}
-
+	
 	Map<AccessLevel, List<PlotInfo>> plots = new HashMap<>()
-
-
+	
+	
 	Map<AccessLevel, List<PlotInfo>> getPlotAccessMap(){
 		return plots;
 	}
-
+	
+	Plot getHomePlot() {
+		return manager.getPlot(homeid, null)
+	}
+	
+	void setHomePlot(int id) {
+		this.homeid = id
+		save()
+	}
+	
 	List<Plot> getPlots() {
 		List<Plot> list = []
 		plots.values().each { List<PlotInfo> infos ->
@@ -37,7 +46,7 @@ class PlotMember implements Cacheable{
 		}
 		return list
 	}
-
+	
 	List<Plot> getPlots(AccessLevel access){
 		List<Plot> list = []
 		plots.each { AccessLevel level,List<PlotInfo> info ->
@@ -51,7 +60,7 @@ class PlotMember implements Cacheable{
 		}
 		return list
 	}
-
+	
 	List<Plot> getPlotsAboveLevel(AccessLevel access){
 		List<Plot> list = []
 		plots.each { AccessLevel level, List<PlotInfo> info ->
@@ -66,7 +75,7 @@ class PlotMember implements Cacheable{
 		}
 		return list
 	}
-
+	
 	
 	AccessLevel getAccessLevel(Plot plot){
 		for(Entry e : plots.entrySet()) {
@@ -82,18 +91,23 @@ class PlotMember implements Cacheable{
 	void setAccess(AccessLevel access, Plot plot){
 		def list = plots.get(access) ?: []
 		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld()))
-
+		
 		plots.put(access, list)
-
+		
+		save()
+	}
+	
+	
+	void save() {
 		if(manager)
 			manager.savePlotMember(this)
 	}
-
+	
 	public boolean isStale() {
 		return false;
 	}
 	
 	
-
-
+	
+	
 }
