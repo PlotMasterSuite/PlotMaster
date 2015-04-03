@@ -84,11 +84,8 @@ class GridManager extends PlotManager{
 		//println "getRegionAt() regx: $regx, regz: $regz"
 		
 		asyncWrap(c) {
-			def r
-			if(xzRegionCache.contains("$regx:$regz")) {
-				return xzRegionCache.get("$regx:$regz")
-			} else {
-				r = backend.getRegionByLocation(regx, regz)
+			return xzRegionCache.get("$regx:$regz") {
+				Region r = backend.getRegionByLocation(regx, regz)
 				xzRegionCache.cache("$regx:$regz", r)
 				
 				if(r) {
@@ -103,13 +100,9 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public Region getRegion(int id, Callback c) {
-		def r
 		asyncWrap(c) {
-			if(regionCache.contains(id)) {
-				return regionCache.get(id)
-			} else {
-				r = backend.getRegion(id)
-				regionCache.cache(id, r)
+			return regionCache.get(id) {
+				Region r = backend.getRegion(id)
 				r.plots.values().each {
 					it.setManager(this)
 				}
@@ -145,12 +138,8 @@ class GridManager extends PlotManager{
 	@Override
 	public Plot getPlot(int id, Callback c) {
 		asyncWrap(c) {
-			Plot p
-			if(plotCache.contains(id)) {
-				return plotCache.get(id)
-			} else {
-				p = backend.getPlot(id)
-				plotCache.cache(id, p)
+			return plotCache.get(id) {
+				Plot p = backend.getPlot(id)
 				p.setManager(this)
 				return p
 			}
@@ -290,24 +279,30 @@ class GridManager extends PlotManager{
 	}
 	
 	@Override
-	public PlotMember getPlotMember(String uuid) {
-		
-	}
-	
-	@Override
-	public PlotMember getPlotMember(PMPlayer player) {
-		PlotMember member =  backend.getMember(player.getUUID())
-		if(!member){
-			member = new PlotMember(uuid: player.getUUID(), name : player.getName())
-			savePlotMember(member)
+	public PlotMember getPlotMember(String uuid, Callback c) {
+		asyncWrap(c) {
+			
 		}
-		member.setManager(this)
-		return member
 	}
 	
 	@Override
-	public PlotMember savePlotMember(PlotMember member) {
-		backend.saveMember(member)
+	public PlotMember getPlotMember(PMPlayer player, Callback c) {
+		asyncWrap(c){
+			PlotMember member =  backend.getMember(player.getUUID())
+			if(!member){
+				member = new PlotMember(uuid: player.getUUID(), name : player.getName())
+				savePlotMember(member)
+			}
+			member.setManager(this)
+			return member
+		}
+	}
+	
+	@Override
+	public PlotMember savePlotMember(PlotMember member, Callback c) {
+		asyncWrap(c) {
+			backend.saveMember(member)
+		}
 	}
 	
 	@Override

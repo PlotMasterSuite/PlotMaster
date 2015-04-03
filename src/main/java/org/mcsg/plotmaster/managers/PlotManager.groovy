@@ -56,11 +56,11 @@ abstract class PlotManager {
 	
 	abstract RegionCreation createRegion(int x, int y, int h, int w, Callback c)
 	
-	abstract PlotMember getPlotMember(String uuid)
+	abstract PlotMember getPlotMember(String uuid, Callback c)
 	
-	abstract PlotMember getPlotMember(PMPlayer player)
+	abstract PlotMember getPlotMember(PMPlayer player, Callback c)
 	
-	abstract PlotMember savePlotMember(PlotMember member)
+	abstract PlotMember savePlotMember(PlotMember member, Callback c)
 	
 	/**
 	 * Checks if a player can modify this location or not

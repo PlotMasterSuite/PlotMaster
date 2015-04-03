@@ -1,5 +1,6 @@
 package org.mcsg.plotmaster.cache
 
+import org.mcsg.plotmaster.utils.Callback
 import org.mcsg.plotmaster.utils.NullCachable;
 import org.mcsg.plotmaster.utils.SchedulerAdapter;
 
@@ -7,17 +8,19 @@ import groovy.transform.CompileStatic;
 
 import java.util.concurrent.ConcurrentHashMap
 
+
 @CompileStatic
 class MemCache<K, V extends Cacheable> implements Cache{
-	Map<K, V> cache;
-	Map<K, Long> last;
+	Map<K, V> cache
+	Map<K, Long> last
 	
-	int cullPeriod;
-	int cullTime;
-	int softSize;
-	int hardSize;
+	int cullPeriod
+	int cullTime
+	int softSize
+	int hardSize
 	
-	int hits, misses
+	int hits, 
+	misses
 	
 	def MemCache(int cullPeriod, int cullTime, int softSize, int hardSize){
 		cache = new ConcurrentHashMap<>()
@@ -46,6 +49,19 @@ class MemCache<K, V extends Cacheable> implements Cache{
 			misses++
 		}
 		return (val instanceof NullCachable) ? null : val
+	}
+	
+	V get(K id, Callback c) {
+		if(contains(id)) {
+			return get(id)
+			hits++
+		}
+		misses++
+		
+		def val = (V)c.call(id)
+		cache(id, val)
+		
+		return val
 	}
 	
 	

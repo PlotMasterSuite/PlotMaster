@@ -18,15 +18,16 @@ import org.mcsg.plotmaster.utils.Callback;
 
 class UnboundManager extends PlotManager{
 
-	List<Region> regions;
-
-	Map settings
-
-
 	@Override
 	public void load(Map settings) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Map getSettings() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -115,13 +116,19 @@ class UnboundManager extends PlotManager{
 	}
 
 	@Override
-	public PlotMember getPlotMember(PMPlayer player) {
+	public PlotMember getPlotMember(String uuid, Callback c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PlotMember savePlotMember(PlotMember member) {
+	public PlotMember getPlotMember(PMPlayer player, Callback c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlotMember savePlotMember(PlotMember member, Callback c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -136,24 +143,12 @@ class UnboundManager extends PlotManager{
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
 		// TODO Auto-generated method stub
 		return false;
-	}	
-
-	@Override
-	public PlotMember getPlotMember(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
-	public void playerOffline(PMPlayer player) {
+	public boolean isInRegion(PMPlayer player, Callback c) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void playerOnline(PMPlayer player) {
-		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override
@@ -169,10 +164,17 @@ class UnboundManager extends PlotManager{
 	}
 
 	@Override
-	public boolean isInRegion(PMPlayer player, Callback c) {
+	public void playerOffline(PMPlayer player) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
+
+	@Override
+	public void playerOnline(PMPlayer player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }
