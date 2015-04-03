@@ -1,6 +1,8 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer
@@ -61,6 +63,11 @@ class BukkitPlayer implements PMPlayer{
 
 	public boolean isFlying() {
 		player.isFlying()
+	}
+
+
+	public void teleport(PMLocation loc) {
+		player.teleport(new Location(Bukkit.getWorld(loc.getWorld()), loc.getX(), loc.getY(), loc.getZ()))
 	}
 
 	

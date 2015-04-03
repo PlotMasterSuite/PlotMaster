@@ -160,6 +160,15 @@ class Plot implements Cacheable{
 		return PlatformAdapter.toLocation(world, x, 0, z)
 	}
 	
+	PMLocation getCenter() {
+		def cx = x + w / 2 
+		def cz = z + h / 2
+		
+		def cy = getTop(world, cx, cz) + 1
+		
+		return PlatformAdapter.toLocation(world, cx, cy, cz)
+	}
+	
 	/**
 	 * Internal use. Sets a member of this plot as offline. 
 	 * @param member

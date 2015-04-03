@@ -8,17 +8,18 @@ import org.mcsg.plotmaster.bridge.PMCommandSender;
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.command.ConsoleSubCommand
 import org.mcsg.plotmaster.command.PlayerSubCommand;
+import org.mcsg.plotmaster.command.PlotSubCommand
+import org.mcsg.plotmaster.managers.PlotManager;
 
-class SettingsSubCommand implements PlayerSubCommand{
+class SettingsSubCommand implements PlotSubCommand{
 
 	public String help() {
 		return null;
 	}
 
-	public boolean onCommand(PMPlayer player, List<String> args) {
+	public boolean onCommand(PMPlayer player,PlotManager manager, List<String> args) {
 		if(args.size() > 1) {
 			def loc = player.getLocation()
-			def manager = PlotMaster.getInstance().getManager(loc.getWorld())
 			
 			manager.getPlot(loc) { Plot plot
 				if(plot) {

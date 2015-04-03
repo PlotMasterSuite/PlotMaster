@@ -5,8 +5,10 @@ import java.util.List;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand
+import org.mcsg.plotmaster.command.PlotSubCommand
+import org.mcsg.plotmaster.managers.PlotManager;
 
-class DeleteSubCommand implements PlayerSubCommand {
+class DeleteSubCommand implements PlotSubCommand {
 
 	@Override
 	public String help() {
@@ -15,9 +17,8 @@ class DeleteSubCommand implements PlayerSubCommand {
 	}
 
 	@Override
-	public boolean onCommand(PMPlayer player, List<String> args) {
+	public boolean onCommand(PMPlayer player,PlotManager manager, List<String> args) {
 		def location = player.getLocation()
-		def manager = PlotMaster.getInstance().getManager(location.getWorld())
 		
 		manager.getPlotAt(location.getX(), location.getZ()){
 			manager.deletePlot(it) {

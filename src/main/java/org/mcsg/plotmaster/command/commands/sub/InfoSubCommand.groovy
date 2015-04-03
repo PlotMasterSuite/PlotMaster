@@ -8,12 +8,13 @@ import org.mcsg.plotmaster.Plot
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand
+import org.mcsg.plotmaster.command.PlotSubCommand
 import org.mcsg.plotmaster.managers.PlotManager;
 import org.mcsg.plotmaster.managers.grid.GridManager;
 import org.mcsg.plotmaster.schematic.Border;
 import org.mcsg.plotmaster.schematic.SchematicBlock
 
-class InfoSubCommand implements PlayerSubCommand{
+class InfoSubCommand implements PlotSubCommand{
 
 	@Override
 	public String help() {
@@ -22,9 +23,9 @@ class InfoSubCommand implements PlayerSubCommand{
 	}
 
 	@Override
-	public boolean onCommand(PMPlayer player, List<String> args) {
+	public boolean onCommand(PMPlayer player, PlotManager man,List<String> args) {
 		def loc = player.getLocation()
-		PlotMaster.getInstance().getManager(loc.getWorld()).getPlotAt(loc.getX(), loc.getZ()) { Plot plot ->
+		man.getPlotAt(loc.getX(), loc.getZ()) { Plot plot ->
 
 			if(plot) {
 
@@ -34,7 +35,7 @@ class InfoSubCommand implements PlayerSubCommand{
 			} else {
 				player.sendMessage "&cNo plot found"
 			}
-			def manager = PlotMaster.getInstance().getManager(loc.getWorld()) as GridManager
+			def manager = man as GridManager
 			def border = Border.load(manager.getSettings().grid.border)
 			player.sendMessage("\nDEBUG:\n&eBorder: ${border.getName()}")
 			player.sendMessage("    &eWidth: ${border.getWidth()}")
@@ -51,27 +52,7 @@ class InfoSubCommand implements PlayerSubCommand{
 			}
 			
 			def face = border.getFace(posx, posz, manager.cellWidth, manager.cellHeight)
-			if(face) {
 
-				
-			/*	if(face.toString().contains("SOUTH")){
-					posz = posz - (h % width)
-				}
-				if(face.toString().contains("EAST")) {
-					posx = posx - (w % width)
-				}*/
-	
-			/*	if(face.toString().contains("SOUTH")){
-					posz = posz - (manager.cellHeight % border.width )
-				}
-				if(face.toString().contains("EAST")) {
-					posx =  posx - (manager.cellWidth % border.width)
-				}*/
-				
-				
-
-			
-			}
 
 			SchematicBlock[] blocks = border.getColumnAt(loc.getX(), loc.getZ(), manager.getSettings().grid.width.toInteger(),manager.getSettings().grid.height.toInteger())
 			player.sendMessage("    &eface: ${face.toString()}, posx: ${posx}, posz: ${posz}")

@@ -6,9 +6,10 @@ import org.mcsg.plotmaster.Plot
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand;
+import org.mcsg.plotmaster.command.PlotSubCommand
 import org.mcsg.plotmaster.managers.PlotManager
 
-class ResetSubCommand implements PlayerSubCommand {
+class ResetSubCommand implements PlotSubCommand {
 
 	@Override
 	public String help() {
@@ -17,9 +18,8 @@ class ResetSubCommand implements PlayerSubCommand {
 	}
 
 	@Override
-	public boolean onCommand(PMPlayer player, List<String> args) {
+	public boolean onCommand(PMPlayer player,PlotManager manager, List<String> args) {
 		
-		PlotManager manager = PlotMaster.getInstance().getManager(player.getLocation().getWorld())
 		Plot p = manager.getPlotAt(player.getLocation().getX(), player.getLocation().getZ(), null)
 		
 		p.reset(manager.getSettings()) {

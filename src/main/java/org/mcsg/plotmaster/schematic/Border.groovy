@@ -16,11 +16,11 @@ class Border {
 	Map<SFace, Schematic> borders = [:]
 
 	/*
-	 * Z = H
+	 * Z = W
 	 * -Z = NORTH
 	 * +Z = SOUTH
 	 * 
-	 * X = W
+	 * X = H
 	 * +X = EAST
 	 * -X = WEST
 	 * 

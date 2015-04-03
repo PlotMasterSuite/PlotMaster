@@ -4,11 +4,13 @@ import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand;
+import org.mcsg.plotmaster.command.PlotSubCommand
 import org.mcsg.plotmaster.managers.PlotCreation;
+import org.mcsg.plotmaster.managers.PlotManager;
 import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.utils.Messages;
 
-class ClaimSubCommand implements PlayerSubCommand{
+class ClaimSubCommand implements PlotSubCommand{
 
 	@Override
 	public String help() {
@@ -19,7 +21,7 @@ class ClaimSubCommand implements PlayerSubCommand{
 	}
 
 	@Override
-	public boolean onCommand(PMPlayer player, List<String> args) {
+	public boolean onCommand(PMPlayer player,PlotManager man,List<String> args) {
 		if(player.hasPermission("plot.create")){
 			def tname = (args[0]) ?: "default"
 			
@@ -29,7 +31,6 @@ class ClaimSubCommand implements PlayerSubCommand{
 			if(!type){
 				player.sendMessage("&cRequested PlotType does not exist!")
 			} else {
-				def man = PlotMaster.getInstance().getManager(loc.getWorld())
 				
 				man.createPlot(player, loc.getX(), loc.getZ(), type){
 					def result = it as 	PlotCreation

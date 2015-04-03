@@ -12,4 +12,6 @@ interface PMPlayer extends PMCommandSender {
 	PMVector getVelocity()
 	
 	boolean isFlying()
+	
+	void teleport(PMLocation loc)
 }
