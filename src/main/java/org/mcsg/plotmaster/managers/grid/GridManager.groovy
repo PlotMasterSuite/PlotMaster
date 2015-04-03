@@ -281,20 +281,23 @@ class GridManager extends PlotManager{
 	@Override
 	public PlotMember getPlotMember(String uuid, Callback c) {
 		asyncWrap(c) {
-			
+			return memberCache.get(uuid) {
+				return backend.getMember(uuid)
+			}
 		}
 	}
 	
 	@Override
 	public PlotMember getPlotMember(PMPlayer player, Callback c) {
 		asyncWrap(c){
-			PlotMember member =  backend.getMember(player.getUUID())
-			if(!member){
-				member = new PlotMember(uuid: player.getUUID(), name : player.getName())
-				savePlotMember(member)
+			return memberCache.get(player.getUUID()) {
+				PlotMember member =  backend.getMember(player.getUUID())
+				if(!member){
+					member = new PlotMember(uuid: player.getUUID(), name : player.getName())
+					savePlotMember(member)
+				}
+				member.setManager(this)
 			}
-			member.setManager(this)
-			return member
 		}
 	}
 	

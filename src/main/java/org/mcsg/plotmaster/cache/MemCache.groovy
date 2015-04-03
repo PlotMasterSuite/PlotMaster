@@ -51,14 +51,14 @@ class MemCache<K, V extends Cacheable> implements Cache{
 		return (val instanceof NullCachable) ? null : val
 	}
 	
-	V get(K id, Callback c) {
+	V get(K id, CacheProvider provider) {
 		if(contains(id)) {
 			return get(id)
 			hits++
 		}
 		misses++
 		
-		def val = (V)c.call(id)
+		def val = (V)provider.provide(id)
 		cache(id, val)
 		
 		return val

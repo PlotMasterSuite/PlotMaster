@@ -27,7 +27,7 @@ import org.mcsg.plotmaster.utils.Callback
 	  * @param backup
 	  * @return
 	  */
-	 V get(K id, Callback backup)
+	 V get(K id, CacheProvider provider)
 	 
 	 
 	 
