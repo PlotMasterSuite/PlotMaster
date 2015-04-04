@@ -3,6 +3,7 @@ package org.mcsg.plotmaster.command.commands;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMCommandSender;
 import org.mcsg.plotmaster.command.ConsoleCommand;
+import org.mcsg.plotmaster.command.commands.sub.HelpSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.BorderSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.ClaimSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.ClearSubCommand;
@@ -34,6 +35,8 @@ public class PlotCommand extends ConsoleCommand{
 		registerCommand("teleport", teleport)
 		registerCommand("tp", teleport)
 		registerCommand("home", new HomeSubCommand())
+		
+		registerCommand("help", new HelpSubCommand("p", this))
 	}
 
 	

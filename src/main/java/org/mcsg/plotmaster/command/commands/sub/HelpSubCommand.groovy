@@ -41,6 +41,12 @@ class HelpSubCommand implements ConsoleSubCommand{
 	public String getCommand() {
 		return "help";
 	}
+
+
+
+	public String getPermission() {
+		return null;
+	}
 	
 	
 }

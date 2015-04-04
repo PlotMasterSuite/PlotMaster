@@ -66,4 +66,9 @@ class ClaimSubCommand implements PlotSubCommand{
 		return null;
 	}
 
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

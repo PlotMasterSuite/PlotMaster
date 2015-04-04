@@ -45,5 +45,9 @@ class SettingsSubCommand implements PlotSubCommand{
 	}
 
 
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

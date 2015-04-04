@@ -66,4 +66,9 @@ class TeleportSubCommand implements PlotSubCommand{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

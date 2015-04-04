@@ -25,7 +25,11 @@ public abstract class PlayerCommand extends RootCommand{
 				assert !(sub instanceof ConsoleSubCommand), "Cannot invoke a ConsoleSubCommand from a PlayerCommand!"
 				
 				if(sub instanceof PlayerSubCommand) {
-					return ((PlayerSubCommand)sub).onCommand(player, (args.size() < 2 ? new ArrayList<String>() : args[1..-1]))
+					def subcom = ((PlayerSubCommand)sub);
+					if(subcom.getPermission() && player.hasPermission(subcom.getPermission()))
+						return subcom.onCommand(player, (args.size() < 2 ? new ArrayList<String>() : args[1..-1]))
+					else
+						player.sendMessage("&cYou do not have permission for this command!")
 				} else if(sub instanceof PlotSubCommand) {
 					def manager = PlotMaster.getInstance().getManager(player.getLocation().getWorld())
 					if(!manager) {

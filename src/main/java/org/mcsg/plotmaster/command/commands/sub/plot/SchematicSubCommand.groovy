@@ -42,5 +42,10 @@ class SchematicSubCommand implements PlayerSubCommand{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
