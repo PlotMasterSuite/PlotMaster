@@ -1,4 +1,4 @@
-package org.mcsg.plotmaster.command.commands.sub
+package org.mcsg.plotmaster.command.commands.sub.plot
 
 import java.util.List;
 
@@ -37,6 +37,11 @@ class SettingsSubCommand implements PlotSubCommand{
 				}
 			}
 		}
+	}
+
+	public String getCommand() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -1,4 +1,4 @@
-package org.mcsg.plotmaster.command.commands.sub
+package org.mcsg.plotmaster.command.commands.sub.plot
 
 import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.PlotMaster;
@@ -59,6 +59,11 @@ class ClaimSubCommand implements PlotSubCommand{
 		
 		
 		
+	}
+
+	public String getCommand() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

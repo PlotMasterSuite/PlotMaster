@@ -19,39 +19,38 @@ import spark.Route
 
 @CompileStatic
 class RestServer {
-
-
+	
+	
 	//Yes, PM is 100% standalone and the core can be started without a server
 	public static void main(args){
 		pm = new PlotMaster()
-
+		
 		pm.onLoad(new DefaultConsole())
 		pm.onEnable()
-
+		
 		man = PlotMaster.getInstance().getManager("world")
-
 		new RestServer().start()
-
+		
 	}
-
+	
 	static PlotMaster pm
 	static PlotManager man
 	Gson gson = new GsonBuilder().setPrettyPrinting().create()
-
+	
 	void start(){
 		before { Request req, Response res ->
 			pm.sendConsoleMessage("&7[WebServer] Request to ${req.url()}")
-
+			
 			res.type("application/json")
 		}
-
-
+		
+		
 		get("/regions") { Request req, Response res ->
 			def regions = []
 			int start = ((req.queryParams("start")?.toInteger()) ?: 1)
 			int amount = ((req.queryParams("amount")?.toInteger()) ?: 25)
 			amount = (amount < 25) ? amount : 25
-
+			
 			for(index in start..start+amount-1){
 				def reg = man.getRegion(index, null)
 				if(reg){
@@ -66,27 +65,27 @@ class RestServer {
 			}
 			return toJson(regions)
 		}
-
+		
 		get("/region/:id") { Request req, Response res ->
 			def id = req.params("id")
 			if(id.contains(",")) {
 				def s = id.split(",")
 				def x = s[0].toInteger()
 				def z = s[1].toInteger()
-
+				
 				println "Getting at $x, $z"
-
+				
 				return toJson(man.getRegionAt(x, z, null))
 			}
 			return toJson(man.getRegion(id.toInteger(), null))
 		}
-
+		
 		get("/plots") { Request req, Response res ->
 			def regions = []
 			int start = ((req.queryParams("start")?.toInteger()) ?: 1)
 			int amount = ((req.queryParams("amount")?.toInteger()) ?: 25)
 			amount = (amount < 25) ? amount : 25
-
+			
 			for(index in start..start+amount-1){
 				def plot = man.getPlot(index, null)
 				if(plot){
@@ -101,28 +100,28 @@ class RestServer {
 			}
 			return toJson(regions)
 		}
-
+		
 		get("/plot/:id") { Request req, Response res ->
 			def id = req.params("id")
 			if(id.contains(",")) {
 				def s = id.split(",")
 				def x = s[0].toInteger()
 				def z = s[1].toInteger()
-
+				
 				println "Getting at $x, $z"
-
+				
 				return toJson(man.getPlotAt(x, z, null))
 			}
 			return toJson(man.getPlot(id.toInteger(), null))
 		}
 	}
-
+	
 	String getUrl(Request req, String url){
 		return req.url().replace(req.uri(), "") + url
 	}
-
+	
 	String toJson(Object o){
 		gson.toJson(o)
 	}
-
+	
 }

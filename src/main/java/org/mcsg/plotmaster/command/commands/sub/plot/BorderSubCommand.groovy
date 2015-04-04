@@ -1,4 +1,4 @@
-package org.mcsg.plotmaster.command.commands.sub
+package org.mcsg.plotmaster.command.commands.sub.plot
 
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand;
@@ -38,6 +38,11 @@ class BorderSubCommand implements PlayerSubCommand{
 		borders.put(name, border)
 				
 		return true
+	}
+
+	public String getCommand() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -13,5 +13,7 @@ import groovy.transform.CompileStatic;
 public interface SubCommand {
 
 	public String help();
+	
+	public String getCommand();
 }
 
