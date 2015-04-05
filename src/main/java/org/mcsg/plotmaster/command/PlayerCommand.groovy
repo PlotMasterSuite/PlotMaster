@@ -26,7 +26,7 @@ public abstract class PlayerCommand extends RootCommand{
 				
 				if(sub instanceof PlayerSubCommand) {
 					def subcom = ((PlayerSubCommand)sub);
-					if(subcom.getPermission() && player.hasPermission(subcom.getPermission()))
+					if(!subcom.getPermission() || player.hasPermission(subcom.getPermission()))
 						return subcom.onCommand(player, (args.size() < 2 ? new ArrayList<String>() : args[1..-1]))
 					else
 						player.sendMessage("&cYou do not have permission for this command!")
@@ -36,7 +36,11 @@ public abstract class PlayerCommand extends RootCommand{
 						player.sendMessage("&cThis command must be executed from a PlotMaster enabled world!")
 						return false
 					}
-					return ((PlotSubCommand)sub).onCommand(player, manager, (args.size() < 2 ? new ArrayList<String>() : args[1..-1]))
+					def subcom = ((PlotSubCommand)sub);
+					if(!subcom.getPermission() || player.hasPermission(subcom.getPermission()))
+						return subcom.onCommand(player, manager, (args.size() < 2 ? new ArrayList<String>() : args[1..-1]))
+					else
+						player.sendMessage("&cYou do not have permission for this command!")
 				}
 			}
 			else {
@@ -45,6 +49,7 @@ public abstract class PlayerCommand extends RootCommand{
 		} else {
 			return onCommand(player, args);
 		}
+		
 	}
 	
 	public abstract boolean onCommand(PMPlayer player, List<String> args);

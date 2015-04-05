@@ -46,8 +46,7 @@ class BorderSubCommand implements PlayerSubCommand{
 	}
 
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plotm";
 	}
 
 }

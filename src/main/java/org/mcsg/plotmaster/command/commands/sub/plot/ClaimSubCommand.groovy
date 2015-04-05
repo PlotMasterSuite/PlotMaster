@@ -2,6 +2,7 @@ package org.mcsg.plotmaster.command.commands.sub.plot
 
 import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.PlotMaster;
+import org.mcsg.plotmaster.PlotMember
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand;
 import org.mcsg.plotmaster.command.PlotSubCommand
@@ -11,7 +12,7 @@ import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.utils.Messages;
 
 class ClaimSubCommand implements PlotSubCommand{
-
+	
 	@Override
 	public String help() {
 		"""
@@ -19,13 +20,13 @@ class ClaimSubCommand implements PlotSubCommand{
 			&b/plot create [type]
 		"""
 	}
-
+	
 	@Override
 	public boolean onCommand(PMPlayer player,PlotManager man,List<String> args) {
 		if(player.hasPermission("plot.create")){
 			def tname = (args[0]) ?: "default"
 			
-			def loc = player.getLocation() 
+			def loc = player.getLocation()
 			def type = PlotMaster.getInstance().getPlotType(loc.getWorld(), tname)
 			
 			if(!type){
@@ -39,13 +40,13 @@ class ClaimSubCommand implements PlotSubCommand{
 						def plot = result.getPlot()
 						player.sendMessage(result.getMessage())
 						
-						def member = man.getPlotMember(player)
-						member.setAccess(AccessLevel.OWNER, plot)
-						
-						plot.reset(man.getSettings()) {
-							player.sendMessage("&aPlot has been generated!")
+						man.getPlotMember(player) { PlotMember member ->
+							member.setAccess(AccessLevel.OWNER, plot)
+							
+							plot.reset(man.getSettings()) {
+								player.sendMessage("&aPlot has been generated!")
+							}
 						}
-						
 					} else {
 						player.sendMessage(result.getMessage())
 					}
@@ -60,15 +61,15 @@ class ClaimSubCommand implements PlotSubCommand{
 		
 		
 	}
-
+	
 	public String getCommand() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	public String getPermission() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }

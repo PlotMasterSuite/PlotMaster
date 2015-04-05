@@ -100,7 +100,7 @@ class PlotMember implements Cacheable{
 	
 	void save() {
 		if(manager)
-			manager.savePlotMember(this)
+			manager.savePlotMember(this){}
 	}
 	
 	public boolean isStale() {

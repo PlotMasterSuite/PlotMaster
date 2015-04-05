@@ -35,12 +35,13 @@ class BlockListener implements Listener{
 	@EventHandler
 	public void Interact(PlayerInteractEvent e) {
 		
-		def player = new BukkitPlayer(e.getPlayer());
-		def loc = new BukkitLocation(e.getClickedBlock()?.getLocation())
-		def block = new BukkitBlock(e.getClickedBlock())
-		
-		if(block && loc)
+		if(e.getClickedBlock()) {
+			def player = new BukkitPlayer(e.getPlayer());
+			def loc = new BukkitLocation(e.getClickedBlock().getLocation())
+			def block = new BukkitBlock(e.getClickedBlock())
+			
 			e.setCancelled(BlockListeners.blockBreak(player, loc, block) || BlockListeners.blockPlace(player,  loc, block))
+		}
 		
 		
 	}

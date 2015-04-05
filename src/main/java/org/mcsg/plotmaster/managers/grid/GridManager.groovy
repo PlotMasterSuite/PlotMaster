@@ -297,6 +297,7 @@ class GridManager extends PlotManager{
 					savePlotMember(member)
 				}
 				member.setManager(this)
+				return member
 			}
 		}
 	}
@@ -310,7 +311,7 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public boolean canModifyLocation(PMPlayer player, PMLocation location) {
-		PlotMember member = getPlotMember(player)
+		PlotMember member = getPlotMember(player, null)
 		
 		def isPart = false
 		
@@ -325,21 +326,21 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
-		PlotMember member = getPlotMember(player)
+		PlotMember member = getPlotMember(player, null)
 		
 		def mode = settings.get("default-access-mode").toString().toLowerCase()
 		def isPart = !"deny".equals(mode)
 		
 		
 		if(isPart) {
-			member.getPlots(AccessLevel.DENY)?.each {
+			member?.getPlots(AccessLevel.DENY)?.each {
 				if(it.isPartOf(location.x, location.z)) {
 					isPart = false
 					return
 				}
 			}
 		} else {
-			member.getPlotsAboveLevel(AccessLevel.ALLOW)?.each {
+			member?.getPlotsAboveLevel(AccessLevel.ALLOW)?.each {
 				if(it.isPartOf(location.x, location.z)) {
 					isPart = true
 					return
@@ -392,11 +393,12 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public void playerOnline(PMPlayer player) {
-		def member = getPlotMember(player)
-		memberCache.cache(member.uuid, member)
-		
-		member.getPlots().each {
-			it.memberOnline(member)
+		getPlotMember(player){ PlotMember member ->
+			memberCache.cache(member.uuid, member)
+			
+			member.getPlots().each {
+				it.memberOnline(member)
+			}
 		}
 	}
 	
