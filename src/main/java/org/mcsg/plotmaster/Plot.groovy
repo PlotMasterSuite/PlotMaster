@@ -149,7 +149,7 @@ class Plot implements Cacheable{
 	 * @return
 	 */
 	PMLocation getMax(){
-		return PlatformAdapter.toLocation(world, x + h, 255, z + w)
+		return PlatformAdapter.toLocation(world, x + h - 1, 255, z + w - 1)
 	}
 	
 	/**
@@ -161,7 +161,7 @@ class Plot implements Cacheable{
 	}
 	
 	PMLocation getCenter() {
-		def cx = x + w / 2 
+		def cx = x + w / 2
 		def cz = z + h / 2
 		
 		def cy = getTop(world, cx, cz) + 1
@@ -259,14 +259,36 @@ class Plot implements Cacheable{
 		levels.each { Map m ->
 			map.put(m.y as Integer, m.block as String)
 		}
-		
-		println map.toMapString()
-		
+				
 		List updates = new ArrayList()
 		
+		def values = [:]
+		
 		String material = "AIR"
-		for(int y = 255; y > 0; y--){
-			material = (map.get(y)) ?: material
+		def cur = "AIR"
+		def air = 0
+		for(int y = 255; y > 0; y--){ //we want to go from bottom to top
+			if(map.get(y)) {          //but teh definition is top to bottom
+				values.put(y + 1, cur)
+				if(cur == "AIR")
+					air = y + 1
+				cur = map.get(y)
+			}
+		}
+		
+		values.put(0, cur)
+		
+		//clear air top to bottom. Fixes some client lag issues. Also cleans up liquids correctly
+		for(int y = 255; y >= air; y--){			
+			for(int xx = 0; xx < w; xx++){
+				for(int zz = 0; zz < h; zz++){
+					updates.add(PlatformAdapter.createBlockUpdate(world, xx + x, y, zz + z, "AIR", 0 as byte))
+				}
+			}
+		}
+		
+		for(int y = 0; y < air; y++){
+			material = (values.get(y)) ?: material
 			
 			for(int xx = 0; xx < w; xx++){
 				for(int zz = 0; zz < h; zz++){
