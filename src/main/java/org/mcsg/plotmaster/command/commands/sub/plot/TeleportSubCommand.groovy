@@ -44,11 +44,13 @@ class TeleportSubCommand implements PlotSubCommand{
 				return null
 			}
 			
-			if(args.size() == 2 && args[1].isNumber()) {
-				def id = args[1].toInteger() - 1
+			
+			def getPlot = {int id ->
 				def list = member.getPlotsAboveLevel(AccessLevel.MEMBER)
 				
-				if(list.size() == 0) {
+				println list?.size()
+				
+				if(!list || list.size() == 0) {
 					player.sendMessage("&cPlayer is not a member of any plots!")
 					return null
 				}
@@ -58,8 +60,20 @@ class TeleportSubCommand implements PlotSubCommand{
 					return null
 				}
 				return list.get(id)
+			}
+			
+			
+			if(args.size() == 2 && args[1].isNumber()) {
+				def id = args[1].toInteger() - 1
+				return getPlot(id)
 			} else {
-				return member.getHomePlot()
+				Plot plot =  member.getHomePlot()
+				
+				if(plot)
+					return plot
+				else
+					return getPlot(0)
+				
 			}
 		}
 		

@@ -109,8 +109,6 @@ abstract class AbstractSQLBackend implements Backend{
 		def time = System.currentTimeMillis()
 		region.setId(res.id)
 
-		println "Created: $region"
-
 		closeReturn(sql, region)
 	}
 

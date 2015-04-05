@@ -34,10 +34,10 @@ import static org.mcsg.plotmaster.utils.AsyncUtils.asyncWrap;
 @CompileStatic
 class GridManager extends PlotManager{
 	
-	Cache regionCache;
-	Cache xzRegionCache;
+	Cache<Integer, Region> regionCache;
+	Cache<?, Region> xzRegionCache;
 	
-	Cache plotCache;
+	Cache<Integer, Plot> plotCache;
 	
 	Cache<String, PlotMember> memberCache;
 	
@@ -144,7 +144,7 @@ class GridManager extends PlotManager{
 		(Plot) asyncWrap(c) {
 			return plotCache.get(id) {
 				Plot p = backend.getPlot(id)
-				p.setManager(this)
+				p?.setManager(this)
 				return p
 			}
 		}
@@ -332,7 +332,7 @@ class GridManager extends PlotManager{
 	public boolean canEnterLocation(PMPlayer player, PMLocation location) {
 		PlotMember member = getPlotMember(player, null)
 		
-		def mode = settings.get("default-access-mode").toString().toLowerCase()
+		def mode = settings.get("default-access-mode")?.toString()?.toLowerCase()
 		def isPart = !"deny".equals(mode)
 		
 		

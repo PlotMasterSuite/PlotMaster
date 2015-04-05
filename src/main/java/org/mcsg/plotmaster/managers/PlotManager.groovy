@@ -26,7 +26,7 @@ abstract class PlotManager {
 	
 	abstract Map getSettings()
 	
-	// For all methods, if Closure is not null, will run async with the Closure being the callback
+	// For all methods, if Call is not null, will run async with the Callback being called SYNC when its finished
 	
 	abstract Region getRegionAt(int x, int z, Callback c)
 	
