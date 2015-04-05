@@ -12,6 +12,7 @@ import org.mcsg.plotmaster.utils.PlatformAdapter;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.event.extent.EditSessionEvent;
+import com.sk89q.worldedit.extension.platform.Actor
 import com.sk89q.worldedit.function.mask.AbstractMask
 import com.sk89q.worldedit.function.mask.Mask
 import com.sk89q.worldedit.function.mask.Mask2D;
@@ -32,8 +33,9 @@ public class WorldEditListener implements Listener{
 
 
 		Plot plot = manager.getPlotAt(location.getX(), location.getZ(), null)
-
-		if(plot){
+		Actor a = e.getActor()
+		
+		if(plot && a.getUniqueId().toString() == plot.getOwnerUUID()){
 			def loc1 = plot.getMin()
 			def vec1 = new Vector(loc1.getX(), loc1.getY(), loc1.getZ())
 			
