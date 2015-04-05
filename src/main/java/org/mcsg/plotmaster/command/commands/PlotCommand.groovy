@@ -18,6 +18,7 @@ import org.mcsg.plotmaster.command.commands.sub.plot.HomeSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.InfoSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.ResetSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.SchematicSubCommand;
+import org.mcsg.plotmaster.command.commands.sub.plot.SettingsSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.TeleportSubCommand;
 
 @CompileStatic
@@ -40,6 +41,7 @@ public class PlotCommand extends PlayerCommand{
 		registerCommand("home", new HomeSubCommand())
 		
 		registerCommand("help", new HelpSubCommand("p", this))
+		registerCommand("set", new SettingsSubCommand())
 	}
 
 	@Override

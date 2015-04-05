@@ -21,7 +21,24 @@ class TeleportSubCommand implements PlotSubCommand{
 		return null;
 	}
 	
+	//TODO: really need to clean this up 
 	public boolean onCommand(PMPlayer player, PlotManager manager, List<String> args) {
+		if(args.size() == 0) {
+			player.sendMessage("&cMust specify an ID or player")
+		}  
+		
+		if(args[0].isNumber()) {
+			int id = args[0].toInteger()
+			
+			manager.getPlot(id) { Plot plot ->
+				if(plot)
+				player.teleport(plot.getCenter())
+				else
+				player.sendMessage("&cPlot not found")
+			}	
+			return true
+		}
+		
 		def uuid = PlatformAdapter.getUUID(args[0])
 		
 		if(!uuid) {
@@ -62,11 +79,15 @@ class TeleportSubCommand implements PlotSubCommand{
 				return list.get(id)
 			}
 			
+		
+			
 			
 			if(args.size() == 2 && args[1].isNumber()) {
 				def id = args[1].toInteger() - 1
 				return getPlot(id)
-			} else {
+			} 
+			
+			else {
 				Plot plot =  member.getHomePlot()
 				
 				if(plot)

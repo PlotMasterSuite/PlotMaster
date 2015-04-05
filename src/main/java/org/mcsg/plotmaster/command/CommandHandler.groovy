@@ -17,7 +17,6 @@ class CommandHandler {
 	
 	static load(){
 		registerCommand("plot", new PlotCommand())
-		registerCommand("test", new TestCommand())
 	}
 	
 
