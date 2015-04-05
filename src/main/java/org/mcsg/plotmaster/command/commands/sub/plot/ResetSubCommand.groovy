@@ -27,7 +27,7 @@ class ResetSubCommand implements PlotSubCommand {
 		Plot p = manager.getPlotAt(player.getLocation().getX(), player.getLocation().getZ(), null)
 		
 		p.reset(manager.getSettings()) {
-			player.sendMessage("&aPlot has been cleared!")
+			player.sendMessage("&aPlot has been reset!")
 		}
 		
 		
