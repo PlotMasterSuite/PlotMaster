@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 
 import org.mcsg.plotmaster.Plot
@@ -11,6 +13,7 @@ import org.mcsg.plotmaster.command.PlayerSubCommand;
 import org.mcsg.plotmaster.command.PlotSubCommand
 import org.mcsg.plotmaster.managers.PlotManager;
 
+@CompileStatic
 class SettingsSubCommand implements PlotSubCommand{
 
 	public String help() {
@@ -21,7 +24,7 @@ class SettingsSubCommand implements PlotSubCommand{
 		if(args.size() > 1) {
 			def loc = player.getLocation()
 			
-			manager.getPlot(loc) { Plot plot
+			manager.getPlotAt(loc.getX(), loc.getZ()) { Plot plot
 				if(plot) {
 					def set = args.get(0)
 					

@@ -29,7 +29,6 @@ import com.sk89q.worldedit.WorldEdit;
 
 
 
-
 class PlotMaster{
 
 	private static Map<String, Class<? extends PlotManager>> managers_registry = [:]

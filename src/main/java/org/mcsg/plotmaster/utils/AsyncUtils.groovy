@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import groovy.lang.Closure;
 import groovy.transform.CompileStatic;
 
+@CompileStatic
 class AsyncUtils {
 
 	static asyncWrap(Callback callback, Closure code){

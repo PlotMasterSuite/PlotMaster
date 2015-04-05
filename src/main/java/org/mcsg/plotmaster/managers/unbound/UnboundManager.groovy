@@ -3,6 +3,7 @@ package org.mcsg.plotmaster.managers.unbound
 import java.util.Map;
 
 import groovy.lang.Closure;
+import groovy.transform.CompileStatic;
 
 import org.bukkit.Location;
 import org.mcsg.plotmaster.Plot;
@@ -16,6 +17,7 @@ import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.managers.RegionCreation
 import org.mcsg.plotmaster.utils.Callback;
 
+@CompileStatic
 class UnboundManager extends PlotManager{
 
 	@Override

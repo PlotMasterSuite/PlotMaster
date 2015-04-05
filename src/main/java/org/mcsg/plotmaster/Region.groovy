@@ -1,9 +1,11 @@
 package org.mcsg.plotmaster
 
+import groovy.transform.CompileStatic;
+
 import org.bukkit.World
 import org.mcsg.plotmaster.cache.Cacheable;
 
-
+@CompileStatic
 class Region implements Cacheable{
 
 	int id;	

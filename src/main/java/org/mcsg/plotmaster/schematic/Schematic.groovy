@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.schematic
 
+import groovy.transform.CompileStatic;
+
 import java.io.File;
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
@@ -7,6 +9,7 @@ import java.util.zip.GZIPOutputStream
 import org.mcsg.plotmaster.Settings;
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 
+@CompileStatic
 class Schematic {
 
 	SchematicBlock[][][] blocks;

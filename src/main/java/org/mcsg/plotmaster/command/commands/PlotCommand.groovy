@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands;
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 
 import org.mcsg.plotmaster.PlotMaster;
@@ -18,6 +20,7 @@ import org.mcsg.plotmaster.command.commands.sub.plot.ResetSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.SchematicSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.TeleportSubCommand;
 
+@CompileStatic
 public class PlotCommand extends PlayerCommand{
 
 

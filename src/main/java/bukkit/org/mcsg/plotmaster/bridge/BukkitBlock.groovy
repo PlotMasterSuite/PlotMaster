@@ -1,10 +1,13 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import groovy.transform.CompileStatic;
+
 import org.bukkit.block.Block
 import org.mcsg.plotmaster.bridge.PMBlock
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.utils.Material;
 
+@CompileStatic
 class BukkitBlock implements PMBlock{
 
 	Block block

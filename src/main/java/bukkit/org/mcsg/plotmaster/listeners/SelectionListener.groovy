@@ -1,6 +1,8 @@
 package bukkit.org.mcsg.plotmaster.listeners
 
+import groovy.transform.CompileStatic;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer
+
 import org.bukkit.Location
 import org.bukkit.Material;
 import org.bukkit.entity.Player
@@ -10,6 +12,7 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.mcsg.plotmaster.utils.Selection;
 
+@CompileStatic
 class SelectionListener implements Listener {
 
 	@EventHandler

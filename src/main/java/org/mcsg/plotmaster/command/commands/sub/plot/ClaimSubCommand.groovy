@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import org.mcsg.plotmaster.AccessLevel;
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.PlotMember
@@ -11,6 +13,7 @@ import org.mcsg.plotmaster.managers.PlotManager;
 import org.mcsg.plotmaster.managers.PlotCreation.PlotCreationStatus;
 import org.mcsg.plotmaster.utils.Messages;
 
+@CompileStatic
 class ClaimSubCommand implements PlotSubCommand{
 	
 	@Override

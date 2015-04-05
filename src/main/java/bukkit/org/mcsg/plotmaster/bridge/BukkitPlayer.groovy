@@ -1,5 +1,7 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import groovy.transform.CompileStatic;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location
@@ -8,6 +10,7 @@ import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMPlayer
 import org.mcsg.plotmaster.bridge.PMVector
 
+@CompileStatic
 class BukkitPlayer implements PMPlayer{
 
 	Player player

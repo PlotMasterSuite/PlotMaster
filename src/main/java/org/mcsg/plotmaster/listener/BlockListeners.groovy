@@ -1,10 +1,13 @@
 package org.mcsg.plotmaster.listener
 
+import groovy.transform.CompileStatic;
+
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.bridge.PMBlock
 import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
 
+@CompileStatic
 class BlockListeners {
 
 

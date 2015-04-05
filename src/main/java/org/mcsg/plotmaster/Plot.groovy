@@ -19,7 +19,7 @@ import org.mcsg.plotmaster.utils.Callback
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 import org.mcsg.plotmaster.utils.TaskQueue;
 
-
+@CompileStatic
 class Plot implements Cacheable{
 	
 	static transient final Gson gson = new Gson()

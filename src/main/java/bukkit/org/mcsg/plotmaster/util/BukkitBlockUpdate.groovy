@@ -1,11 +1,15 @@
 package bukkit.org.mcsg.plotmaster.util
 
+import groovy.transform.CompileStatic;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.World
 import org.mcsg.plotmaster.utils.BlockUpdate
 
+
+@CompileStatic
 class BukkitBlockUpdate implements BlockUpdate{
 
 	Location loc

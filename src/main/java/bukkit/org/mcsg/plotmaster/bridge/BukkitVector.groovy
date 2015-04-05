@@ -1,8 +1,10 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import groovy.transform.CompileStatic;
 import org.bukkit.util.Vector;
 import org.mcsg.plotmaster.bridge.PMVector
 
+@CompileStatic
 class BukkitVector implements PMVector{
 
 	Vector vec

@@ -1,9 +1,13 @@
 package org.mcsg.plotmaster.utils
 
+import groovy.transform.CompileStatic;
+
 import org.mcsg.plotmaster.schematic.Schematic
 import org.mcsg.plotmaster.schematic.SchematicBlock
+
 import static java.lang.Math.*
 
+@CompileStatic
 class Selection {
 
 	static Map<String, Selection> selections = [:]

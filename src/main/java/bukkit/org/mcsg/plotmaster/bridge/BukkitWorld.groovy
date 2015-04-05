@@ -1,9 +1,12 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import groovy.transform.CompileStatic;
 import org.bukkit.World
 import org.mcsg.plotmaster.bridge.PMLocation;
 import org.mcsg.plotmaster.bridge.PMVector;
 
+
+@CompileStatic
 class BukkitWorld implements PMLocation{
 
 	World world

@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 
 import org.mcsg.plotmaster.Plot
@@ -9,6 +11,8 @@ import org.mcsg.plotmaster.command.PlayerSubCommand;
 import org.mcsg.plotmaster.command.PlotSubCommand
 import org.mcsg.plotmaster.managers.PlotManager
 
+
+@CompileStatic
 class ResetSubCommand implements PlotSubCommand {
 
 	@Override

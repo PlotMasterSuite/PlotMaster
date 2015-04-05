@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 import java.util.Map.Entry
 
@@ -8,6 +10,7 @@ import org.mcsg.plotmaster.command.ConsoleSubCommand;
 import org.mcsg.plotmaster.command.RootCommand
 import org.mcsg.plotmaster.command.SubCommand
 
+@CompileStatic
 class HelpSubCommand implements ConsoleSubCommand{
 
 	RootCommand command;
@@ -24,6 +27,7 @@ class HelpSubCommand implements ConsoleSubCommand{
 		return "Prints command help";
 	}
 
+	@groovy.transform.CompileDynamic
 	public boolean onCommand(PMCommandSender player, List<String> args) {
 		def subs = command.getSubs()
 		def coms = new HashSet(subs.values())

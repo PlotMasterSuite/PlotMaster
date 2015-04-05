@@ -1,5 +1,6 @@
 package bukkit.org.mcsg.plotmaster.listeners
 
+import groovy.transform.CompileStatic;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitBlock;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitLocation
 import bukkit.org.mcsg.plotmaster.util.EntityData
@@ -15,6 +16,7 @@ import org.mcsg.plotmaster.events.PlotOnlineEvent;
 
 import com.google.common.eventbus.Subscribe;
 
+@CompileStatic
 class PlotMasterListener {
 
 	@Subscribe

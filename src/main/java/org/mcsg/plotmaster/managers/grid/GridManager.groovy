@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.managers.grid
 
+import java.lang.invoke.LambdaForm.Compiled;
+
 import groovy.lang.Closure;
 import groovy.transform.CompileStatic;
 
@@ -29,6 +31,7 @@ import org.mcsg.plotmaster.utils.LocationUtils;
 
 import static org.mcsg.plotmaster.utils.AsyncUtils.asyncWrap;
 
+@CompileStatic
 class GridManager extends PlotManager{
 	
 	Cache regionCache;
@@ -36,7 +39,7 @@ class GridManager extends PlotManager{
 	
 	Cache plotCache;
 	
-	Cache memberCache;
+	Cache<String, PlotMember> memberCache;
 	
 	String world
 	int cellWidth
@@ -63,6 +66,7 @@ class GridManager extends PlotManager{
 		
 	}
 	
+	@groovy.transform.CompileDynamic
 	void load(Map settings){
 		this.cellHeight = settings.grid.height
 		this.cellWidth = settings.grid.width
@@ -83,7 +87,7 @@ class GridManager extends PlotManager{
 		
 		//println "getRegionAt() regx: $regx, regz: $regz"
 		
-		asyncWrap(c) {
+		(Region) asyncWrap(c) {
 			return xzRegionCache.get("$regx:$regz") {
 				Region r = backend.getRegionByLocation(regx, regz)
 				xzRegionCache.cache("$regx:$regz", r)
@@ -100,7 +104,7 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public Region getRegion(int id, Callback c) {
-		asyncWrap(c) {
+		(Region) asyncWrap(c) {
 			return regionCache.get(id) {
 				Region r = backend.getRegion(id)
 				r.plots.values().each {
@@ -116,7 +120,7 @@ class GridManager extends PlotManager{
 	public Plot getPlotAt(int x, int z, Callback c ) {
 		//print "getPlotAt() cellx: ${x},  cellz: ${z}"
 		
-		asyncWrap(c) {
+		(Plot) asyncWrap(c) {
 			Region r = getRegionAt(x, z, null)
 			if(!r) return null
 			def plots = r.plots
@@ -137,7 +141,7 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public Plot getPlot(int id, Callback c) {
-		asyncWrap(c) {
+		(Plot) asyncWrap(c) {
 			return plotCache.get(id) {
 				Plot p = backend.getPlot(id)
 				p.setManager(this)
@@ -166,7 +170,7 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public  PlotCreation createPlot(int x, int z, PlotType type, Callback c) {
-		asyncWrap(c){
+		(PlotCreation) asyncWrap(c){
 			if(plotExist(x, z, null))
 				return new PlotCreation(status: PlotCreationStatus.PLOT_EXISTS)
 			
@@ -220,7 +224,7 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public PlotCreation createPlot(PMPlayer player, int x, int z, PlotType type, Callback c) {
-		asyncWrap(c){
+		(PlotCreation) asyncWrap(c){
 			
 			def creation =  createPlot(x, z, type, null)
 			
@@ -245,7 +249,7 @@ class GridManager extends PlotManager{
 		
 		//println "CreateRegion() ${regx}, ${regz}"
 		
-		asyncWrap(c){
+		(RegionCreation) asyncWrap(c){
 			if(regionExist(regx, regz, null))
 				return new RegionCreation(status: RegionCreationStatus.REGION_EXISTS, region: getRegionAt(regx, regz, null))
 			
@@ -280,7 +284,7 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public PlotMember getPlotMember(String uuid, Callback c) {
-		asyncWrap(c) {
+		(PlotMember) asyncWrap(c) {
 			return memberCache.get(uuid) {
 				return backend.getMember(uuid)
 			}
@@ -289,12 +293,12 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public PlotMember getPlotMember(PMPlayer player, Callback c) {
-		asyncWrap(c){
+		(PlotMember) asyncWrap(c){
 			return memberCache.get(player.getUUID()) {
 				PlotMember member =  backend.getMember(player.getUUID())
 				if(!member){
 					member = new PlotMember(uuid: player.getUUID(), name : player.getName())
-					savePlotMember(member)
+					savePlotMember(member, null)
 				}
 				member.setManager(this)
 				return member
@@ -304,7 +308,7 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public PlotMember savePlotMember(PlotMember member, Callback c) {
-		asyncWrap(c) {
+		(PlotMember) asyncWrap(c) {
 			backend.saveMember(member)
 		}
 	}

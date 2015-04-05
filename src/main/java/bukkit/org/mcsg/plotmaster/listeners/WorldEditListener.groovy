@@ -1,5 +1,7 @@
 package bukkit.org.mcsg.plotmaster.listeners;
 
+import groovy.transform.CompileStatic;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.mcsg.plotmaster.Plot
@@ -18,6 +20,7 @@ import com.sk89q.worldedit.regions.CuboidRegion
 import com.sk89q.worldedit.session.SessionOwner
 import com.sk89q.worldedit.util.eventbus.Subscribe;
 
+@CompileStatic
 public class WorldEditListener implements Listener{
 
 	@Subscribe

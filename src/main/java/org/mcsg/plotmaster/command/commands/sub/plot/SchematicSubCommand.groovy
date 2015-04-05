@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 
 import org.mcsg.plotmaster.bridge.PMPlayer;
@@ -7,6 +9,8 @@ import org.mcsg.plotmaster.command.PlayerSubCommand
 import org.mcsg.plotmaster.schematic.Schematic
 import org.mcsg.plotmaster.utils.Selection
 
+
+@CompileStatic
 class SchematicSubCommand implements PlayerSubCommand{
 
 	@Override

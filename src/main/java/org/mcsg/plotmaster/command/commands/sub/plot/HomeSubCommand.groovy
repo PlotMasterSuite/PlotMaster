@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 
 import org.mcsg.plotmaster.AccessLevel;
@@ -12,6 +14,7 @@ import org.mcsg.plotmaster.command.PlotSubCommand
 import org.mcsg.plotmaster.managers.PlotManager
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 
+@CompileStatic
 class HomeSubCommand implements PlotSubCommand {
 	
 	public String help() {
@@ -31,7 +34,7 @@ class HomeSubCommand implements PlotSubCommand {
 				player.sendMessage("&cInvalid plot! Please select a plot between 1 and ${list.size()}")
 				return true
 			}
-			player.teleport(list.get(id))
+			player.teleport(list.get(id).getCenter())
 			return true
 		}
 		
@@ -44,7 +47,7 @@ class HomeSubCommand implements PlotSubCommand {
 						player.sendMessage("&aHome set!")
 					}
 				}else if(args[0].isNumber()) {
-					def id = args[0] - 1
+					def id = args[0].toInteger() - 1
 					return tpid(member, id)
 				}
 			} else {

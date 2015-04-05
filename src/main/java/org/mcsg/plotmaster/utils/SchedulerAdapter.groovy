@@ -4,7 +4,8 @@ import org.mcsg.plotmaster.utils.PlatformAdapter.PlatformType;
 
 import bukkit.org.mcsg.plotmaster.util.BukkitSchedulerUtils;
 import groovy.lang.Closure;
-
+import groovy.transform.CompileStatic;
+@CompileStatic
 class SchedulerAdapter {
 
 	static delayed(int delay, Closure run){

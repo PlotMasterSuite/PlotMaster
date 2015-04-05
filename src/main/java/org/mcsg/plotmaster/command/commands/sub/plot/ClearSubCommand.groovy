@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 
 import org.mcsg.plotmaster.Plot
@@ -8,6 +10,8 @@ import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand
 import org.mcsg.plotmaster.managers.PlotManager
 
+
+@CompileStatic
 class ClearSubCommand implements PlayerSubCommand{
 
 	@Override

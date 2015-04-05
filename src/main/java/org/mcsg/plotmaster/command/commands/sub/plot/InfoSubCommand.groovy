@@ -1,6 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
 import groovy.swing.factory.ColumnFactory;
+import groovy.transform.CompileStatic;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.mcsg.plotmaster.managers.PlotManager;
 import org.mcsg.plotmaster.managers.grid.GridManager;
 import org.mcsg.plotmaster.schematic.Border;
 import org.mcsg.plotmaster.schematic.SchematicBlock
+
 
 class InfoSubCommand implements PlotSubCommand{
 

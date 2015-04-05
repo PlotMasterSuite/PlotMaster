@@ -1,5 +1,6 @@
 package bukkit.org.mcsg.plotmaster.listeners
 
+import groovy.transform.CompileStatic;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitBlock
 import bukkit.org.mcsg.plotmaster.bridge.BukkitLocation
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer
@@ -12,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.eclipse.jetty.io.ArrayByteBufferPool.Bucket;
 import org.mcsg.plotmaster.listener.BlockListeners;
 
+@CompileStatic
 class BlockListener implements Listener{
 	
 	

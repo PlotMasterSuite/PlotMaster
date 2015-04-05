@@ -1,5 +1,7 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import java.util.List;
 
 import org.mcsg.plotmaster.AccessLevel;
@@ -11,6 +13,7 @@ import org.mcsg.plotmaster.managers.PlotManager;
 import org.mcsg.plotmaster.utils.AsyncUtils;
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 
+@CompileStatic
 class TeleportSubCommand implements PlotSubCommand{
 	
 	public String help() {

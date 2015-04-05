@@ -1,11 +1,13 @@
 package org.mcsg.plotmaster
 
+import groovy.transform.CompileStatic;
+
 import java.util.Map.Entry;
 
 import org.mcsg.plotmaster.cache.Cacheable;
 import org.mcsg.plotmaster.managers.PlotManager
 
-
+@CompileStatic
 class PlotMember implements Cacheable{
 	
 	String uuid;
@@ -78,7 +80,7 @@ class PlotMember implements Cacheable{
 	
 	
 	AccessLevel getAccessLevel(Plot plot){
-		for(Entry e : plots.entrySet()) {
+		for(Entry<AccessLevel, List<Plot>> e : plots.entrySet()) {
 			for(Plot p : e.getValue()){
 				if(p.id == plot.id){
 					return e.getKey()
@@ -88,6 +90,7 @@ class PlotMember implements Cacheable{
 		return AccessLevel.NONE
 	}
 	
+	@groovy.transform.CompileDynamic
 	void setAccess(AccessLevel access, Plot plot){
 		def list = plots.get(access) ?: []
 		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld()))

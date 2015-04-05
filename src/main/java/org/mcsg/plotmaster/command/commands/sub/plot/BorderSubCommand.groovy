@@ -1,11 +1,14 @@
 package org.mcsg.plotmaster.command.commands.sub.plot
 
+import groovy.transform.CompileStatic;
+
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlayerSubCommand;
 import org.mcsg.plotmaster.schematic.Border
 import org.mcsg.plotmaster.schematic.SFace;
 import org.mcsg.plotmaster.utils.Selection;
 
+@CompileStatic
 class BorderSubCommand implements PlayerSubCommand{
 	//NP: Rob Gasser - Taking Over (ft. Miyoki) NP: The Brig - Hurricane (VIP Mix)
 	Map<String, Border> borders = [:]

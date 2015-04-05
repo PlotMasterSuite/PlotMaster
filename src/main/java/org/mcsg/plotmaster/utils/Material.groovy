@@ -1,5 +1,8 @@
 package org.mcsg.plotmaster.utils
 
+import groovy.transform.CompileStatic;
+
+@CompileStatic
 enum Material {
 	AIR,
 	STONE,

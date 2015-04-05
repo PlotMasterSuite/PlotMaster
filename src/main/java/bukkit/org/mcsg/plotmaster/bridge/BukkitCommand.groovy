@@ -1,8 +1,10 @@
 package bukkit.org.mcsg.plotmaster.bridge
 
+import groovy.transform.CompileStatic;
+
 import org.bukkit.command.Command
 import org.mcsg.plotmaster.bridge.PMCommand
-
+@CompileStatic
 class BukkitCommand implements PMCommand{
 
 	Command cmd

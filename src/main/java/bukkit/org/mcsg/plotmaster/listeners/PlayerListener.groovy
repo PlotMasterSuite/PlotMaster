@@ -1,5 +1,6 @@
 package bukkit.org.mcsg.plotmaster.listeners
 
+import groovy.transform.CompileStatic;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitLocation
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer
 import bukkit.org.mcsg.plotmaster.bridge.BukkitWorld
@@ -13,10 +14,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.mcsg.plotmaster.Plot.AccessMode;
 import org.mcsg.plotmaster.AccessLevel;
+import org.mcsg.plotmaster.Plot
 import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.events.PlayerEnterPlotEvent;
 import org.mcsg.plotmaster.managers.PlotManager
 
+
+@CompileStatic
 class PlayerListener implements Listener{
 	
 	private PlotManager getManager(World world){
@@ -39,8 +43,8 @@ class PlayerListener implements Listener{
 		
 		manager.isInPlotFast(player) { boolean is ->
 			if(is && !isInPlot[player.getUUID()]) {
-				manager.getPlotAt(player.getLocation()) {
-					PlayerEnterPlotEvent ev = new PlayerEnterPlotEvent(plot: it, player: player)
+				manager.getPlotAt(player.getLocation()) { Plot plot ->
+					PlayerEnterPlotEvent ev = new PlayerEnterPlotEvent(plot: plot, player: player)
 					PlotMaster.getInstance().fireEvent(ev)
 				}
 			}

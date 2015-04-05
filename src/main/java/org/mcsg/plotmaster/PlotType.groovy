@@ -12,6 +12,7 @@ import org.mcsg.plotmaster.utils.BlockUpdateTask
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 import org.mcsg.plotmaster.utils.TaskQueue;
 
+@CompileStatic
 class PlotType {
 
 	String name

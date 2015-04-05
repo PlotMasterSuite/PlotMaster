@@ -1,10 +1,14 @@
 package org.mcsg.plotmaster
 
+import groovy.transform.CompileStatic;
+
 import org.mcsg.plotmaster.utils.PlatformAdapter;
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
+
+@CompileStatic
 class Settings {
 
 	/**
