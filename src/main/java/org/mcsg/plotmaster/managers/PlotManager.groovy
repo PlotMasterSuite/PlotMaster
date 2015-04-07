@@ -114,6 +114,20 @@ abstract class PlotManager {
 	 */
 	abstract boolean isInPlotFast(PMPlayer player, Callback c)
 	
+	/**
+	 * Checks if the plot is loaded
+	 * @param id
+	 * @return true if the plot is loaded
+	 */
+	abstract boolean isPlotLoaded(int id)
+	
+	/**
+	 * Checks if the plot is loaded
+	 * @param x
+	 * @param z
+	 * @return true if the plot is loaded
+	 */
+	abstract boolean isPlotLoaded(int x, int z)
 	
 	
 	abstract void playerOffline(PMPlayer player)

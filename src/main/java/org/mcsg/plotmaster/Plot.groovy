@@ -48,7 +48,7 @@ class Plot implements Cacheable{
 		time: "default",
 		"time-progression": true,
 		"clear-entities-unload" : true,
-		"save-entities" : false,
+		"save-entities" : true,
 	]
 	
 	//eg mobs on plot, time in plot, other data
@@ -78,6 +78,10 @@ class Plot implements Cacheable{
 	 */
 	def getSetting(setting){
 		return settings[setting]
+	}
+	
+	def getSetting(setting, defaultval) {
+		return setting.get(setting) ?: defaultval
 	}
 	
 	/**

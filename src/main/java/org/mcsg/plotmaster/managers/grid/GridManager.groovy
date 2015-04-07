@@ -461,4 +461,27 @@ class GridManager extends PlotManager{
 			return val
 		}
 	}
+
+	@Override
+	public boolean isPlotLoaded(int id) {
+		return plotCache.contains(id)
+	}
+
+	@Override
+	public boolean isPlotLoaded(int x, int z) {
+		def regx = getRegionX(x)
+		def regz = getRegionZ(z)
+		
+		if(!xzRegionCache.contains("$regx:$regz"))
+			return false
+			
+		Region reg = xzRegionCache.get("$regx:$regz")
+		
+		for(Plot plot : reg.getPlots().values()) {
+			if(plot.isPartOf(x, z))
+				return true
+		}
+		
+		return false
+	}
 }

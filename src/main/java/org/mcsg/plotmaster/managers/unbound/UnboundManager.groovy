@@ -177,6 +177,18 @@ class UnboundManager extends PlotManager{
 		
 	}
 
+	@Override
+	public boolean isPlotLoaded(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isPlotLoaded(int x, int z) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 
 }
