@@ -98,6 +98,9 @@ class PlotMember implements Cacheable{
 		plots.put(access, list)
 		
 		save()
+		
+		plot.accessMap.put(uuid, access)
+		plot.save()
 	}
 	
 	
