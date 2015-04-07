@@ -81,7 +81,7 @@ class Plot implements Cacheable{
 	}
 	
 	def getSetting(setting, defaultval) {
-		return setting.get(setting) ?: defaultval
+		return settings.get(setting) ?: defaultval
 	}
 	
 	/**
