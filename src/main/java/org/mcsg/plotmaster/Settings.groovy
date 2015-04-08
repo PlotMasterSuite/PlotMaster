@@ -44,7 +44,7 @@ class Settings {
 		version: 1,
 		setup: false,
 
-		configurations: [
+		worlds: [
 			[
 				type: "grid",
 				world: "world",

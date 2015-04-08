@@ -119,7 +119,7 @@ class PlotMaster{
 
 
 	private loadConfigurations(){
-		for(Map conf in Settings.config.configurations) {
+		for(Map conf in Settings.config.worlds) {
 
 			conf.plotTypes.each { key, value ->
 				def plot = new PlotType(name: value.name, w: value.width, h: value.height,
@@ -187,7 +187,7 @@ class PlotMaster{
 
 	List<Map> getConfigurationSelectionPerManagerType(String type){
 		def list = []
-		def sel = Settings.getConfig().configurations
+		def sel = Settings.getConfig().worlds
 
 		list = sel.findAll() {
 			(it as Map).type == type
