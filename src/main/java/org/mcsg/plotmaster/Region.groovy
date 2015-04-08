@@ -8,7 +8,7 @@ import org.mcsg.plotmaster.cache.Cacheable;
 @CompileStatic
 class Region implements Cacheable{
 
-	int id;	
+	int id = -1;	
 	int x, z
 	int h, w
 	

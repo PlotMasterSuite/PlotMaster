@@ -28,7 +28,7 @@ class Plot implements Cacheable{
 		ALLOW, DENY
 	}
 	
-	int id
+	int id = -1
 	
 	String plotName = ""
 	String ownerName = "", ownerUUID = ""
@@ -38,7 +38,7 @@ class Plot implements Cacheable{
 	long createdAt = System.currentTimeMillis()
 	PlotType type
 	AccessMode accessMode = AccessMode.ALLOW
-	Map<String, AccessLevel> accessMap
+	Map<String, AccessLevel> accessMap = [:]
 	
 	//eg gamemode, pvp mod etc
 	Map settings = [

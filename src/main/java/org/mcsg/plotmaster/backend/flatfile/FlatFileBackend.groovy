@@ -148,7 +148,7 @@ class FlatFileBackend implements Backend{
 		def en  = plotMap.lastEntry()
 
 		Integer id = ((en) ? en.getKey() : 0) + 1
-
+		
 		plot.setId(id)
 		plot.setCreatedAt(System.currentTimeMillis())
 
