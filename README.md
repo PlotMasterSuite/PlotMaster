@@ -11,5 +11,8 @@ Builds: http://ci.mc-sg.org/job/PlotMaster/
 
 # Install Instructions
 
+https://github.com/PlotMasterSuite/PlotMaster/wiki/PlotMaster-Installation
 
 #Setup Instructions
+
+https://github.com/PlotMasterSuite/PlotMaster/wiki/PlotMaster-Setup
