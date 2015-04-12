@@ -72,7 +72,7 @@ class SQLiteBackend extends AbstractSQLBackend {
 				 `id` INTEGER PRIMARY KEY,
 				 `uuid` TEXT,
 				 `name` TEXT,
-				 `type` TEXT,
+				 `level` TEXT,
 				 `plot` INTEGER
 			);
 		""".toString())

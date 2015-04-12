@@ -70,7 +70,7 @@ class MysqlBackend extends AbstractSQLBackend {
 				 `id` int(11) NOT NULL AUTO_INCREMENT,
 				 `uuid` varchar(36) NOT NULL,
 				 `name` varchar(16) ,
-				 `type` enum('OWNER', 'ADMIN', 'MEMBER', 'ALLOW', 'DENY') NOT NULL,
+				 `level` enum('OWNER', 'ADMIN', 'MEMBER', 'ALLOW', 'DENY') NOT NULL,
 				 `plot` int(11) NOT NULL,
 				 PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1
