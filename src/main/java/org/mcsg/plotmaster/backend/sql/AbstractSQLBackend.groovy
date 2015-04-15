@@ -17,7 +17,6 @@ import org.mcsg.plotmaster.PlotMaster;
 import org.mcsg.plotmaster.PlotMember;
 import org.mcsg.plotmaster.PlotType;
 import org.mcsg.plotmaster.Region;
-import org.mcsg.plotmaster.PlotMember.PlotInfo
 import org.mcsg.plotmaster.backend.Backend;
 import org.mcsg.plotmaster.backend.sql.sqlite.SQLiteBackend
 import org.mcsg.plotmaster.managers.PlotManager;
@@ -140,10 +139,7 @@ abstract class AbstractSQLBackend implements Backend{
 
 		sql.eachRow("SELECT * FROM ${access_list} WHERE uuid=?".toString(), [uuid]) { row ->
 			def type = AccessLevel.valueOf(row.type);
-			def access = (member.getPlotAccessMap().get(type)) ?: new ArrayList<PlotInfo>()
-
-			access.add(new PlotInfo(id: row.plot, world: world))
-			member.getPlotAccessMap().put(type, access)
+			member.getPlotAccessMap().put(row.plot, type)
 		}
 
 		closeReturn(sql, member)
@@ -158,10 +154,8 @@ abstract class AbstractSQLBackend implements Backend{
 
 		//id, uuid, name, type, plot, reg
 		sql.withBatch("INSERT INTO ${access_list} VALUES(NULL, ?, ?, ?, ?)".toString()) { BatchingPreparedStatementWrapper ps ->
-			member.getPlotAccessMap().each { level, list ->
-				list?.each {
-					ps.addBatch([member.uuid, member.name, level.toString(), it.id])
-				}
+			member.getPlotAccessMap().each { id, level ->
+					ps.addBatch([member.uuid, member.name, level.toString(), id])
 			}
 
 		}

@@ -17,12 +17,12 @@ class PlotMember implements Cacheable{
 	String world
 	
 	transient PlotManager manager
-
-	
-	Map<AccessLevel, List<Integer>> plots = new HashMap<>()
 	
 	
-	Map<AccessLevel, List<Integer>> getPlotAccessMap(){
+	Map<Integer, AccessLevel> plots = new HashMap<>()
+	
+	
+	Map<Integer, AccessLevel> getPlotAccessMap(){
 		return plots;
 	}
 	
@@ -37,25 +37,18 @@ class PlotMember implements Cacheable{
 	
 	List<Plot> getPlots() {
 		List<Plot> list = []
-		plots.values().each { List<Integer> infos ->
-			if(infos){
-				infos.each { Integer id ->
-					list.add(manager.getPlot(id, null))
-				}
-			}
+		plots.keySet().each { Integer id ->
+			list.add(manager.getPlot(id, null))
 		}
+		
 		return list
 	}
 	
 	List<Plot> getPlots(AccessLevel access){
 		List<Plot> list = []
-		plots.each { AccessLevel level,List<Integer> info ->
+		plots.each { Integer id, AccessLevel level ->
 			if(level == access){
-				if(info){
-					info.each { Integer id ->
-						list.add(manager.getPlot(id, null))
-					}
-				}
+				list.add(manager.getPlot(id, null))
 			}
 		}
 		return list
@@ -63,14 +56,9 @@ class PlotMember implements Cacheable{
 	
 	List<Plot> getPlotsAboveLevel(AccessLevel access){
 		List<Plot> list = []
-		plots.each { AccessLevel level, List<Integer> info ->
-			println "Level is ${access.getLevel()}, ${level.getLevel()} "
+		plots.each { Integer id, AccessLevel level ->
 			if(level.getLevel() >= access.getLevel()){
-				if(info){
-					info.each { Integer id ->
-						list.add(manager.getPlot(id, null))
-					}
-				}
+				list.add(manager.getPlot(id, null))
 			}
 		}
 		return list
@@ -88,13 +76,8 @@ class PlotMember implements Cacheable{
 		return AccessLevel.NONE
 	}
 	
-	@groovy.transform.CompileDynamic
 	void setAccess(AccessLevel access, Plot plot){
-		def list = plots.get(access) ?: []
-		list.add(new PlotInfo(id: plot.getId(), world: plot.getWorld()))
-		
-		plots.put(access, list)
-		
+		plots.put(plot.id, access)
 		save()
 		
 		plot.accessMap.put(uuid, access)
