@@ -72,6 +72,7 @@ class SQLiteBackend extends AbstractSQLBackend {
 				 `id` INTEGER PRIMARY KEY,
 				 `uuid` TEXT,
 				 `name` TEXT,
+				 `home` INTEGER,
 				 `level` TEXT,
 				 `plot` INTEGER
 			);

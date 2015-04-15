@@ -14,17 +14,15 @@ class PlotMember implements Cacheable{
 	String name;
 	int homeid;
 	
+	String world
+	
 	transient PlotManager manager
+
 	
-	static class PlotInfo {
-		int id;
-		String world
-	}
-	
-	Map<AccessLevel, List<PlotInfo>> plots = new HashMap<>()
+	Map<AccessLevel, List<Integer>> plots = new HashMap<>()
 	
 	
-	Map<AccessLevel, List<PlotInfo>> getPlotAccessMap(){
+	Map<AccessLevel, List<Integer>> getPlotAccessMap(){
 		return plots;
 	}
 	
@@ -39,10 +37,10 @@ class PlotMember implements Cacheable{
 	
 	List<Plot> getPlots() {
 		List<Plot> list = []
-		plots.values().each { List<PlotInfo> infos ->
+		plots.values().each { List<Integer> infos ->
 			if(infos){
-				infos.each {
-					list.add(manager.getPlot(it.id, null))
+				infos.each { Integer id ->
+					list.add(manager.getPlot(id, null))
 				}
 			}
 		}
@@ -51,11 +49,11 @@ class PlotMember implements Cacheable{
 	
 	List<Plot> getPlots(AccessLevel access){
 		List<Plot> list = []
-		plots.each { AccessLevel level,List<PlotInfo> info ->
+		plots.each { AccessLevel level,List<Integer> info ->
 			if(level == access){
 				if(info){
-					info.each {
-						list.add(manager.getPlot(it.id, null))
+					info.each { Integer id ->
+						list.add(manager.getPlot(id, null))
 					}
 				}
 			}
@@ -65,12 +63,12 @@ class PlotMember implements Cacheable{
 	
 	List<Plot> getPlotsAboveLevel(AccessLevel access){
 		List<Plot> list = []
-		plots.each { AccessLevel level, List<PlotInfo> info ->
+		plots.each { AccessLevel level, List<Integer> info ->
 			println "Level is ${access.getLevel()}, ${level.getLevel()} "
 			if(level.getLevel() >= access.getLevel()){
 				if(info){
-					info.each {
-						list.add(manager.getPlot(it.id, null))
+					info.each { Integer id ->
+						list.add(manager.getPlot(id, null))
 					}
 				}
 			}
