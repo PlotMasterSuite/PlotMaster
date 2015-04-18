@@ -37,7 +37,7 @@ class InfoSubCommand implements PlotSubCommand{
 			} else {
 				player.sendMessage "&cNo plot found"
 			}
-			def manager = man as GridManager
+			/*def manager = man as GridManager
 			def border = Border.load(manager.getSettings().grid.border)
 			player.sendMessage("\nDEBUG:\n&eBorder: ${border.getName()}")
 			player.sendMessage("    &eWidth: ${border.getWidth()}")
@@ -58,7 +58,7 @@ class InfoSubCommand implements PlotSubCommand{
 
 			SchematicBlock[] blocks = border.getColumnAt(loc.getX(), loc.getZ(), manager.getSettings().grid.width.toInteger(),manager.getSettings().grid.height.toInteger())
 			player.sendMessage("    &eface: ${face.toString()}, posx: ${posx}, posz: ${posz}")
-			player.sendMessage("    &eColumn: ${getMaterialString(blocks)}")
+			player.sendMessage("    &eColumn: ${getMaterialString(blocks)}")*/
 
 
 		}
