@@ -96,6 +96,10 @@ class Border {
 		borders.put(face,  schematic)
 		save()
 	}
+	
+	int getWidth(SFace face) {
+		return borders.get(face).width
+	}
 
 	private SFace getFace(int posx, int posz, int h, int w){
 
