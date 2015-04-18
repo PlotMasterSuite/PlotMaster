@@ -12,7 +12,6 @@ import org.mcsg.plotmaster.utils.PlatformAdapter;
 class Border {
 
 	String name;
-	int width
 	Map<SFace, Schematic> borders = [:]
 
 	/*
@@ -81,10 +80,10 @@ class Border {
 		if(face) {
 
 			if(face.toString().contains("SOUTH")){
-				posz = posz - (h % width)
+				posz = posz - (h % borders.get(SFace.SOUTH).width)
 			}
 			if(face.toString().contains("EAST")) {
-				posx = posx - (w % width)
+				posx = posx - (w % borders.get(SFace.EAST).width)
 			}
 
 			Schematic schematic = borders.get(face)
@@ -100,11 +99,11 @@ class Border {
 
 	private SFace getFace(int posx, int posz, int h, int w){
 
-		boolean south = posz >= h  - width
-		boolean north = posz <  width
+		boolean south = posz >= h  - borders.get(SFace.SOUTH)?.width
+		boolean north = posz <  borders.get(SFace.NORTH)?.width
 
-		boolean east = posx >= w - width
-		boolean west = posx <  width
+		boolean east = posx >= w - borders.get(SFace.EAST)?.width
+		boolean west = posx <  borders.get(SFace.WEST)?.width
 
 
 		if(north && east)

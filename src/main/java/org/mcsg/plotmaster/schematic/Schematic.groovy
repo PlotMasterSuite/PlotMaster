@@ -15,6 +15,7 @@ class Schematic {
 	SchematicBlock[][][] blocks;
 	String name
 
+	int width
 	
 	def Schematic(int sizex, int sizey, int sizez){
 		blocks = new SchematicBlock[sizex][ sizez][ sizey]

@@ -95,6 +95,7 @@ class GridManager extends PlotManager{
 				if(r) {
 					r.plots.values().each {
 						it.setManager(this)
+						it.setRegion(r)
 					}
 				}
 				return r
@@ -474,7 +475,7 @@ class GridManager extends PlotManager{
 		
 		if(!xzRegionCache.contains("$regx:$regz"))
 			return false
-			
+						
 		Region reg = xzRegionCache.get("$regx:$regz")
 		
 		for(Plot plot : reg.getPlots().values()) {

@@ -186,14 +186,12 @@ class PlotMaster{
 
 
 	List<Map> getConfigurationSelectionPerManagerType(String type){
-		def list = []
 		def sel = Settings.getConfig().worlds
 
-		list = sel.findAll() {
+		return sel.findAll() {
 			(it as Map).type == type
 		}
 
-		return list
 	}
 
 	Map getBackendConfiguration(String backend){
