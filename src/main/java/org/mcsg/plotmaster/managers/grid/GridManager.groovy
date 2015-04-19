@@ -271,10 +271,7 @@ class GridManager extends PlotManager{
 	}
 	
 	private int getRegionX(int x) {
-		def width = cellWidth + bx
-		
-		println "$x,$bx,$width,${(x - (x % width)) + bw}"
-		
+		def width = cellWidth + bx		
 		
 		if(x > 0)
 			return (x - (x % width)) + bw
