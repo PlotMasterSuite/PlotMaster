@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location
 import org.bukkit.OfflinePlayer
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign
 import org.bukkit.event.Event
 import org.mcsg.plotmaster.bridge.PMLocation
 import org.mcsg.plotmaster.bridge.PMPlayer
@@ -21,7 +22,6 @@ import groovy.transform.CompileStatic;
 import bukkit.org.mcsg.plotmaster.bridge.BukkitLocation
 import bukkit.org.mcsg.plotmaster.bridge.BukkitPlayer;
 import bukkit.org.mcsg.plotmaster.util.BukkitBlockUpdate;
-
 @CompileStatic
 class PlatformAdapter {
 	
@@ -34,6 +34,20 @@ class PlatformAdapter {
 	static BlockUpdate createBlockUpdate(String world, int x, int y, int z, String material, byte data){
 		if(platform == PlatformType.BUKKIT){
 			return new BukkitBlockUpdate(world, x, y, z, material, data)
+		}
+	}
+	
+	static void createSign(String world, int x, int y, int z, String ... text) {
+		if(platform == PlatformType.BUKKIT) {
+			Location loc = new Location(Bukkit.getWorld(world), x, y, z)
+			Block block = loc.getBlock()
+			block.setType(org.bukkit.Material.SIGN)
+			Sign sign = (Sign) block.getState()
+			
+			text.eachWithIndex { String str, int i ->
+				sign.setLine(i, str)
+			}
+			sign.update()
 		}
 	}
 	
