@@ -17,7 +17,7 @@ class SelectionListener implements Listener {
 
 	@EventHandler
 	void select(PlayerInteractEvent e){
-		if(e.getPlayer().getItemInHand().getType() == Material.STICK){
+		if(e.getPlayer().getItemInHand().getType() == Material.GOLD_HOE){
 			Player player = e.getPlayer()
 			Location loc = e.getClickedBlock().getLocation()
 			Action a = e.getAction()
