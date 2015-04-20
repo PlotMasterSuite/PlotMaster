@@ -33,8 +33,10 @@ class BorderSubCommand implements PlayerSubCommand{
 			def name = args[0]
 			def face = SFace.fromString(args[1])
 			def border = borders.get(name) ?: new Border(name: name)
+			def schem = sel.toSchematic()
 			
-			border.setBorder(face, sel.toSchematic())
+			schem.setWidth(args[2].toInteger())
+			border.setBorder(face, schem)
 			player.sendMessage("&aSuccessfully set ${face} of ${name}")
 			
 			borders.put(name, border)
@@ -44,7 +46,7 @@ class BorderSubCommand implements PlayerSubCommand{
 			if(args[0] == "load") {
 				def border = Border.load(args[1])
 				def loc = player.getLocation()
-				def mx = loc.getX(), my = loc.getY(), mz = loc.getX()
+				def mx = loc.getX(), my = loc.getY(), mz = loc.getZ()
 				if(border) {
 					for(SFace face : SFace.values()) {
 						def s = border.borders.get(face)
@@ -53,13 +55,13 @@ class BorderSubCommand implements PlayerSubCommand{
 						
 						def lx
 						
-						PlatformAdapter.createSign(loc.getWorld(), mx, my, mz, "", face.toString())
+						PlatformAdapter.createSign(loc.getWorld(), mx + blocks.length / 2, my + 1, mz - 2, "", face.toString())
 						
 						for(int x = 0; x < blocks.length; x++) {
-							for(int y = 0; y < blocks[x].length; y++) {
-								for(int z = 0; z < blocks[x][y].length; z++) {
-									def block = blocks[x][y][z]
-									PlatformAdapter.createBlockUpdate(loc.getWorld(),mx + x ,y , z, block.getMaterial(), block.getData()).update() 
+							for(int z = 0; z < blocks[x].length; z++) {
+								for(int y = 0; y < blocks[x][z].length; y++) {
+									def block = blocks[x][z][y]
+									PlatformAdapter.createBlockUpdate(loc.getWorld(),mx + x ,my + y , z + mz, block.getMaterial(), block.getData()).update() 
 								}
 							}
 							lx = x

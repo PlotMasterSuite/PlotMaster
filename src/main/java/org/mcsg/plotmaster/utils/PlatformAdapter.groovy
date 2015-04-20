@@ -41,7 +41,8 @@ class PlatformAdapter {
 		if(platform == PlatformType.BUKKIT) {
 			Location loc = new Location(Bukkit.getWorld(world), x, y, z)
 			Block block = loc.getBlock()
-			block.setType(org.bukkit.Material.SIGN)
+			block.setType(org.bukkit.Material.SIGN_POST)
+			println loc
 			Sign sign = (Sign) block.getState()
 			
 			text.eachWithIndex { String str, int i ->
