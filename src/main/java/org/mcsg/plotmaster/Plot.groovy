@@ -49,6 +49,7 @@ class Plot implements Cacheable{
 		"time-progression": true,
 		"clear-entities-unload" : true,
 		"save-entities" : true,
+		"spawn-mobs": false,
 	]
 	
 	//eg mobs on plot, time in plot, other data

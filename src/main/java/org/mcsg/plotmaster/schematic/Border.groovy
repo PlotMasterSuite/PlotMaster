@@ -10,10 +10,10 @@ import org.mcsg.plotmaster.utils.PlatformAdapter;
 
 @CompileStatic
 class Border {
-
+	
 	String name;
 	Map<SFace, Schematic> borders = [:]
-
+	
 	/*
 	 * Z = W
 	 * -Z = NORTH
@@ -25,73 +25,74 @@ class Border {
 	 * 
 	 * 
 	 */
-
-
+	
+	
 	SchematicBlock getBlockAt(int x, int y, int z , int w, int h, int bottom){
 		//Fix x = 0 & z = 0 line
 		if(x > 0)
 			x -= 1
 		if(z > 0)
 			z -=1
-
+		
 		def posx = Math.abs(x % (w + 1))
 		def posz = Math.abs(z % (h + 1))
-
+		
 		//Fix negative values
 		if(x < 0)
 			posx = (w - 1) - posx
-
+		
 		if(z < 0)
 			posz = (h - 1) - posz
-
+		
 		def face = getFace(posx, posz, h, w)
-
+		
 		if(face) {
-
+			
 			Schematic schematic = borders.get(face)
-
+			
 			int yloc = y - bottom
-
+			
 			return schematic.getBlockAt(posx, yloc, posz)
 		}
 		return null
 	}
-
-
+	
+	
 	SchematicBlock[] getColumnAt(int x, int z , int w, int h){
 		//Fix x = 0 & z = 0 line
 		if(x > 0)
 			x -= 1
 		if(z > 0)
 			z -=1
-
+		
 		def posx = Math.abs(x % (w))
 		def posz = Math.abs(z % (h))
-
+		
 		//Fix negative values
 		if(x < 0)
 			posx = (w - 1) - posx
-
+		
 		if(z < 0)
 			posz = (h - 1) - posz
-
-
+		
+		
 		def face = getFace(posx, posz, h, w)
 		if(face) {
-
+			
 			if(face.toString().contains("SOUTH")){
 				posz = posz - (h % borders.get(SFace.SOUTH).width)
 			}
 			if(face.toString().contains("EAST")) {
 				posx = posx - (w % borders.get(SFace.EAST).width)
 			}
-
+			
 			Schematic schematic = borders.get(face)
-			return schematic.getColumn(posx , posz)
+			if(schematic)
+				return schematic.getColumn(posx , posz)
 		}
 		return null
 	}
-
+	
 	void setBorder(SFace face, Schematic schematic){
 		borders.put(face,  schematic)
 		save()
@@ -100,16 +101,16 @@ class Border {
 	int getWidth(SFace face) {
 		return borders.get(face).width
 	}
-
+	
 	private SFace getFace(int posx, int posz, int h, int w){
-
+		
 		boolean south = posz >= h  - borders.get(SFace.SOUTH)?.width
 		boolean north = posz <  borders.get(SFace.NORTH)?.width
-
+		
 		boolean east = posx >= w - borders.get(SFace.EAST)?.width
 		boolean west = posx <  borders.get(SFace.WEST)?.width
-
-
+		
+		
 		if(north && east)
 			return SFace.NORTH_EAST
 		if(north && west)
@@ -126,53 +127,53 @@ class Border {
 			return SFace.WEST
 		if(east)
 			return SFace.EAST
-
+		
 		return null
 	}
-
-
+	
+	
 	void save(){
 		checkFolder()
-
+		
 		def json = Settings.getGson().toJson(this)
 		def file = new File(folder, "${name}.border")
-
+		
 		def writer = new OutputStreamWriter(new GZIPOutputStream(
 				new FileOutputStream(file)))
-
+		
 		writer.write(json)
 		writer.close()
 	}
-
+	
 	static File folder
-
+	
 	private static checkFolder(){
 		if(!folder){
 			folder = new File(PlatformAdapter.getDataFolder(), "borders/")
 			folder.mkdirs()
 		}
 	}
-
-
+	
+	
 	static Border load(String name){
 		checkFolder()
 		File file = new File(folder, "${name}.border")
-
+		
 		if(!file.exists())
 			return null
-
+		
 		def reader = new BufferedReader(new InputStreamReader(
 				new GZIPInputStream(new FileInputStream(file))))
-
+		
 		def json = reader.getText()
-
+		
 		Border border = Settings.getGson().fromJson(json, Border.class)
 		reader.close()
-
+		
 		return border
 	}
-
-
-
-
+	
+	
+	
+	
 }

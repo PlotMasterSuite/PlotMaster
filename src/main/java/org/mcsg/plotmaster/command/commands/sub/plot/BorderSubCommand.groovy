@@ -61,7 +61,8 @@ class BorderSubCommand implements PlayerSubCommand{
 							for(int z = 0; z < blocks[x].length; z++) {
 								for(int y = 0; y < blocks[x][z].length; y++) {
 									def block = blocks[x][z][y]
-									PlatformAdapter.createBlockUpdate(loc.getWorld(),mx + x ,my + y , z + mz, block.getMaterial(), block.getData()).update() 
+									if(block)
+										PlatformAdapter.createBlockUpdate(loc.getWorld(),mx + x ,my + y , z + mz, block.getMaterial(), block.getData()).update()
 								}
 							}
 							lx = x
