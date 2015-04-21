@@ -30,10 +30,10 @@ class InfoSubCommand implements PlotSubCommand{
 		man.getPlotAt(loc.getX(), loc.getZ()) { Plot plot ->
 
 			if(plot) {
-
 				player.sendMessage "&6--[ X: ${plot.getX()}, Z: ${plot.getZ()} ]--"
-				player.sendMessage "&aOwner: ${plot.getOwnerName()}"
-				player.sendMessage "&aRegion: ${plot.getRegion().getX()}, ${plot.getRegion().getZ()}"
+				player.sendMessage "&aOwner: &7${plot.getOwnerName()}"
+				player.sendMessage "&aRegion: &7${plot.getRegion().getX()}, ${plot.getRegion().getZ()}"
+				player.sendMessage("&aPlot Access: &7${plot.getAccessMap()}")
 			} else {
 				player.sendMessage "&cNo plot found"
 			}
