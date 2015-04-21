@@ -143,7 +143,9 @@ class GridManager extends PlotManager{
 	
 	@Override
 	public Plot getPlotAt(PMLocation loc, Callback c){
-		return getPlotAt(loc.getX(), loc.getZ(), c)
+		(Plot) asyncWrap(c) {
+			getPlotAt(loc.getX(), loc.getZ(), null)
+		}
 	}
 	
 	@Override

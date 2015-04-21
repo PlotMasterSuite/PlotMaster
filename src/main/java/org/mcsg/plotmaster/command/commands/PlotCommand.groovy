@@ -10,12 +10,15 @@ import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.ConsoleCommand;
 import org.mcsg.plotmaster.command.PlayerCommand
 import org.mcsg.plotmaster.command.commands.sub.HelpSubCommand
+import org.mcsg.plotmaster.command.commands.sub.plot.AdminSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.BorderSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.ClaimSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.ClearSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.DeleteSubCommand;
+import org.mcsg.plotmaster.command.commands.sub.plot.DenySubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.HomeSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.InfoSubCommand;
+import org.mcsg.plotmaster.command.commands.sub.plot.MemberSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.ResetSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.SchematicSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.SettingsSubCommand
@@ -42,6 +45,10 @@ public class PlotCommand extends PlayerCommand{
 		
 		registerCommand("help", new HelpSubCommand("p", this))
 		registerCommand("set", new SettingsSubCommand())
+		
+		registerCommand("deny", new DenySubCommand())
+		registerCommand("admin", new AdminSubCommand())
+		registerCommand("member", new MemberSubCommand())
 	}
 
 	@Override
