@@ -10,12 +10,15 @@ import org.mcsg.plotmaster.bridge.PMPlayer
 @CompileStatic
 class BlockListeners {
 
+	
+	public static HashSet<String> bypass = new HashSet<>()
+	
 
 	static boolean blockPlace(PMPlayer player, PMLocation location, PMBlock block){
 		def man = PlotMaster.getInstance().getManager(location.getWorld())
 		def bol = man.canModifyLocation(player, location)
 		
-		if(!bol) {
+		if(!bol && !bypass.contains(player.getUUID())) {
 			player.sendMessage("&aCannot modify this location!")
 		}
 
@@ -26,7 +29,7 @@ class BlockListeners {
 		def man = PlotMaster.getInstance().getManager(location.getWorld())
 		def bol = man.canModifyLocation(player, location)
 
-		if(!bol) {
+		if(!bol && !bypass.contains(player.getUUID())) {
 			player.sendMessage("&aCannot modify this location!")
 		}
 
