@@ -12,6 +12,7 @@ import org.mcsg.plotmaster.command.PlayerCommand
 import org.mcsg.plotmaster.command.commands.sub.HelpSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.AdminSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.BorderSubCommand;
+import org.mcsg.plotmaster.command.commands.sub.plot.BypassSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.ClaimSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.ClearSubCommand;
 import org.mcsg.plotmaster.command.commands.sub.plot.DeleteSubCommand;
@@ -49,6 +50,8 @@ public class PlotCommand extends PlayerCommand{
 		registerCommand("deny", new DenySubCommand())
 		registerCommand("admin", new AdminSubCommand())
 		registerCommand("member", new MemberSubCommand())
+		
+		registerCommand("bypass", new BypassSubCommand())
 	}
 
 	@Override
