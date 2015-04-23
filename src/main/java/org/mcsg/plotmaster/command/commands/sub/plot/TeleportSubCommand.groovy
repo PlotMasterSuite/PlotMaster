@@ -17,8 +17,7 @@ import org.mcsg.plotmaster.utils.PlatformAdapter;
 class TeleportSubCommand implements PlotSubCommand{
 	
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Teleports to another users plot";
 	}
 	
 	//TODO: really need to clean this up 
@@ -101,12 +100,10 @@ class TeleportSubCommand implements PlotSubCommand{
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "tp <player> [plotid]"
 	}
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.tp";
 	}
 }

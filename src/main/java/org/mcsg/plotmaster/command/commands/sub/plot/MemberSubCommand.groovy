@@ -12,18 +12,15 @@ import org.mcsg.plotmaster.managers.PlotManager;
 class MemberSubCommand implements PlotSubCommand{
 	
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Sets a player as a member of this plot. Allows them to edit the plot";
 	}
 	
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "member <player>";
 	}
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.access.member";
 	}
 	
 	

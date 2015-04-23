@@ -17,8 +17,7 @@ class ResetSubCommand implements PlotSubCommand {
 
 	@Override
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Resets a plot";
 	}
 
 	@Override
@@ -34,13 +33,11 @@ class ResetSubCommand implements PlotSubCommand {
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "reset";
 	}
 
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.reset";
 	}
 }

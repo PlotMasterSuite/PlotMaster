@@ -9,8 +9,7 @@ import org.mcsg.plotmaster.listener.BlockListeners;
 class BypassSubCommand implements PlayerSubCommand{
 	
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Allows you to place, break and worldedit blocks anywhere";
 	}
 	
 	public String getCommand() {

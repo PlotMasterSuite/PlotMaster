@@ -18,7 +18,7 @@ import org.mcsg.plotmaster.utils.PlatformAdapter;
 class HomeSubCommand implements PlotSubCommand {
 	
 	public String help() {
-		return null;
+		return "Teleports you to your plots";
 	}
 	
 	public boolean onCommand(PMPlayer player,PlotManager manager,  List<String> args) {
@@ -61,13 +61,11 @@ class HomeSubCommand implements PlotSubCommand {
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "home [id]"
 	}
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.home"
 	}
 	
 }

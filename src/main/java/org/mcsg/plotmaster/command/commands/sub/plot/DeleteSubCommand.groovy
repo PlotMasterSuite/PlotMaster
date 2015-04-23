@@ -16,8 +16,7 @@ class DeleteSubCommand implements PlotSubCommand {
 
 	@Override
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Clears a plot and removes all owners & users";
 	}
 
 	@Override
@@ -33,13 +32,11 @@ class DeleteSubCommand implements PlotSubCommand {
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "delete";
 	}
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.delete";
 	}
 
 }

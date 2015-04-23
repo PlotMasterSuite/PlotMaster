@@ -12,18 +12,15 @@ import org.mcsg.plotmaster.managers.PlotManager;
 class AdminSubCommand implements PlotSubCommand {
 
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Set a player to admin of the plot. You must be the owner of the plot to set someone to admin";
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "admin <player>";
 	}
 
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.access.admin";
 	}
 
 	public boolean onCommand(PMPlayer player, PlotManager manager, List<String> args) {

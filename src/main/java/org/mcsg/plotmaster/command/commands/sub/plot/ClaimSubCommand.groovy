@@ -66,13 +66,11 @@ class ClaimSubCommand implements PlotSubCommand{
 	}
 	
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "claim <type>;"
 	}
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.claim";
 	}
 	
 }

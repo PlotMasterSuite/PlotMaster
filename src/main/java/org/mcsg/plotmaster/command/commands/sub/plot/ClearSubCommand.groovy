@@ -16,8 +16,7 @@ class ClearSubCommand implements PlayerSubCommand{
 
 	@Override
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "clear a plot";
 	}
 
 	@Override
@@ -35,12 +34,10 @@ class ClearSubCommand implements PlayerSubCommand{
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "clear";
 	}
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.clear";
 	}
 
 }

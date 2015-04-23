@@ -15,8 +15,7 @@ class SchematicSubCommand implements PlayerSubCommand{
 
 	@Override
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Creates a schematic";
 	}
 
 	@Override
@@ -43,13 +42,11 @@ class SchematicSubCommand implements PlayerSubCommand{
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "schematic <name>";
 	}
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.schematic";
 	}
 
 }

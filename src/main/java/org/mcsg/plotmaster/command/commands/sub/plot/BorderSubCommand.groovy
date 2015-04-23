@@ -17,7 +17,9 @@ class BorderSubCommand implements PlayerSubCommand{
 	
 	@Override
 	public String help() {
-		return null;
+		return """Creates a border. You must create a selection with a gold hoe, then run the command. 
+				Example: /p border road NORTH 1. 
+				Faces: NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST"""
 	}
 	
 	@Override
@@ -75,12 +77,11 @@ class BorderSubCommand implements PlayerSubCommand{
 	}
 	
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "border <name> <face> <size>"
 	}
 	
 	public String getPermission() {
-		return "plotm";
+		return "plot.border";
 	}
 	
 }

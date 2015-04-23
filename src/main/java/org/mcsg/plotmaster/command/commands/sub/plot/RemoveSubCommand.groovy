@@ -12,18 +12,15 @@ import org.mcsg.plotmaster.managers.PlotManager;
 class RemoveSubCommand implements PlotSubCommand{
 
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Removes a players access from this plot";
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "remove <player>";
 	}
 
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "player.access.remove";
 	}
 
 	public boolean onCommand(PMPlayer player, PlotManager manager, List<String> args) {

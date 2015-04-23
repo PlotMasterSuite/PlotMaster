@@ -17,7 +17,7 @@ import org.mcsg.plotmaster.managers.PlotManager;
 class SettingsSubCommand implements PlotSubCommand{
 
 	public String help() {
-		return null;
+		return "Changes plot settings";
 	}
 
 	public boolean onCommand(PMPlayer player,PlotManager manager, List<String> args) {
@@ -43,14 +43,12 @@ class SettingsSubCommand implements PlotSubCommand{
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "setting [setting] [value]";
 	}
 
 
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.setting";
 	}
 
 }

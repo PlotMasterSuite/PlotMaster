@@ -17,18 +17,15 @@ import org.mcsg.plotmaster.utils.PlatformAdapter;
 class DenySubCommand implements PlotSubCommand{
 	
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Denies a player access to your plot";
 	}
 	
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "deny";
 	}
 	
 	public String getPermission() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plot.access.deny";
 	}
 	
 	public boolean onCommand(PMPlayer player, PlotManager manager, List<String> args) {

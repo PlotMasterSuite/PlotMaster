@@ -20,8 +20,7 @@ class InfoSubCommand implements PlotSubCommand{
 
 	@Override
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Gets plot info";
 	}
 
 	@Override
@@ -74,12 +73,10 @@ class InfoSubCommand implements PlotSubCommand{
 	}
 
 	public String getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return "info";
 	}
 
 	public String getPermission() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
