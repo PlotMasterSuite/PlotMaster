@@ -17,9 +17,9 @@ class BorderSubCommand implements PlayerSubCommand{
 	
 	@Override
 	public String help() {
-		return """Creates a border. You must create a selection with a gold hoe, then run the command. 
-				Example: /p border road NORTH 1. 
-				Faces: NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST"""
+		return 'Creates a border. You must create a selection with a gold hoe, then run the command.'+
+				'Example: /p border road NORTH 1.' +
+				'Faces: NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST'
 	}
 	
 	@Override

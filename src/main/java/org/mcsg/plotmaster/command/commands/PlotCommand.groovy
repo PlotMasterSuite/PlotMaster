@@ -26,7 +26,7 @@ import org.mcsg.plotmaster.command.commands.sub.plot.SettingsSubCommand
 import org.mcsg.plotmaster.command.commands.sub.plot.TeleportSubCommand;
 
 @CompileStatic
-public class PlotCommand extends PlayerCommand{
+public class PlotCommand extends ConsoleCommand{
 
 
 
@@ -54,8 +54,9 @@ public class PlotCommand extends PlayerCommand{
 		registerCommand("bypass", new BypassSubCommand())
 	}
 
+
 	@Override
-	public boolean onCommand(PMPlayer player, List<String> args) {
+	public boolean onCommand(PMCommandSender player, List<String> args) {
 		player.sendMessage("&aPlot Master Suite, Version ${PlotMaster.getVersion()}. By Double0negative")
 		return true;
 	}

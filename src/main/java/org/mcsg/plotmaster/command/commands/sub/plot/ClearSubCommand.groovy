@@ -16,7 +16,7 @@ class ClearSubCommand implements PlayerSubCommand{
 
 	@Override
 	public String help() {
-		return "clear a plot";
+		return "Clear a plot";
 	}
 
 	@Override
