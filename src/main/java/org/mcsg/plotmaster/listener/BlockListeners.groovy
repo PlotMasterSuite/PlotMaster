@@ -16,9 +16,9 @@ class BlockListeners {
 
 	static boolean blockPlace(PMPlayer player, PMLocation location, PMBlock block){
 		def man = PlotMaster.getInstance().getManager(location.getWorld())
-		def bol = man.canModifyLocation(player, location)
+		def bol = man.canModifyLocation(player, location) || bypass.contains(player.getUUID())
 		
-		if(!bol && !bypass.contains(player.getUUID())) {
+		if(!bol ) {
 			player.sendMessage("&aCannot modify this location!")
 		}
 
@@ -27,9 +27,9 @@ class BlockListeners {
 
 	static boolean blockBreak(PMPlayer player, PMLocation location, PMBlock block){
 		def man = PlotMaster.getInstance().getManager(location.getWorld())
-		def bol = man.canModifyLocation(player, location)
+		def bol = man.canModifyLocation(player, location) || bypass.contains(player.getUUID())
 
-		if(!bol && !bypass.contains(player.getUUID())) {
+		if(!bol) {
 			player.sendMessage("&aCannot modify this location!")
 		}
 
