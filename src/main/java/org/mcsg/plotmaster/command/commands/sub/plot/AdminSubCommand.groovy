@@ -8,6 +8,7 @@ import org.mcsg.plotmaster.PlotMember
 import org.mcsg.plotmaster.bridge.PMPlayer;
 import org.mcsg.plotmaster.command.PlotSubCommand
 import org.mcsg.plotmaster.managers.PlotManager;
+import org.mcsg.plotmaster.utils.PlatformAdapter;
 
 class AdminSubCommand implements PlotSubCommand {
 
@@ -32,10 +33,12 @@ class AdminSubCommand implements PlotSubCommand {
 					def level = plot.getAccessMap().get(player.getUUID())
 					def p = args[0]
 					
-					manager.getPlotMember(p) { PlotMember member ->
+					String uuid = PlatformAdapter.getUUID(p)
+					
+					manager.getPlotMember(uuid) { PlotMember member ->
 						if(member) {
 							if(level.getLevel() >= AccessLevel.ADMIN.level) {
-								member.setAccess(AccessLevel.DENY, plot)
+								member.setAccess(AccessLevel.ADMIN, plot)
 							} else {
 								player.sendMessage("&cYou do not have the required plot access")
 							}

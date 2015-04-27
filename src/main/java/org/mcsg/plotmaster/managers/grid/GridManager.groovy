@@ -219,7 +219,8 @@ class GridManager extends PlotManager{
 			}
 			
 			Plot plot = new Plot(world: world, region: region, x: plox, z: ploz, w: type.w, h: type.h, type: type, settings: type.settings);
-			
+			plot.setManager(this)
+						
 			PlotCreationEvent e = new PlotCreationEvent(plot: plot)
 			PlotMaster.getInstance().fireEvent(e)
 			
@@ -305,7 +306,9 @@ class GridManager extends PlotManager{
 		(PlotMember) asyncWrap(c){
 			return memberCache.get(player.getUUID()) {
 				PlotMember member =  backend.getMember(player.getUUID())
+				println member
 				if(!member){
+					println "No member creating new"
 					member = new PlotMember(uuid: player.getUUID(), name : player.getName())
 					savePlotMember(member, null)
 				}

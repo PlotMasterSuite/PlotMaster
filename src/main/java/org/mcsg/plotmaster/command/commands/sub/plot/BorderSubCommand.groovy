@@ -49,7 +49,10 @@ class BorderSubCommand implements PlayerSubCommand{
 				def border = Border.load(args[1])
 				def loc = player.getLocation()
 				def mx = loc.getX(), my = loc.getY(), mz = loc.getZ()
+				int i = 0
+				
 				if(border) {
+					
 					for(SFace face : SFace.values()) {
 						def s = border.borders.get(face)
 						
@@ -57,8 +60,7 @@ class BorderSubCommand implements PlayerSubCommand{
 						
 						def lx
 						
-						PlatformAdapter.createSign(loc.getWorld(), mx + blocks.length / 2, my + 1, mz - 2, "", face.toString())
-						
+						PlatformAdapter.createSign(loc.getWorld(), mx + blocks.length / 2, my + 1, mz - 5, "", face.toString())
 						for(int x = 0; x < blocks.length; x++) {
 							for(int z = 0; z < blocks[x].length; z++) {
 								for(int y = 0; y < blocks[x][z].length; y++) {
@@ -70,7 +72,9 @@ class BorderSubCommand implements PlayerSubCommand{
 							lx = x
 						}
 						mx = lx + mx + 5
+						
 					}
+					
 				}
 			}
 		}

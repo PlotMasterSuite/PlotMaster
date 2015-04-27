@@ -36,8 +36,9 @@ class DenySubCommand implements PlotSubCommand{
 				if(plot) {
 					def level = plot.getAccessMap().get(player.getUUID())
 					def p = args[0]
+					String uuid = PlatformAdapter.getUUID(p)
 					
-					manager.getPlotMember(p) { PlotMember member ->
+					manager.getPlotMember(uuid) { PlotMember member ->
 						if(member) {
 							if(level.getLevel() >= AccessLevel.ADMIN.level) {
 								member.setAccess(AccessLevel.DENY, plot)
